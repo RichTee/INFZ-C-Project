@@ -3,7 +3,7 @@ CBlokHerkansing
 
 ### How do I get set up? ###
 
-* Summary of set up
+* Summary of set up *
 Visual Studio 2013
 
 ### Known Issues ###
