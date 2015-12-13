@@ -52,9 +52,9 @@ namespace CBlokHerkansing.Controllers.Database
             {
                 conn.Open();
 
-                string selectQueryStudent = @"SELECT role FROM medewerker m WHERE m.gebruikerId = (SELECT g.gebruikerId FROM gebruiker g WHERE gebruikersnaam = @gebruikersnaam);";
+                string selectQuery = @"SELECT role FROM medewerker m WHERE m.gebruikerId = (SELECT g.gebruikerId FROM gebruiker g WHERE gebruikersnaam = @gebruikersnaam);";
 
-                MySqlCommand cmd = new MySqlCommand(selectQueryStudent, conn);
+                MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
                 MySqlParameter usernameParam = new MySqlParameter("@gebruikersnaam", MySqlDbType.VarChar);
 
                 usernameParam.Value = gebruikersnaam;

@@ -41,12 +41,45 @@ textarea {
 .navbar-inverse .navbar-brand {
     color: white;
 }
+
+/******/
+/*Body*/
+/******/
+.price {
+    display: block;
+    font-size: 20px;
+    line-height: 20px;
+    text-align: right;
+    color: gray;
+    padding-right: 5px;
+}
+
+/*Tab System*/
+.centered-pills {  
+    text-align: center
+}
+.centered-pills ul.nav-tabs {
+    display: inline-block
+}
+.centered-pills li {
+    display: inline
+}
+.centered-pills a {
+    float: left
+}
+* html .centered-pills ul.nav-tabs, *+html .centered-pills ul.nav-tabs {
+    display: inline
+}
+
 /**********/
 /* Custom */
 /**********/
-
 .navbar {
     border-radius: 0;
+}
+
+.panel-heading {
+    font-weight: bold;
 }
 
  .form-signin
