@@ -1,0 +1,33 @@
+﻿@model CBlokHerkansing.Models.Account.LoginModel
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Login", "Account"))
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-md-offset-4">
+                <h1 class="text-center login-title">Log in om naar uw account toe te gaan</h1>
+                <form class="form-signin">
+                    @Html.TextBoxFor(model => model.UserName, new { placeholder = "Gebruikersnaam", @class = "form-control"})
+                    @Html.ValidationMessageFor(Model => Model.UserName)
+                    @Html.TextBoxFor(model => model.PassWord, new { placeholder = "●●●●●●●●●●●", type = "password", @class = "form-control" })
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">
+                        Sign in <!-- TODO: Groen maken-->
+                    </button>
+                    <label class="checkbox pull-left">
+                        <input type="checkbox" value="remember-me">
+                        Remember me
+                    </label>
+                    <a href="#" class="pull-right need-help">Need help? </a><span class="clearfix"></span>
+                </form>
+                <a href="#" class="text-center new-account">Create an account </a>
+            </div>
+        </div>
+    </div>
+
+}
+

@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Dierenzaak</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+</head>
+<body>
+    @{Html.RenderPartial("_Header");}
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper" class="topPadding winkelwagentje">
+        <ul class="sidebar-nav" style="color: white">
+            <li class="sidebar-brand">
+                Winkelwagentje &nbsp;
+            </li>
+            <li>
+                Broek &nbsp; 5x &nbsp; 20 euro <i class="fa fa-times" style="color:red"></i>
+            </li>
+        </ul>
+    </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+    @RenderBody()
+    @{Html.RenderPartial("_Footer");}
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    @RenderSection("scripts", required: false)
+    <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+
+            var menu = $('.menu');
+            var origOffsetY = menu.offset().top;
+
+            function scroll() {
+                if ($(window).scrollTop() >= origOffsetY) {
+                    $('.menu').addClass('navbar-fixed-top');
+                    $('.menu').removeClass('navbar-static-top');
+                    $('.winkelwagentje').addClass('scrollPadding');
+                    $('.winkelwagentje').removeClass('topPadding');
+                } else {
+                    $('.menu').removeClass('navbar-fixed-top');
+                    $('.menu').addClass('navbar-static-top');
+                    $('.winkelwagentje').addClass('topPadding');
+                    $('.winkelwagentje').removeClass('scrollPadding');
+                }
+
+
+            }
+
+            document.onscroll = scroll;
+
+        });
+    </script>
+</body>
+</html>
