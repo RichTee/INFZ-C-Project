@@ -19,7 +19,6 @@ namespace CBlokHerkansing.Controllers.Database
                 string selectQueryStudent = @"select * from gebruiker where gebruikersnaam = @gebruikersnaam and wachtwoord = @wachtwoord";
 
                 MySqlCommand cmd = new MySqlCommand(selectQueryStudent, conn);
-
                 MySqlParameter usernameParam = new MySqlParameter("@gebruikersnaam", MySqlDbType.VarChar);
                 MySqlParameter passwordParam = new MySqlParameter("@wachtwoord", MySqlDbType.VarChar);
 
@@ -47,20 +46,19 @@ namespace CBlokHerkansing.Controllers.Database
 
         }
 
-        public string[] getRollen(string username)
+        public string[] getRollen(string gebruikersnaam)
         {
             try
             {
                 conn.Open();
 
-                string selectQueryStudent = @"select rechten 
-                                                from klant
-                                                where gebruikersnaam = @username;";
+                string selectQueryStudent = @"SELECT role FROM medewerker m WHERE m.gebruikerId = (SELECT g.gebruikerId FROM gebruiker g WHERE gebruikersnaam = @gebruikersnaam);";
 
                 MySqlCommand cmd = new MySqlCommand(selectQueryStudent, conn);
+                MySqlParameter usernameParam = new MySqlParameter("@gebruikersnaam", MySqlDbType.VarChar);
 
-                MySqlParameter usernameParam = new MySqlParameter("@username", MySqlDbType.VarChar);
-                usernameParam.Value = username;
+                usernameParam.Value = gebruikersnaam;
+
                 cmd.Parameters.Add(usernameParam);
                 cmd.Prepare();
 
@@ -69,7 +67,7 @@ namespace CBlokHerkansing.Controllers.Database
                 List<string> rollen = new List<string>();
                 while (dataReader.Read())
                 {
-                    string rolnaam = dataReader.GetString("rechten");
+                    string rolnaam = dataReader.GetString("role");
                     rollen.Add(rolnaam);
                 }
 

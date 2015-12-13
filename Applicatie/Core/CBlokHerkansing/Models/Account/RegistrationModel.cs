@@ -8,6 +8,13 @@ namespace CBlokHerkansing.Models.Account
 {
     public class RegistrationModel
     {
+        /*
+         * TODO:
+         * Check String Length does not exceed Database VarChar length 
+         * Compare Password & CheckPassword
+         * Encrypt Password with BCrypt
+         */
+
         [Required(ErrorMessage = "Een Gebruikersnaam is verplicht")] // Dit MOET aanwezig zijn
         [StringLength(25, ErrorMessage = "Een Gebruikersnaam mag maximaal 25 karakters hebben")]
         public string Username { get; set; }

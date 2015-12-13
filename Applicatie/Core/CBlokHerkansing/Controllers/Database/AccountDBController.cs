@@ -16,7 +16,7 @@ namespace CBlokHerkansing.Controllers.Database
             {
                 conn.Open();
 
-                // KolomNummering                           1               2
+                // Column                                          1               2
                 string insertString = @"insert into gebruiker (gebruikersnaam,  wachtwoord) 
                                                         values (@gebruikersnaam,@wachtwoord)";
 

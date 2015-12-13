@@ -44,7 +44,16 @@
                 </li>
                 <li><a href="#">Aanbiedingen</a></li>
                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                <li><a href="/Account/Login"><span class="glyphicon glyphicon-user"></span>Login</a></li>
+                @if (User.IsInRole("MEDEWERKER"))
+                {
+                    <li>@Html.ActionLink("Beheer", "Beheer", "Account")</li>
+                    <li><!--TODO: RESOLVE THE GLYPHICON ISSUE<span class="glyphicon glyphicon-user"></span>-->@Html.ActionLink("Uitloggen", "Login", "Account")</li>
+                }
+                else
+                {
+                    <li><a href="/Account/Login"><span class="glyphicon glyphicon-user"></span>Login</a></li>
+                } 
+
                 <li><a href="#"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
             </ul>
         </div>

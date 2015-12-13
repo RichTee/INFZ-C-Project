@@ -126,6 +126,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\Profile.cshtml" />
+    <Content Include="Views\Account\Beheer.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -140,9 +142,6 @@
     <Folder Include="Controllers\Cart\" />
     <Folder Include="Controllers\Product\" />
     <Folder Include="Controllers\User\" />
-    <Folder Include="Views\AccountDB\" />
-    <Folder Include="Views\AuthDB\" />
-    <Folder Include="Views\Database\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
