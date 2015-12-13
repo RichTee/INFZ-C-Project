@@ -8,7 +8,7 @@ namespace CBlokHerkansing.Models.Account
 {
     public class LoginModel
     {
-        [Required(ErrorMessage = "Gebruikersnaam is vereist")] // Dit MOET aanwezig zijn
+        [Required(ErrorMessage = "Gebruikersnaam is vereist")] // MUST BE PRESENT
         public string UserName { get; set; }
 
         [Required(ErrorMessage = "Wachtwoord is vereist")]

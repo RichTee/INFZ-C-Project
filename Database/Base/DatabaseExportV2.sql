@@ -192,10 +192,11 @@ DROP TABLE IF EXISTS `gebruiker`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `gebruiker` (
   `gebruikerId` int(11) NOT NULL AUTO_INCREMENT,
-  `voornaam` varchar(45) NOT NULL,
-  `achternaam` varchar(45) NOT NULL,
+  `gebruikersnaam` varchar(45) NOT NULL,
+  `voornaam` varchar(45) DEFAULT NULL,
+  `achternaam` varchar(45) DEFAULT NULL,
   `wachtwoord` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL,
+  `email` varchar(45) DEFAULT NULL,
   `bestellingId` int(11) DEFAULT NULL,
   PRIMARY KEY (`gebruikerId`),
   KEY `FK_GebruikerBestelling_idx` (`bestellingId`),
