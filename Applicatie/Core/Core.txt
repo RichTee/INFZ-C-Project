@@ -1,0 +1,1 @@
+Core is your main working area, changes unrelated to database will go here.
