@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `dierenzaak` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `dierenzaak`;
--- MySQL dump 10.13  Distrib 5.6.24, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
 -- Host: localhost    Database: dierenzaak
 -- ------------------------------------------------------
--- Server version	5.6.26-log
+-- Server version	5.6.25-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -30,11 +30,8 @@ CREATE TABLE `aanbieding` (
   `eindDatum` date DEFAULT NULL,
   `kortingsPercentage` int(11) DEFAULT NULL,
   `kortingsBedrag` double DEFAULT NULL,
-  `regelId` int(11) DEFAULT NULL,
-  PRIMARY KEY (`aanbiedingId`),
-  KEY `FK_AanbiedingRegel_idx` (`regelId`),
-  CONSTRAINT `FK_AanbiedingRegel` FOREIGN KEY (`regelId`) REFERENCES `bestelregel` (`regelId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`aanbiedingId`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -60,8 +57,11 @@ CREATE TABLE `adres` (
   `huisnummer` varchar(45) NOT NULL,
   `huisnummertoevoeging` varchar(45) DEFAULT NULL,
   `stad` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`adresId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `gebruikerId` int(11) NOT NULL,
+  PRIMARY KEY (`adresId`),
+  KEY `FK_KlantAdres_idx` (`gebruikerId`),
+  CONSTRAINT `FK_KlantAdres` FOREIGN KEY (`gebruikerId`) REFERENCES `gebruiker` (`gebruikerId`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,6 +70,7 @@ CREATE TABLE `adres` (
 
 LOCK TABLES `adres` WRITE;
 /*!40000 ALTER TABLE `adres` DISABLE KEYS */;
+INSERT INTO `adres` VALUES (1,'teststraat','testcode','8',NULL,'world',1);
 /*!40000 ALTER TABLE `adres` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -85,10 +86,10 @@ CREATE TABLE `afbeelding` (
   `omschrijving` varchar(100) DEFAULT NULL,
   `locatie` varchar(45) DEFAULT NULL,
   `title` varchar(45) DEFAULT NULL,
-  `productId` int(11) DEFAULT NULL,
+  `productId` int(11) NOT NULL,
   PRIMARY KEY (`afbeeldingId`),
   KEY `FK_ProductAfbeelding_idx` (`productId`),
-  CONSTRAINT `FK_ProductAfbeelding` FOREIGN KEY (`productId`) REFERENCES `product` (`productId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `FK_ProductAfbeelding` FOREIGN KEY (`productId`) REFERENCES `product` (`productId`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -114,10 +115,13 @@ CREATE TABLE `bestelling` (
   `bezorgTijd` varchar(45) DEFAULT NULL,
   `bestelDatum` varchar(45) DEFAULT NULL,
   `adresId` int(11) NOT NULL,
+  `gebruikerId` int(11) NOT NULL,
   PRIMARY KEY (`bestellingId`),
   KEY `FK_BestellingAdres_idx` (`adresId`),
-  CONSTRAINT `FK_BestellingAdres` FOREIGN KEY (`adresId`) REFERENCES `adres` (`adresId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `FK_BestellingGebruiker_idx` (`gebruikerId`),
+  CONSTRAINT `FK_BestellingAdres` FOREIGN KEY (`adresId`) REFERENCES `adres` (`adresId`),
+  CONSTRAINT `FK_BestellingGebruiker` FOREIGN KEY (`gebruikerId`) REFERENCES `gebruiker` (`gebruikerId`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -126,6 +130,7 @@ CREATE TABLE `bestelling` (
 
 LOCK TABLES `bestelling` WRITE;
 /*!40000 ALTER TABLE `bestelling` DISABLE KEYS */;
+INSERT INTO `bestelling` VALUES (1,'pending','3 dagen','iets',1,1),(2,'pending','3 dagen','iets',1,1);
 /*!40000 ALTER TABLE `bestelling` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -140,11 +145,17 @@ CREATE TABLE `bestelregel` (
   `regelId` int(11) NOT NULL AUTO_INCREMENT,
   `hoeveelheid` int(11) DEFAULT NULL,
   `datum` date DEFAULT NULL,
-  `bestellingId` int(11) DEFAULT NULL,
+  `bestelId` int(11) DEFAULT NULL,
+  `detailId` int(11) NOT NULL,
+  `aanbiedingId` int(11) DEFAULT NULL,
   PRIMARY KEY (`regelId`),
-  KEY `FK_RegelBestelling_idx` (`bestellingId`),
-  CONSTRAINT `FK_RegelBestelling` FOREIGN KEY (`bestellingId`) REFERENCES `bestelling` (`bestellingId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `FK_RegelBestelling_idx` (`bestelId`),
+  KEY `FK_RegelDetail_idx` (`detailId`),
+  KEY `FK_AanbiedingDetail_idx` (`aanbiedingId`),
+  CONSTRAINT `FK_AanbiedingDetail` FOREIGN KEY (`aanbiedingId`) REFERENCES `aanbieding` (`aanbiedingId`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `FK_RegelBestelling` FOREIGN KEY (`bestelId`) REFERENCES `bestelling` (`bestellingId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_RegelDetail` FOREIGN KEY (`detailId`) REFERENCES `productdetail` (`detailId`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -169,8 +180,7 @@ CREATE TABLE `categorie` (
   `omschrijving` varchar(100) DEFAULT NULL,
   `subId` int(11) DEFAULT NULL,
   PRIMARY KEY (`categorieId`),
-  KEY `SubID` (`subId`),
-  CONSTRAINT `FK_SubCategorie` FOREIGN KEY (`categorieId`) REFERENCES `categorie` (`subId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `SubID` (`subId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -192,16 +202,17 @@ DROP TABLE IF EXISTS `gebruiker`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `gebruiker` (
   `gebruikerId` int(11) NOT NULL AUTO_INCREMENT,
-  `gebruikersnaam` varchar(45) NOT NULL,
   `voornaam` varchar(45) DEFAULT NULL,
   `achternaam` varchar(45) DEFAULT NULL,
   `wachtwoord` varchar(45) NOT NULL,
   `email` varchar(45) DEFAULT NULL,
-  `bestellingId` int(11) DEFAULT NULL,
+  `telefoonnummer` varchar(45) DEFAULT NULL,
+  `goldStatus` varchar(45) DEFAULT NULL,
+  `rolId` int(11) NOT NULL,
   PRIMARY KEY (`gebruikerId`),
-  KEY `FK_GebruikerBestelling_idx` (`bestellingId`),
-  CONSTRAINT `FK_GebruikerBestelling` FOREIGN KEY (`bestellingId`) REFERENCES `bestelling` (`bestellingId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `FK_GebruikerRol_idx` (`rolId`),
+  CONSTRAINT `FK_GebruikerRol` FOREIGN KEY (`rolId`) REFERENCES `rol` (`rolId`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -210,59 +221,8 @@ CREATE TABLE `gebruiker` (
 
 LOCK TABLES `gebruiker` WRITE;
 /*!40000 ALTER TABLE `gebruiker` DISABLE KEYS */;
+INSERT INTO `gebruiker` VALUES (1,'hans','test','test','test','test','test',1),(2,'bram','test','test','test','test','test',1);
 /*!40000 ALTER TABLE `gebruiker` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `klant`
---
-
-DROP TABLE IF EXISTS `klant`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `klant` (
-  `gebruikerId` int(11) NOT NULL AUTO_INCREMENT,
-  `telefoonnummer` varchar(12) NOT NULL,
-  `goldStatus` varchar(5) DEFAULT NULL,
-  `adresId` int(11) NOT NULL,
-  PRIMARY KEY (`gebruikerId`),
-  KEY `FK_KlantAdres_idx` (`adresId`),
-  CONSTRAINT `FK_KlantAdres` FOREIGN KEY (`adresId`) REFERENCES `adres` (`adresId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_KlantGebruiker` FOREIGN KEY (`gebruikerId`) REFERENCES `gebruiker` (`gebruikerId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `klant`
---
-
-LOCK TABLES `klant` WRITE;
-/*!40000 ALTER TABLE `klant` DISABLE KEYS */;
-/*!40000 ALTER TABLE `klant` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `medewerker`
---
-
-DROP TABLE IF EXISTS `medewerker`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `medewerker` (
-  `gebruikerId` int(11) NOT NULL AUTO_INCREMENT,
-  `role` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`gebruikerId`),
-  CONSTRAINT `FK_MedewerkerGebruiker` FOREIGN KEY (`gebruikerId`) REFERENCES `gebruiker` (`gebruikerId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `medewerker`
---
-
-LOCK TABLES `medewerker` WRITE;
-/*!40000 ALTER TABLE `medewerker` DISABLE KEYS */;
-/*!40000 ALTER TABLE `medewerker` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -276,13 +236,7 @@ CREATE TABLE `product` (
   `productId` int(11) NOT NULL AUTO_INCREMENT,
   `naam` varchar(45) DEFAULT NULL,
   `omschrijving` varchar(100) DEFAULT NULL,
-  `detailId` int(11) DEFAULT NULL,
-  `categorieId` int(11) DEFAULT NULL,
-  PRIMARY KEY (`productId`),
-  KEY `FK_ProductDetail_idx` (`detailId`),
-  KEY `FK_ProductCategorie_idx` (`categorieId`),
-  CONSTRAINT `FK_ProductCategorie` FOREIGN KEY (`categorieId`) REFERENCES `categorie` (`categorieId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_ProductDetail` FOREIGN KEY (`detailId`) REFERENCES `productdetail` (`detailId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`productId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -309,14 +263,11 @@ CREATE TABLE `productdetail` (
   `maat` int(11) DEFAULT NULL,
   `kleur` varchar(45) DEFAULT NULL,
   `voorraad` int(11) DEFAULT NULL,
-  `regelId` int(11) DEFAULT NULL,
-  `aanbiedingId` int(11) DEFAULT NULL,
+  `productId` int(11) NOT NULL,
   PRIMARY KEY (`detailId`),
-  KEY `FK_DetailRegel_idx` (`regelId`),
-  KEY `FK_DetailAanbieding_idx` (`aanbiedingId`),
-  CONSTRAINT `FK_DetailAanbieding` FOREIGN KEY (`aanbiedingId`) REFERENCES `aanbieding` (`aanbiedingId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_DetailRegel` FOREIGN KEY (`regelId`) REFERENCES `bestelregel` (`regelId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `FK_DetailProduct_idx` (`productId`),
+  CONSTRAINT `FK_DetailProduct` FOREIGN KEY (`productId`) REFERENCES `product` (`productId`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -326,6 +277,30 @@ CREATE TABLE `productdetail` (
 LOCK TABLES `productdetail` WRITE;
 /*!40000 ALTER TABLE `productdetail` DISABLE KEYS */;
 /*!40000 ALTER TABLE `productdetail` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `rol`
+--
+
+DROP TABLE IF EXISTS `rol`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `rol` (
+  `rolId` int(11) NOT NULL,
+  `rol` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`rolId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `rol`
+--
+
+LOCK TABLES `rol` WRITE;
+/*!40000 ALTER TABLE `rol` DISABLE KEYS */;
+INSERT INTO `rol` VALUES (1,'admin'),(2,'klant');
+/*!40000 ALTER TABLE `rol` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -337,4 +312,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-12-11 22:46:28
+-- Dump completed on 2015-12-14 17:46:05
