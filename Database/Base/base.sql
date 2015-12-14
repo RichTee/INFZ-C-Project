@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `dierenzaak` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `dierenzaak`;
--- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.24, for Win64 (x86_64)
 --
 -- Host: localhost    Database: dierenzaak
 -- ------------------------------------------------------
--- Server version	5.6.25-log
+-- Server version	5.6.26-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -40,6 +40,7 @@ CREATE TABLE `aanbieding` (
 
 LOCK TABLES `aanbieding` WRITE;
 /*!40000 ALTER TABLE `aanbieding` DISABLE KEYS */;
+INSERT INTO `aanbieding` VALUES (1,'2015-12-05','2015-12-12',NULL,2.99);
 /*!40000 ALTER TABLE `aanbieding` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -90,7 +91,7 @@ CREATE TABLE `afbeelding` (
   PRIMARY KEY (`afbeeldingId`),
   KEY `FK_ProductAfbeelding_idx` (`productId`),
   CONSTRAINT `FK_ProductAfbeelding` FOREIGN KEY (`productId`) REFERENCES `product` (`productId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,6 +100,7 @@ CREATE TABLE `afbeelding` (
 
 LOCK TABLES `afbeelding` WRITE;
 /*!40000 ALTER TABLE `afbeelding` DISABLE KEYS */;
+INSERT INTO `afbeelding` VALUES (1,'voedsel afbeelding','locatie','voedsel',1);
 /*!40000 ALTER TABLE `afbeelding` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -164,6 +166,7 @@ CREATE TABLE `bestelregel` (
 
 LOCK TABLES `bestelregel` WRITE;
 /*!40000 ALTER TABLE `bestelregel` DISABLE KEYS */;
+INSERT INTO `bestelregel` VALUES (1,20,'2016-12-13',NULL,1,NULL);
 /*!40000 ALTER TABLE `bestelregel` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -180,8 +183,9 @@ CREATE TABLE `categorie` (
   `omschrijving` varchar(100) DEFAULT NULL,
   `subId` int(11) DEFAULT NULL,
   PRIMARY KEY (`categorieId`),
-  KEY `SubID` (`subId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  KEY `SubID` (`subId`),
+  CONSTRAINT `FK_SubCatergorie` FOREIGN KEY (`subId`) REFERENCES `categorie` (`categorieId`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -190,6 +194,7 @@ CREATE TABLE `categorie` (
 
 LOCK TABLES `categorie` WRITE;
 /*!40000 ALTER TABLE `categorie` DISABLE KEYS */;
+INSERT INTO `categorie` VALUES (1,'honden','hoden catgorie',NULL);
 /*!40000 ALTER TABLE `categorie` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -236,8 +241,10 @@ CREATE TABLE `product` (
   `productId` int(11) NOT NULL AUTO_INCREMENT,
   `naam` varchar(45) DEFAULT NULL,
   `omschrijving` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`productId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `categorieId` int(11) NOT NULL,
+  PRIMARY KEY (`productId`),
+  CONSTRAINT `FK_ProductCategorie` FOREIGN KEY (`productId`) REFERENCES `categorie` (`categorieId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -246,6 +253,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
+INSERT INTO `product` VALUES (1,'honden voedsel','voer voor de hond',1);
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -276,6 +284,7 @@ CREATE TABLE `productdetail` (
 
 LOCK TABLES `productdetail` WRITE;
 /*!40000 ALTER TABLE `productdetail` DISABLE KEYS */;
+INSERT INTO `productdetail` VALUES (1,20,10,2,'rood',20,1);
 /*!40000 ALTER TABLE `productdetail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -312,4 +321,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-12-14 17:46:05
+-- Dump completed on 2015-12-14 22:03:00
