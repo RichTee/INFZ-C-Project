@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace CBlokHerkansing.Models.Account
@@ -10,8 +11,12 @@ namespace CBlokHerkansing.Models.Account
     public class RegistrationModel
     {
         /*
+         * Vraag:
+         * Wat gaan we met username doen? Voor nu haal ik hem uit de front end maar hij werkt nog steeds niet op de backend.
+         * 
          * TODO:
          * Check String Length does not exceed Database VarChar length 
+         * Set up regeular expression for email.
          * Encrypt Password with BCrypt
          */
 
@@ -22,12 +27,12 @@ namespace CBlokHerkansing.Models.Account
         [Required(ErrorMessage = "Een Wachtwoord is verplicht")]
         [StringLength(25, ErrorMessage = "Een Wachtwoord mag maximaal 25 karakters hebben")]
         [DataType(DataType.Password)]
-        public string Password { get; set; }
+        public string Wachtwoord { get; set; }
 
         [Required(ErrorMessage = "Een Wachtwoord is verplicht")]
-        [EqualTo("Password", ErrorMessage = "Wachtwoorden komen niet overeen.")]
+        [EqualTo("Wachtwoord", ErrorMessage = "Wachtwoorden komen niet overeen.")]
         [DataType(DataType.Password)]
-        public string CheckPassword { get; set; }
+        public string WachtwoordCheck { get; set; }
         [Required(ErrorMessage = "Een voornaam is verplicht")]
         public string Voornaam { get; set; }
 
@@ -38,7 +43,7 @@ namespace CBlokHerkansing.Models.Account
         public int Telefoonnummer { get; set; }
 
         [Required(ErrorMessage = "Een email is verplicht")]
-        [RegularExpression("[A-Z0-9._%+-]+@[A-Z0-9.-]+.[A-Z]{2,})",ErrorMessage = "Dit is geen gledig email adres.")]
+        //[RegularExpression(reg ,ErrorMessage = "Dit is geen gledig email adres.")]
         public string Email { get; set; }
     }
 }
