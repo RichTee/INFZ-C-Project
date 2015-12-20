@@ -42,6 +42,7 @@ namespace CBlokHerkansing.Controllers.Database
                 conn.Close();
             }
         }
+
         public Boolean checkGebruikerDuplicaat(string gebruikersnaam)
         {
             try
