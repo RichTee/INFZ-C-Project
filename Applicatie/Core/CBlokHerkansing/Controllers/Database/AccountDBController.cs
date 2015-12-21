@@ -20,9 +20,9 @@ namespace CBlokHerkansing.Controllers.Database
             {
                 conn.Open();
 
-                // Column                                          1           2          3         4       5           6               7
-                string insertString = @"insert into gebruiker (voornaam,  achternaam, wachtwoord, email, goldStatus, telefoonnummer, rollId) 
-                                                        values (@voornaam,@achternaam, @wachtwoord, @email, @goldStatus, @telefoonnummer, @rollId)";
+                // Column                                          1           2          3         4       5           6
+                string insertString = @"insert into gebruiker (voornaam,  achternaam, wachtwoord, email, goldStatus, telefoonnummer) 
+                                                        values (@voornaam,@achternaam, @wachtwoord, @email, @goldStatus, @telefoonnummer)";
 
                 MySqlCommand cmd = new MySqlCommand(insertString, conn);
                 MySqlParameter voornaamParam = new MySqlParameter("@voornaam", MySqlDbType.VarChar);
@@ -33,7 +33,7 @@ namespace CBlokHerkansing.Controllers.Database
                 // To Do:
                 // De goede MySqlDbType moet hier nog worden aangegeven
                 MySqlParameter goldStatusParam = new MySqlParameter("@goldStatus", MySqlDbType.VarChar);
-                MySqlParameter telefoonnummerParam = new MySqlParameter("@telefoonnummer", MySqlDbType.Float);
+                MySqlParameter telefoonnummerParam = new MySqlParameter("@telefoonnummer", MySqlDbType.VarChar);
 
                 voornaamParam.Value = registrationModel.Voornaam;
                 achternaamParam.Value = registrationModel.Achternaam;
@@ -45,6 +45,8 @@ namespace CBlokHerkansing.Controllers.Database
                 cmd.Parameters.Add(achternaamParam);
                 cmd.Parameters.Add(wachtwoordParam);
                 cmd.Parameters.Add(emailParam);
+                cmd.Parameters.Add(goldStatusParam);
+                cmd.Parameters.Add(telefoonnummerParam);
                 cmd.Prepare();
                 cmd.ExecuteNonQuery();
             }
@@ -59,20 +61,20 @@ namespace CBlokHerkansing.Controllers.Database
             }
         }
 
-        public Boolean checkGebruikerDuplicaat(string gebruikersnaam)
+        public Boolean checkGebruikerDuplicaat(string email)
         {
             try
             {
                 conn.Open();
 
-                String insertString = "select * from gebruiker where gebruikersnaam = @gebruikersnaam";
+                String insertString = "select * from gebruiker where email = @email";
 
                 MySqlCommand cmd = new MySqlCommand(insertString, conn);
-                MySqlParameter gebruikersnaamParam = new MySqlParameter("@gebruikersnaam", MySqlDbType.VarChar);
+                MySqlParameter emailParam = new MySqlParameter("@email", MySqlDbType.VarChar);
 
-                gebruikersnaamParam.Value = gebruikersnaam;
+                emailParam.Value = email;
 
-                cmd.Parameters.Add(gebruikersnaamParam);
+                cmd.Parameters.Add(emailParam);
                 cmd.Prepare();
 
                 MySqlDataReader dataReader = cmd.ExecuteReader();

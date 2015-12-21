@@ -213,7 +213,7 @@ CREATE TABLE `gebruiker` (
   `email` varchar(45) DEFAULT NULL,
   `telefoonnummer` varchar(45) DEFAULT NULL,
   `goldStatus` varchar(45) DEFAULT NULL,
-  `rolId` int(11) NOT NULL,
+  `rolId` int(11) DEFAULT 2,
   PRIMARY KEY (`gebruikerId`),
   KEY `FK_GebruikerRol_idx` (`rolId`),
   CONSTRAINT `FK_GebruikerRol` FOREIGN KEY (`rolId`) REFERENCES `rol` (`rolId`)
@@ -226,7 +226,7 @@ CREATE TABLE `gebruiker` (
 
 LOCK TABLES `gebruiker` WRITE;
 /*!40000 ALTER TABLE `gebruiker` DISABLE KEYS */;
-INSERT INTO `gebruiker` VALUES (1,'hans','test','test','test','test','test',1),(2,'bram','test','test','test','test','test',1);
+INSERT INTO `gebruiker` VALUES(1,'bram','test','test','test','test','test',1);
 /*!40000 ALTER TABLE `gebruiker` ENABLE KEYS */;
 UNLOCK TABLES;
 

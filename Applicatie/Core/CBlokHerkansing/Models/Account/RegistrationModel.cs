@@ -1,4 +1,4 @@
-﻿using Foolproof;
+﻿//using Foolproof;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -19,18 +19,17 @@ namespace CBlokHerkansing.Models.Account
          * Set up regeular expression for email.
          * Encrypt Password with BCrypt
          */
-
-        [Required(ErrorMessage = "Een Gebruikersnaam is verplicht")] // Dit MOET aanwezig zijn
-        [StringLength(25, ErrorMessage = "Een Gebruikersnaam mag maximaal 25 karakters hebben")]
-        public string Username { get; set; }
+        [Required(ErrorMessage = "Een email is verplicht")]
+        //[RegularExpression(reg ,ErrorMessage = "Dit is geen geldig email adres.")]
+        public string Email { get; set; }
 
         [Required(ErrorMessage = "Een Wachtwoord is verplicht")]
         [StringLength(25, ErrorMessage = "Een Wachtwoord mag maximaal 25 karakters hebben")]
         [DataType(DataType.Password)]
         public string Wachtwoord { get; set; }
 
-        [Required(ErrorMessage = "Een Wachtwoord is verplicht")]
-        [EqualTo("Wachtwoord", ErrorMessage = "Wachtwoorden komen niet overeen.")]
+        [Required(ErrorMessage = "Een Wachtwoord is verplicht")] // Logisch gezien is Required niet nodig indien je een CompareAttribute hebt.
+        [CompareAttribute("Wachtwoord", ErrorMessage = "Wachtwoorden komen niet overeen.")]
         [DataType(DataType.Password)]
         public string WachtwoordCheck { get; set; }
         [Required(ErrorMessage = "Een voornaam is verplicht")]
@@ -41,9 +40,5 @@ namespace CBlokHerkansing.Models.Account
 
         [Required(ErrorMessage = "Een telefoonnummer is verplicht")]
         public int Telefoonnummer { get; set; }
-
-        [Required(ErrorMessage = "Een email is verplicht")]
-        //[RegularExpression(reg ,ErrorMessage = "Dit is geen gledig email adres.")]
-        public string Email { get; set; }
     }
 }

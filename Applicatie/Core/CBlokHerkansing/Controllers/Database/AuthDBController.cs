@@ -10,22 +10,22 @@ namespace CBlokHerkansing.Controllers.Database
     public class AuthDBController : DatabaseController
     {
 
-        public bool isAuthorized(string username, string password)
+        public bool isAuthorized(string email, string password)
         {
             try
             {
                 conn.Open();
 
-                string selectQueryStudent = @"select * from gebruiker where gebruikersnaam = @gebruikersnaam and wachtwoord = @wachtwoord";
+                string selectQueryStudent = @"select * from gebruiker where email = @email and wachtwoord = @wachtwoord";
 
                 MySqlCommand cmd = new MySqlCommand(selectQueryStudent, conn);
-                MySqlParameter usernameParam = new MySqlParameter("@gebruikersnaam", MySqlDbType.VarChar);
+                MySqlParameter emailParam = new MySqlParameter("@email", MySqlDbType.VarChar);
                 MySqlParameter passwordParam = new MySqlParameter("@wachtwoord", MySqlDbType.VarChar);
 
-                usernameParam.Value = username;
+                emailParam.Value = email;
                 passwordParam.Value = password;
 
-                cmd.Parameters.Add(usernameParam);
+                cmd.Parameters.Add(emailParam);
                 cmd.Parameters.Add(passwordParam);
                 cmd.Prepare();
 
@@ -46,20 +46,21 @@ namespace CBlokHerkansing.Controllers.Database
 
         }
 
-        public string[] getRollen(string gebruikersnaam)
+        // TODO: Nullcheck voor als er geen rollen zijn
+        public string[] getRollen(string email)
         {
             try
             {
                 conn.Open();
 
-                string selectQuery = @"SELECT role FROM medewerker m WHERE m.gebruikerId = (SELECT g.gebruikerId FROM gebruiker g WHERE gebruikersnaam = @gebruikersnaam);";
+                string selectQuery = @"SELECT rol FROM rol r WHERE r.rolId = (SELECT g.rolId FROM gebruiker g WHERE email = @email);";
 
                 MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
-                MySqlParameter usernameParam = new MySqlParameter("@gebruikersnaam", MySqlDbType.VarChar);
+                MySqlParameter emailParam = new MySqlParameter("@email", MySqlDbType.VarChar);
 
-                usernameParam.Value = gebruikersnaam;
+                emailParam.Value = email;
 
-                cmd.Parameters.Add(usernameParam);
+                cmd.Parameters.Add(emailParam);
                 cmd.Prepare();
 
                 MySqlDataReader dataReader = cmd.ExecuteReader();
@@ -67,7 +68,7 @@ namespace CBlokHerkansing.Controllers.Database
                 List<string> rollen = new List<string>();
                 while (dataReader.Read())
                 {
-                    string rolnaam = dataReader.GetString("role");
+                    string rolnaam = dataReader.GetString("rol");
                     rollen.Add(rolnaam);
                 }
 

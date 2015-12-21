@@ -13,8 +13,8 @@ namespace CBlokHerkansing.Models.Account
          * Check String Length does not exceed Database VarChar length
          * Compare Password
          */
-        [Required(ErrorMessage = "Gebruikersnaam is vereist")] // MUST BE PRESENT
-        public string UserName { get; set; }
+        [Required(ErrorMessage = "Email is vereist")]
+        public string Email { get; set; }
 
         [Required(ErrorMessage = "Wachtwoord is vereist")]
         [DataType(DataType.Password)]

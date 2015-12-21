@@ -37,18 +37,18 @@ namespace CBlokHerkansing.Controllers
 
             if (ModelState.IsValid)
             {
-                bool auth = accountDBController.isAuthorized(viewModel.UserName, viewModel.PassWord);
+                bool auth = accountDBController.isAuthorized(viewModel.Email, viewModel.PassWord);
 
                 if (auth)
                 {
-                    FormsAuthentication.SetAuthCookie(viewModel.UserName, false);
+                    FormsAuthentication.SetAuthCookie(viewModel.Email, false);
                     if (returnUrl != null)
                     {
                         return Redirect(returnUrl);
                     }
                     else
                     {
-                        if (User.IsInRole("MEDEWERKER"))
+                        if (User.IsInRole("ADMIN"))
                             return RedirectToAction("Beheer");
                         else
                             return RedirectToAction("Index", "Home");
@@ -71,8 +71,9 @@ namespace CBlokHerkansing.Controllers
         {
             FormsAuthentication.SignOut();
             Session.Abandon();
-
-            return RedirectToAction("Index", "HomeController");
+            
+            //TODO: Make a small page that notifies the user being logged out or make a small notification on the index page.
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Register()
@@ -87,9 +88,10 @@ namespace CBlokHerkansing.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (accountDBController.checkGebruikerDuplicaat(registrationModel.Username))
+                if (accountDBController.checkGebruikerDuplicaat(registrationModel.Email))
                 {
                     accountDBController.InsertKlant(registrationModel);
+                    // TODO: User melden dat email al in gebruik is via een ViewBag message.
                     return RedirectToAction("Login", "Account");
                 }
                 else
