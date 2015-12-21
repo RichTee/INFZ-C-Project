@@ -11,9 +11,6 @@ namespace CBlokHerkansing.Models.Account
     public class RegistrationModel
     {
         /*
-         * Vraag:
-         * Wat gaan we met username doen? Voor nu haal ik hem uit de front end maar hij werkt nog steeds niet op de backend.
-         * 
          * TODO:
          * Check String Length does not exceed Database VarChar length 
          * Set up regeular expression for email.
@@ -21,6 +18,7 @@ namespace CBlokHerkansing.Models.Account
          */
         [Required(ErrorMessage = "Een email is verplicht")]
         //[RegularExpression(reg ,ErrorMessage = "Dit is geen geldig email adres.")]
+        [StringLength(25, ErrorMessage = "Een Email mag maximaal 25 karakters hebben")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Een Wachtwoord is verplicht")]

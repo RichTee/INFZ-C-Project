@@ -29,9 +29,6 @@ namespace CBlokHerkansing.Controllers.Database
                 MySqlParameter achternaamParam = new MySqlParameter("@achternaam", MySqlDbType.VarChar);
                 MySqlParameter wachtwoordParam = new MySqlParameter("@wachtwoord", MySqlDbType.VarChar);
                 MySqlParameter emailParam = new MySqlParameter("@email", MySqlDbType.VarChar);
-
-                // To Do:
-                // De goede MySqlDbType moet hier nog worden aangegeven
                 MySqlParameter goldStatusParam = new MySqlParameter("@goldStatus", MySqlDbType.VarChar);
                 MySqlParameter telefoonnummerParam = new MySqlParameter("@telefoonnummer", MySqlDbType.VarChar);
 

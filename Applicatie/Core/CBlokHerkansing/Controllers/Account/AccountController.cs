@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using CBlokHerkansing.Models.Account;
 using CBlokHerkansing.Controllers.Database;
+using CBlokHerkansing.Authorisation;
 
 namespace CBlokHerkansing.Controllers
 {
@@ -19,7 +20,7 @@ namespace CBlokHerkansing.Controllers
         // GET: Account
         public ActionResult Index()
         {
-            return RedirectToAction("Login", "AccountController"); // Ternary Operator when already logged in to redirect to somewhere else.
+            return RedirectToAction("Index", "Home"); // Ternary Operator when already logged in to redirect to somewhere else.
         }
 
         // TODO: Resolve having to click login twice to logout, redirect properly when user is logged in.
@@ -109,12 +110,14 @@ namespace CBlokHerkansing.Controllers
         }
         
         // Should AccountController handle profiles?
-        public ActionResult Profile()
+        [CustomUnauthorized(Roles="KLANT")]
+        public ActionResult Profiel()
         {
             return View();
         }
 
         // Should AccountController handle CRUD profile(CMS)?
+        [CustomUnauthorized(Roles = "ADMIN")]
         public ActionResult Beheer()
         {
             return View();
