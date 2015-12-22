@@ -128,7 +128,7 @@ namespace CBlokHerkansing.Controllers
         {
             List<Klant> klanten = beheerderDBController.GetKlanten();
 
-            var viewModel = new BeheerderViewModel();
+            BeheerderViewModel viewModel = new BeheerderViewModel();
             viewModel.klantOverzicht = klanten;
 
             return View(viewModel);
