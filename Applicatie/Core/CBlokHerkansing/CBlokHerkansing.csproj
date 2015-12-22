@@ -114,14 +114,17 @@
     <Compile Include="Controllers\Account\AccountController.cs" />
     <Compile Include="Controllers\Database\AccountDBController.cs" />
     <Compile Include="Controllers\Database\AuthDBController.cs" />
+    <Compile Include="Controllers\Database\BeheerderDBController.cs" />
     <Compile Include="Controllers\Database\DatabaseController.cs" />
     <Compile Include="Controllers\Home\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Account\Klant.cs" />
     <Compile Include="Models\Account\LoginModel.cs" />
     <Compile Include="Models\Account\RegistrationModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\Account\BeheerderViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -149,6 +152,7 @@
     <Folder Include="Controllers\Cart\" />
     <Folder Include="Controllers\Product\" />
     <Folder Include="Controllers\User\" />
+    <Folder Include="Views\BeheerderDB\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

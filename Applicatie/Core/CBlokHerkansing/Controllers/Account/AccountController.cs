@@ -7,6 +7,7 @@ using System.Web.Security;
 using CBlokHerkansing.Models.Account;
 using CBlokHerkansing.Controllers.Database;
 using CBlokHerkansing.Authorisation;
+using CBlokHerkansing.ViewModels.Account;
 
 namespace CBlokHerkansing.Controllers
 {
@@ -16,6 +17,7 @@ namespace CBlokHerkansing.Controllers
         // Reason: All Database activities are within the same namespace, saves the creation of new controllers and reuses old ones.
         // Space Efficient, Speed efficient, Resource efficient.
         private AccountDBController accountDBController = new AccountDBController();
+        private BeheerderDBController beheerderDBController = new BeheerderDBController();
 
         // GET: Account
         public ActionResult Index()
@@ -116,11 +118,20 @@ namespace CBlokHerkansing.Controllers
             return View();
         }
 
-        // Should AccountController handle CRUD profile(CMS)?
+        /*
+         * 
+         * Should AccountController handle CRUD profile(CMS) and all of the belonging functions?
+         * 
+         */
         [CustomUnauthorized(Roles = "ADMIN")]
         public ActionResult Beheer()
         {
-            return View();
+            List<Klant> klanten = beheerderDBController.GetKlanten();
+
+            var viewModel = new BeheerderViewModel();
+            viewModel.klantOverzicht = klanten;
+
+            return View(viewModel);
         }
     }
 }
