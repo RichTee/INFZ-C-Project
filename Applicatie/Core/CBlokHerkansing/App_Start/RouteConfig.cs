@@ -13,9 +13,14 @@ namespace CBlokHerkansing
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            // Account/Beheer
+            routes.MapRoute("beheer", "Beheer/{action}/{id}",
+                        new { controller = "Account", action = "Beheer", id = UrlParameter.Optional });
+
+            // Default
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{id}",
+                url: "{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
         }
