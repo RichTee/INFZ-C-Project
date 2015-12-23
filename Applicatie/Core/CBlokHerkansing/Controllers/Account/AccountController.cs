@@ -18,11 +18,12 @@ namespace CBlokHerkansing.Controllers
         // Space Efficient, Speed efficient, Resource efficient.
         private AccountDBController accountDBController = new AccountDBController();
         private BeheerderDBController beheerderDBController = new BeheerderDBController();
+        private KlantDBController klantDBController = new KlantDBController();
 
         // GET: Account
         public ActionResult Index()
         {
-            return RedirectToAction("Index", "Home"); // Ternary Operator when already logged in to redirect to somewhere else.
+            return RedirectToAction("Login", "Account"); // Ternary Operator when already logged in to redirect to somewhere else.
         }
 
         // TODO: Resolve having to click login twice to logout, redirect properly when user is logged in.
@@ -110,12 +111,68 @@ namespace CBlokHerkansing.Controllers
                 return View();
             }
         }
-        
+
+        /*
+         * 
+         * Alle Klant wijzigingen naar eigen controller KlantController.cs ?
+         * 
+         */
+
         // Should AccountController handle profiles?
         [CustomUnauthorized(Roles="KLANT")]
         public ActionResult Profiel()
         {
-            return View();
+            string usr = User.Identity.Name;
+
+            Klant klantGegevens = klantDBController.GetKlantInformatie(usr);
+
+            if (klantGegevens == null)
+            {
+                // ViewBag error message
+            }
+
+            KlantViewModel viewModel = new KlantViewModel();
+            viewModel.klantOverzicht = klantGegevens;
+
+            return View(viewModel);
+        }
+
+        [CustomUnauthorized(Roles = "KLANT, ADMIN")]
+        public ActionResult WijzigKlant(string email)
+        {
+            try
+            {
+                Klant klant = klantDBController.GetKlantInformatie(email);
+                return View(klant);
+            }
+            catch (Exception e)
+            {
+                ViewBag.FoutMelding("Er is iets fout gegaan: " + e);
+                return View();
+            }
+        }
+
+        [HttpPost]
+        [CustomUnauthorized(Roles = "KLANT, ADMIN")]
+        public ActionResult WijzigKlant(Klant klant)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    klantDBController.UpdateKlant(klant);
+                    return RedirectToAction("Index", "Home");
+                }
+                catch (Exception e)
+                {
+                    ViewBag.FoutMelding("Er is iets fout gegaan: " + e);
+                    return View();
+                }
+            }
+            else
+            {
+                return View(klant);
+            }
         }
 
         /*
