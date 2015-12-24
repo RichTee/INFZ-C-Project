@@ -161,7 +161,8 @@ namespace CBlokHerkansing.Controllers
                 try
                 {
                     klantDBController.UpdateKlant(klant);
-                    return RedirectToAction("Index", "Home");
+
+                    return RedirectToAction("Index", "Home"); // TODO: Redirect naar Beheer of Profiel, niet index.
                 }
                 catch (Exception e)
                 {
