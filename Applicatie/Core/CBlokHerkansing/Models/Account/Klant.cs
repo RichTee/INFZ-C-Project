@@ -20,12 +20,10 @@ namespace CBlokHerkansing.Models.Account
         [DataType(DataType.Password)]
         public string Wachtwoord { get; set; }
 
-        /*
         [Required(ErrorMessage = "Een Wachtwoord is verplicht")] // Logisch gezien is Required niet nodig indien je een CompareAttribute hebt.
         [CompareAttribute("Wachtwoord", ErrorMessage = "Wachtwoorden komen niet overeen.")]
         [DataType(DataType.Password)]
         public string WachtwoordCheck { get; set; }
-        */
 
         [Required(ErrorMessage = "Een voornaam is verplicht")]
         public string Voornaam { get; set; }

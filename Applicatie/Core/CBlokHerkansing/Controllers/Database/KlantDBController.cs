@@ -22,7 +22,7 @@ namespace CBlokHerkansing.Controllers.Database
             {
                 conn.Open();
 
-                string selectQuery = "SELECT gebruikerId, email, voornaam, achternaam, wachtwoord, telefoonnummer, goldStatus, r.rol FROM gebruiker g join rol r on g.rolId = r.rolId;";
+                string selectQuery = "SELECT gebruikerId, email, voornaam, achternaam, wachtwoord, telefoonnummer, goldStatus, r.rol FROM gebruiker g join rol r on g.rolId = r.rolId WHERE email = @email;";
                 MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
                 MySqlParameter emailParam = new MySqlParameter("@email", MySqlDbType.VarChar);
 
@@ -63,22 +63,25 @@ namespace CBlokHerkansing.Controllers.Database
             {
                 conn.Open();
 
-                string insertString = @"UPDATE gebruiker SET email=@klant_email, voornaam=@klant_voornaam, achternaam=@klant_achternaam, telefoonnummer=@klant_telefoon WHERE gebruikerId=@klant_id";
+                string insertString = @"UPDATE gebruiker SET email=@klant_email, wachtwoord=@klant_wachtwoord, voornaam=@klant_voornaam, achternaam=@klant_achternaam, telefoonnummer=@klant_telefoon WHERE gebruikerId=@klant_id";
 
                 MySqlCommand cmd = new MySqlCommand(insertString, conn);
                 MySqlParameter klantEmailParam = new MySqlParameter("@klant_email", MySqlDbType.VarChar);
+                MySqlParameter klantWachtwoordParam = new MySqlParameter("@klant_wachtwoord", MySqlDbType.VarChar);
                 MySqlParameter klantVoornaamParam = new MySqlParameter("@klant_voornaam", MySqlDbType.VarChar);
                 MySqlParameter klantAchternaamParam = new MySqlParameter("@klant_achternaam", MySqlDbType.VarChar);
                 MySqlParameter klantTelefoonParam = new MySqlParameter("@klant_telefoon", MySqlDbType.VarChar);
                 MySqlParameter klantIdParam = new MySqlParameter("@klant_id", MySqlDbType.Int32);
 
                 klantEmailParam.Value = klant.Email;
+                klantWachtwoordParam.Value = klant.Wachtwoord;
                 klantVoornaamParam.Value = klant.Voornaam;
                 klantAchternaamParam.Value = klant.Achternaam;
                 klantTelefoonParam.Value = klant.Telefoonnummer;
                 klantIdParam.Value = klant.Id;
 
                 cmd.Parameters.Add(klantEmailParam);
+                cmd.Parameters.Add(klantWachtwoordParam);
                 cmd.Parameters.Add(klantVoornaamParam);
                 cmd.Parameters.Add(klantAchternaamParam);
                 cmd.Parameters.Add(klantTelefoonParam);

@@ -140,6 +140,8 @@ namespace CBlokHerkansing.Controllers
         [CustomUnauthorized(Roles = "KLANT, ADMIN")]
         public ActionResult WijzigKlant(string email)
         {
+            if (!User.IsInRole("ADMIN") && !User.Identity.Name.Equals(email))
+                return View();
             try
             {
                 Klant klant = klantDBController.GetKlantInformatie(email);
