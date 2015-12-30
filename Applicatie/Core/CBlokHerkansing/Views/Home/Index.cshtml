@@ -1,11 +1,15 @@
-﻿
+﻿@model CBlokHerkansing.Models.Product.ProductBase
+
 @{
     ViewBag.Title = "Home";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container">
-
+    @if (Model != null)
+    {
+        
+    }
     <div class="row">
         <div class="col-sm-4">
             <div class="panel panel-success">
@@ -38,9 +42,7 @@
             </div>
         </div>
     </div>
-</div><br>
 
-<div class="container">
     <div class="row">
         <div class="col-sm-4">
             <div class="panel panel-success">

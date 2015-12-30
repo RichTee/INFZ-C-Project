@@ -8,6 +8,8 @@ using CBlokHerkansing.Models.Account;
 using CBlokHerkansing.Controllers.Database;
 using CBlokHerkansing.Authorisation;
 using CBlokHerkansing.ViewModels.Account;
+using CBlokHerkansing.Models.Product;
+using CBlokHerkansing.ViewModels.Product;
 
 namespace CBlokHerkansing.Controllers
 {
@@ -17,8 +19,8 @@ namespace CBlokHerkansing.Controllers
         // Reason: All Database activities are within the same namespace, saves the creation of new controllers and reuses old ones.
         // Space Efficient, Speed efficient, Resource efficient.
         private AccountDBController accountDBController = new AccountDBController();
-        private BeheerderDBController beheerderDBController = new BeheerderDBController();
         private KlantDBController klantDBController = new KlantDBController();
+        private ProductDBController productDBController = new ProductDBController();
 
         // GET: Account
         public ActionResult Index()
@@ -180,17 +182,63 @@ namespace CBlokHerkansing.Controllers
 
         /*
          * 
+         * Alle productWijzigingen naar ProductController?
+         * 
+         */
+        [CustomUnauthorized(Roles = "ADMIN")]
+        public ActionResult WijzigProduct(int id)
+        {
+            try
+            {
+                ProductViewModel product = productDBController.GetProductAndDetail(id);
+                return View(product);
+            }
+            catch (Exception e)
+            {
+                ViewBag.FoutMelding("Er is iets fout gegaan: " + e);
+                return View();
+            }
+        }
+
+        [HttpPost]
+        [CustomUnauthorized(Roles = "ADMIN")]
+        public ActionResult WijzigProduct(ProductViewModel product)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    productDBController.UpdateProductAndDetail(product);
+
+                    return RedirectToAction("Index", "Home"); // TODO: Redirect naar Beheer of Profiel, niet index.
+                }
+                catch (Exception e)
+                {
+                    ViewBag.FoutMelding("Er is iets fout gegaan: " + e);
+                    return View();
+                }
+            }
+            else
+            {
+                return View(product);
+            }
+        }
+
+        /*
+         * 
          * Should AccountController handle CRUD profile(CMS) and all of the belonging functions?
          * 
          */
         [CustomUnauthorized(Roles = "ADMIN")]
         public ActionResult Beheer()
         {
-            List<Klant> klanten = beheerderDBController.GetKlanten();
+            List<Klant> klanten = klantDBController.GetKlanten();
+            List<ProductBase> producten = productDBController.GetProducten();
 
             BeheerderViewModel viewModel = new BeheerderViewModel();
             viewModel.klantOverzicht = klanten;
-
+            viewModel.productBaseOverzicht = producten;
+            
             return View(viewModel);
         }
     }

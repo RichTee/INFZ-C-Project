@@ -12,6 +12,42 @@ namespace CBlokHerkansing.Controllers.Database
     {
         public KlantDBController() { }
 
+        // Get alle klanten
+        public List<Klant> GetKlanten()
+        {
+            List<Klant> klanten = new List<Klant>();
+            try
+            {
+                conn.Open();
+
+                string selectQuery = "SELECT gebruikerId, email, voornaam, achternaam, wachtwoord, telefoonnummer, goldStatus, r.rol FROM gebruiker g join rol r on g.rolId = r.rolId;";
+                MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                if (dataReader != null)
+                {
+                    while (dataReader.Read())
+                    {
+                        Klant klant = GetKlantFromDataReader(dataReader);
+                        klanten.Add(klant);
+                    }
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.Write("Ophalen van klanten mislukt " + e);
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return klanten;
+        }
+
+        // Get 1 klant
         public Klant GetKlantInformatie(string usr)
         {
             if (string.IsNullOrEmpty(usr))
@@ -51,12 +87,7 @@ namespace CBlokHerkansing.Controllers.Database
             return klant;
         }
 
-
-        /*
-         * 
-         * Update klant
-         * 
-         */
+        // Update 1 klant
         public void UpdateKlant(Klant klant)
         {
             try
