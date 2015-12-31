@@ -77,11 +77,6 @@ namespace CBlokHerkansing.Controllers.Database
             string productNaam = dataReader.GetString("naam");
             string productOmschrijving = dataReader.GetString("omschrijving");
             int categorieId = dataReader.GetInt32("categorieId");
-            /*
-             * 
-             * Adres gegevens indien beschikbaar ook hier
-             * 
-             */
 
             ProductBase product = new ProductBase
             {
@@ -93,5 +88,35 @@ namespace CBlokHerkansing.Controllers.Database
 
             return product;
         }
+
+        /*
+         * 
+         * Aanbieding
+         * 
+         */
+
+        // Haal overzicht van aanbiedingen binnen
+        protected ProductAanbieding GetAanbiedingFromDataReader(MySqlDataReader dataReader)
+        {
+            int aanbiedingId = dataReader.GetInt32("aanbiedingId");
+            //string beginDatum = String.IsNullOrEmpty(dataReader.GetDateTime("beginDatum")) ? "Geen" : dataReader.GetString("beginDatum").ToString();
+            //string eindDatum = String.IsNullOrEmpty(dataReader.GetString("eindDatum")) ? "Geen" : dataReader.GetString("eindDatum").ToString();
+            string beginDatum = dataReader.GetDateTime("beginDatum") == null ? "geen" : dataReader.GetDateTime("beginDatum").ToString();
+            string eindDatum = dataReader.GetDateTime("eindDatum") == null ? "geen" : dataReader.GetDateTime("eindDatum").ToString();
+            int kortingsPercentage = 0; // TODO: Fix this shit;
+            double kortingsBedrag = dataReader.GetDouble("kortingsBedrag");
+
+            ProductAanbieding aanbieding = new ProductAanbieding
+            {
+                AanbiedingId = aanbiedingId,
+                BeginDatum = beginDatum,
+                EindDatum = eindDatum,
+                KortingsPercentage = kortingsPercentage,
+                KortingsBedrag = kortingsBedrag
+            };
+
+            return aanbieding;
+        }
+
     }
 }

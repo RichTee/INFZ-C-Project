@@ -112,6 +112,7 @@
     <Compile Include="Authorisation\CustomRoleProvider.cs" />
     <Compile Include="Authorisation\CustomUnauthorized.cs" />
     <Compile Include="Controllers\Account\AccountController.cs" />
+    <Compile Include="Controllers\Database\AanbiedingDBController.cs" />
     <Compile Include="Controllers\Database\AccountDBController.cs" />
     <Compile Include="Controllers\Database\AuthDBController.cs" />
     <Compile Include="Controllers\Database\DatabaseController.cs" />
@@ -125,6 +126,7 @@
     <Compile Include="Models\Account\Klant.cs" />
     <Compile Include="Models\Account\LoginModel.cs" />
     <Compile Include="Models\Account\RegistrationModel.cs" />
+    <Compile Include="Models\Product\ProductAanbieding.cs" />
     <Compile Include="Models\Product\ProductAfbeelding.cs" />
     <Compile Include="Models\Product\ProductBase.cs" />
     <Compile Include="Models\Product\ProductDetail.cs" />
@@ -162,6 +164,7 @@
     <Folder Include="Controllers\User\" />
     <Folder Include="Controllers\Winkelwagen\" />
     <Folder Include="Enum\" />
+    <Folder Include="Views\AanbiedingDB\" />
     <Folder Include="Views\BeheerderDB\" />
     <Folder Include="Views\BestellingDB\" />
     <Folder Include="Views\KlantDB\" />

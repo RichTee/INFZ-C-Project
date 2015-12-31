@@ -21,6 +21,7 @@ namespace CBlokHerkansing.Controllers
         private AccountDBController accountDBController = new AccountDBController();
         private KlantDBController klantDBController = new KlantDBController();
         private ProductDBController productDBController = new ProductDBController();
+        private AanbiedingDBController aanbiedingDBController = new AanbiedingDBController();
 
         // GET: Account
         public ActionResult Index()
@@ -234,11 +235,13 @@ namespace CBlokHerkansing.Controllers
         {
             List<Klant> klanten = klantDBController.GetKlanten();
             List<ProductBase> producten = productDBController.GetProducten();
+            List<ProductAanbieding> aanbiedingen = aanbiedingDBController.GetAanbiedingen();
 
             BeheerderViewModel viewModel = new BeheerderViewModel();
             viewModel.klantOverzicht = klanten;
             viewModel.productBaseOverzicht = producten;
-            
+            viewModel.productAanbiedingOverzicht = aanbiedingen;
+
             return View(viewModel);
         }
     }

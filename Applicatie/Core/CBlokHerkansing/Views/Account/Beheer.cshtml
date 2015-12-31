@@ -46,10 +46,33 @@
         </div>
         <div id="menu1" class="tab-pane fade">
             <h3>Aanbiedingen</h3>
-            <p>
-                Lemon drops chocolate cake cake tiramisu cake dessert. Bonbon jujubes pudding halvah dessert. Dragée danish candy topping sweet roll liquorice. Sesame snaps chocolate bar donut chupa chups chocolate bar chocolate cake. Jujubes sweet pastry sweet roll. Cake marshmallow pie. Cheesecake caramels donut caramels cotton candy cotton candy sweet roll lemon drops candy canes. Brownie dragée sesame snaps chocolate croissant chupa chups jelly-o wafer cake. Tiramisu sweet roll cake liquorice fruitcake. Tootsie roll bear claw tart gummi bears brownie donut jelly cotton candy. Cake marshmallow chocolate bar candy. Croissant sweet roll sugar plum candy candy canes jujubes sesame snaps candy caramels.
-                Toffee cookie gingerbread cupcake candy chocolate bar pastry lollipop. Jelly fruitcake marzipan cake pudding dragée caramels. Chocolate tiramisu gummies caramels cake cheesecake tart. Icing toffee halvah apple pie sweet roll macaroon cake. Chocolate gummies sweet roll. Tootsie roll danish oat cake. Chocolate gingerbread icing tart dragée jelly beans carrot cake cake. Powder marzipan donut tiramisu cookie tootsie roll pudding. Biscuit chocolate apple pie carrot cake tiramisu. Cotton candy macaroon cupcake bear claw gummi bears. Dessert chupa chups dessert chocolate cake cotton candy candy jelly beans. Cake tiramisu candy liquorice wafer muffin sweet wafer marshmallow.
-            </p>
+            @if (Model != null)
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Id</th> <!-- TODO: Belangrijk voor beheerder? -->
+                            <th>Begin Datum</th>
+                            <th>Eind Datum</th>
+                            <th>KortingsPercentage</th>
+                            <th>KortingsBedrag</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.productAanbiedingOverzicht.Count; i++)
+                        {
+                            <tr>
+                                <td>@Model.productAanbiedingOverzicht[i].AanbiedingId</td>
+                                <td>@Model.productAanbiedingOverzicht[i].BeginDatum</td>
+                                <td>@Model.productAanbiedingOverzicht[i].EindDatum</td>
+                                <td>@Model.productAanbiedingOverzicht[i].KortingsPercentage</td>
+                                <td>@Model.productAanbiedingOverzicht[i].KortingsBedrag</td>
+                                <td>@Html.ActionLink("wijzig", "WijzigProduct", new { id = @Model.productAanbiedingOverzicht[i].AanbiedingId }, new { onclick = "return confirm('Weet u zeker dat u dit wilt wijzigen?')" })</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
         </div>
         <div id="menu2" class="tab-pane fade">
             <h3>Gebruikers</h3>

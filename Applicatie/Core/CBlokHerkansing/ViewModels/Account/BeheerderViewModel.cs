@@ -11,5 +11,6 @@ namespace CBlokHerkansing.ViewModels.Account
     {
         public List<Klant> klantOverzicht { get; set; }
         public List<ProductBase> productBaseOverzicht { get; set; }
+        public List<ProductAanbieding> productAanbiedingOverzicht { get; set; }
     }
 }
