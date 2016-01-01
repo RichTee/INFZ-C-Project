@@ -20,7 +20,7 @@ namespace CBlokHerkansing.Controllers.Database
             {
                 conn.Open();
 
-                string selectQuery = "SELECT aanbiedingId, beginDatum, eindDatum, kortingsPercentage, kortingsBedrag FROM aanbieding;";
+                string selectQuery = "SELECT aanbiedingId, beginDatum, eindDatum, kortingsPercentage FROM aanbieding;";
                 MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
                 MySqlDataReader dataReader = cmd.ExecuteReader();
 

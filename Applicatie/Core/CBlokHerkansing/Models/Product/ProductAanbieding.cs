@@ -11,6 +11,5 @@ namespace CBlokHerkansing.Models.Product
         public string BeginDatum { get; set; }
         public string EindDatum { get; set; }
         public int KortingsPercentage { get; set; }
-        public double KortingsBedrag { get; set; }
     }
 }

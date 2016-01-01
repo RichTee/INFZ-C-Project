@@ -103,8 +103,7 @@ namespace CBlokHerkansing.Controllers.Database
             //string eindDatum = String.IsNullOrEmpty(dataReader.GetString("eindDatum")) ? "Geen" : dataReader.GetString("eindDatum").ToString();
             string beginDatum = dataReader.GetDateTime("beginDatum") == null ? "geen" : dataReader.GetDateTime("beginDatum").ToString();
             string eindDatum = dataReader.GetDateTime("eindDatum") == null ? "geen" : dataReader.GetDateTime("eindDatum").ToString();
-            int kortingsPercentage = 0; // TODO: Fix this shit;
-            double kortingsBedrag = dataReader.GetDouble("kortingsBedrag");
+            int kortingsPercentage = dataReader.GetInt32("kortingsPercentage");
 
             ProductAanbieding aanbieding = new ProductAanbieding
             {
@@ -112,7 +111,6 @@ namespace CBlokHerkansing.Controllers.Database
                 BeginDatum = beginDatum,
                 EindDatum = eindDatum,
                 KortingsPercentage = kortingsPercentage,
-                KortingsBedrag = kortingsBedrag
             };
 
             return aanbieding;

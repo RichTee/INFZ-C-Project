@@ -28,8 +28,7 @@ CREATE TABLE `aanbieding` (
   `aanbiedingId` int(11) NOT NULL AUTO_INCREMENT,
   `beginDatum` date DEFAULT NULL,
   `eindDatum` date DEFAULT NULL,
-  `kortingsPercentage` int(11) DEFAULT NULL,
-  `kortingsBedrag` double DEFAULT NULL,
+  `kortingsPercentage` int(11) DEFAULT 0,
   PRIMARY KEY (`aanbiedingId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -40,7 +39,7 @@ CREATE TABLE `aanbieding` (
 
 LOCK TABLES `aanbieding` WRITE;
 /*!40000 ALTER TABLE `aanbieding` DISABLE KEYS */;
-INSERT INTO `aanbieding` VALUES (1,'2015-12-05','2015-12-12',NULL,2.99);
+INSERT INTO `aanbieding` VALUES (1,'2015-12-05','2015-12-12',NULL);
 /*!40000 ALTER TABLE `aanbieding` ENABLE KEYS */;
 UNLOCK TABLES;
 

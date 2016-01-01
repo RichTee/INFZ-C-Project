@@ -55,7 +55,6 @@
                             <th>Begin Datum</th>
                             <th>Eind Datum</th>
                             <th>KortingsPercentage</th>
-                            <th>KortingsBedrag</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -66,7 +65,6 @@
                                 <td>@Model.productAanbiedingOverzicht[i].BeginDatum</td>
                                 <td>@Model.productAanbiedingOverzicht[i].EindDatum</td>
                                 <td>@Model.productAanbiedingOverzicht[i].KortingsPercentage</td>
-                                <td>@Model.productAanbiedingOverzicht[i].KortingsBedrag</td>
                                 <td>@Html.ActionLink("wijzig", "WijzigProduct", new { id = @Model.productAanbiedingOverzicht[i].AanbiedingId }, new { onclick = "return confirm('Weet u zeker dat u dit wilt wijzigen?')" })</td>
                             </tr>
                         }
