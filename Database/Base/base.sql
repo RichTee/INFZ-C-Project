@@ -39,7 +39,7 @@ CREATE TABLE `aanbieding` (
 
 LOCK TABLES `aanbieding` WRITE;
 /*!40000 ALTER TABLE `aanbieding` DISABLE KEYS */;
-INSERT INTO `aanbieding` VALUES (1,'2015-12-05','2015-12-12',NULL);
+INSERT INTO `aanbieding` VALUES (1,'2015-12-05','2015-12-12',15);
 /*!40000 ALTER TABLE `aanbieding` ENABLE KEYS */;
 UNLOCK TABLES;
 
