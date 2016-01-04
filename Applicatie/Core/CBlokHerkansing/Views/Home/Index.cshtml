@@ -1,4 +1,5 @@
-﻿@model CBlokHerkansing.Models.Product.ProductBase
+﻿@using CBlokHerkansing.Models.Product;
+@model List<ProductBase>
 
 @{
     ViewBag.Title = "Home";
@@ -6,73 +7,19 @@
 }
 
 <div class="container">
-    @if (Model != null)
-    {
-        
-    }
-    <div class="row">
+     @foreach (ProductBase product in @Model)
+     {
         <div class="col-sm-4">
             <div class="panel panel-success">
-                <div class="panel-heading">Product Naam</div>
+                <div class="panel-heading">@product.Naam</div>
                 <div class="panel-body"><img src="~/Content/images/test.jpg" class="img-responsive" style="width:100%" alt="Image"></div>
                 <div class="panel-footer">
-                    <p>Cupcake ipsum dolor sit amet cake tart muffin liquorice. Tiramisu bear claw sweet brownie. Pudding sweet roll gingerbread sweet brownie pudding halvah. Marshmallow tart halvah candy canes gummies tootsie roll sweet.</p>
+                    <p>@product.Omschrijving</p>
                     <div class="price">5,-</div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
-            <div class="panel panel-success">
-                <div class="panel-heading">Product Naam</div>
-                <div class="panel-body"><img src="~/Content/images/test.jpg" class="img-responsive" style="width:100%" alt="Image"></div>
-                <div class="panel-footer">
-                    <p>Cupcake ipsum dolor sit amet cake tart muffin liquorice. Tiramisu bear claw sweet brownie. Pudding sweet roll gingerbread sweet brownie pudding halvah. Marshmallow tart halvah candy canes gummies tootsie roll sweet.</p>
-                    <div class="price">5,-</div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="panel panel-success">
-                <div class="panel-heading">Product Naam</div>
-                <div class="panel-body"><img src="~/Content/images/test.jpg" class="img-responsive" style="width:100%" alt="Image"></div>
-                <div class="panel-footer">
-                    <p>Cupcake ipsum dolor sit amet cake tart muffin liquorice. Tiramisu bear claw sweet brownie. Pudding sweet roll gingerbread sweet brownie pudding halvah. Marshmallow tart halvah candy canes gummies tootsie roll sweet.</p>
-                    <div class="price">5,-</div>
-                </div>
-            </div>
-        </div>
+     }
     </div>
-
-    <div class="row">
-        <div class="col-sm-4">
-            <div class="panel panel-success">
-                <div class="panel-heading">Product Naam</div>
-                <div class="panel-body"><img src="~/Content/images/test.jpg" class="img-responsive" style="width:100%" alt="Image"></div>
-                <div class="panel-footer">
-                    <p>Cupcake ipsum dolor sit amet cake tart muffin liquorice. Tiramisu bear claw sweet brownie. Pudding sweet roll gingerbread sweet brownie pudding halvah. Marshmallow tart halvah candy canes gummies tootsie roll sweet.</p>
-                    <div class="price">5,-</div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="panel panel-success">
-                <div class="panel-heading">Product Naam</div>
-                <div class="panel-body"><img src="~/Content/images/test.jpg" class="img-responsive" style="width:100%" alt="Image"></div>
-                <div class="panel-footer">
-                    <p>Cupcake ipsum dolor sit amet cake tart muffin liquorice. Tiramisu bear claw sweet brownie. Pudding sweet roll gingerbread sweet brownie pudding halvah. Marshmallow tart halvah candy canes gummies tootsie roll sweet.</p>
-                    <div class="price">5,-</div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="panel panel-success">
-                <div class="panel-heading">Product Naam</div>
-                <div class="panel-body"><img src="~/Content/images/test.jpg" class="img-responsive" style="width:100%" alt="Image"></div>
-                <div class="panel-footer">
-                    <p>Cupcake ipsum dolor sit amet cake tart muffin liquorice. Tiramisu bear claw sweet brownie. Pudding sweet roll gingerbread sweet brownie pudding halvah. Marshmallow tart halvah candy canes gummies tootsie roll sweet.</p>
-                    <div class="price">5,-</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div><br><br>
+    
+    

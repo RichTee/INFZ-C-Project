@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using CBlokHerkansing.Controllers.Database;
+using CBlokHerkansing.Models.Product;
 
 namespace CBlokHerkansing.Controllers
 {
@@ -11,7 +13,8 @@ namespace CBlokHerkansing.Controllers
         // GET: Home
         public ActionResult Index()
         {
-            return View();
+            ProductDBController productController = new ProductDBController();
+            return View(productController.GetProducten());
         }
 
         public ActionResult Contact()
