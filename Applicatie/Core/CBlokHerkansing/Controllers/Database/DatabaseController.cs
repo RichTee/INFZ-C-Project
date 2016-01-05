@@ -116,5 +116,21 @@ namespace CBlokHerkansing.Controllers.Database
             return aanbieding;
         }
 
+        protected ProductDetail getFullProductFromDataReader(MySqlDataReader datareader)
+        {
+
+            ProductDetail productDetail = new ProductDetail
+            {
+                detailId = datareader.GetInt32("detailID"),
+                verkoopprijs = datareader.GetDouble("verkoopprijs"),
+                inkoopprijs = datareader.GetDouble("inkoopprijs"),
+                maat = datareader.GetInt32("maat"),
+                kleur = datareader.GetString("kleur"),
+                voorraad = datareader.GetInt32("voorraad"),
+                product = GetProductFromDataReader(datareader)
+            };
+            return productDetail;
+        }
+
     }
 }

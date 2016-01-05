@@ -50,21 +50,69 @@ namespace CBlokHerkansing.Controllers.Database
         }
 
         // Get 1 product met details
-        public ProductViewModel GetProductAndDetail(int id)
+        public ProductDetail GetProductAndDetail(int id)
         {
-            // TODO: Get Product & Details
-            return null;
+            try{                
+            conn.Open();
+
+            string selectQuery = "SELECT detailId, verkoopprijs, inkoopprijs, maat, kleur, voorraad, naam, omschrijving, categorieId, productId FROM productdetail LEFT JOIN product on productdetail.productId = product.productId;";
+                MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                if (dataReader != null)
+                {
+                    return getFullProductFromDataReader(dataReader);
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.Write("Ophalen van producten mislukt " + e);
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
         }
 
+        /*
         // Update 1 product met details
-        public ProductViewModel UpdateProductAndDetail(ProductViewModel viewModel)
+        public void UpdateProductAndDetail(ProductViewModel viewModel)
         {
-            if (viewModel == null)
-                return null;
+            try
+            {
+                conn.Open();
 
-            // TODO: Update Product & Details
+                string selectQuery = @"Update verkoopprijs, inkoopprijs, maat, kleur, voorraad, naam, omschrijving, FROM productdetail LEFT JOIN product on productdetail.productId = product.productId;";
+                MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
 
-            return null;
+                if (dataReader != null)
+                {
+                    return getFullProductFromDataReader(dataReader);
+                }
+                else
+                {
+                    return null;
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.Write("Ophalen van producten mislukt " + e);
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+         * 
         }
+         * */
     }
 }

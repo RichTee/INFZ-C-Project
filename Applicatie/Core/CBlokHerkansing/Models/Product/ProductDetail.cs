@@ -13,6 +13,6 @@ namespace CBlokHerkansing.Models.Product
         public int maat { get; set; } // FK?
         public string kleur { get; set; } // FK?
         public int voorraad { get; set; }
-        public int productId { get; set; }
+        public ProductBase product { get; set; }
     }
 }
