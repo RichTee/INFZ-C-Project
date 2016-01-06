@@ -1,0 +1,46 @@
+In Word gooien:
+
+Undef
+- Gold Membership kunnen halen
+- Goed zichtbaar voor kleurenblidnen
+- Mobile compatible
+- Groen kleurenschema
+- Elke pagina binnen 3 seconden
+
+
+Hans
+1. Product in winkelwagen doen
+2. Producten in winkelwagen zien
+3. Hoeveelheid van producten aanpassen in winkelwagen
+4. Product uit winkelwagen verwijderen
+5. Klant kunnen aanmaken
+6. Klant kunnen wijzigen
+7. Bestelling kunnen plaatsen
+8. Bestelling apart factuur adres op kunnen geven
+9. Bestelling apart bezorg adres op kunnen geven
+10. ProductDetail aan een bestaand product toevoegen
+11. ProductDetail CRUD
+12. Redirect direct na inloggen naar manager pagina(Manager)
+13. Aanbiedingen CRUD
+
+Bram
+1. Producten zien op voorpagina
+2. Producten wijzigen(beheer)
+3. Producten toevoegen(beheer)
+4. Aanbiedingen op de homepagina kunnen zien
+5. Categorieën zoeken
+6. Product zoeken op naam
+7. Klant Adres CRUD
+8. Redirect direct na inloggen naar beheer pagina(Beheer)
+9 Status bestelling aanpassen
+10. Categorie CRUD
+11. 10 best lopende producten kunnen zien (Manager)
+12. 10 slechtst lopende producten kunnen zien (Manager)
+13. Omzet van de winkel zien van afgelopen 6 maanden (Manager)
+14. Winst van de afgelopen 6 maanden (Manager)
+
+Jeroen
+1. Use Case
+2. Use Case Diagram
+3. Sitemap
+4. Viewbag Messages
