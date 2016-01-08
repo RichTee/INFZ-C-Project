@@ -150,6 +150,8 @@
     <Content Include="Views\Account\Beheer.cshtml" />
     <Content Include="Views\Shared\Unauthorized.cshtml" />
     <Content Include="Views\Account\WijzigKlant.cshtml" />
+    <Content Include="Views\Product\ToevoegenProductAanbieding.cshtml" />
+    <Content Include="Views\Product\WijzigProductAanbieding.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -164,11 +166,9 @@
     <Folder Include="Controllers\User\" />
     <Folder Include="Controllers\Winkelwagen\" />
     <Folder Include="Enum\" />
-    <Folder Include="Views\AanbiedingDB\" />
-    <Folder Include="Views\BeheerderDB\" />
-    <Folder Include="Views\BestellingDB\" />
-    <Folder Include="Views\KlantDB\" />
-    <Folder Include="Views\Product\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

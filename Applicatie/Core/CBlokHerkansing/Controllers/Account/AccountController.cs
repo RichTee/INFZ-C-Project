@@ -183,47 +183,10 @@ namespace CBlokHerkansing.Controllers
 
         /*
          * 
-         * Alle productWijzigingen naar ProductController?
+         * Alle CRUD aanbiedingen naar AanbiedingController?
          * 
          */
-        [CustomUnauthorized(Roles = "ADMIN")]
-        public ActionResult WijzigProduct(int id)
-        {
-            try
-            {
-                ProductViewModel product = productDBController.GetProductAndDetail(id);
-                return View(product);
-            }
-            catch (Exception e)
-            {
-                ViewBag.FoutMelding("Er is iets fout gegaan: " + e);
-                return View();
-            }
-        }
-
-        [HttpPost]
-        [CustomUnauthorized(Roles = "ADMIN")]
-        public ActionResult WijzigProduct(ProductViewModel product)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    productDBController.UpdateProductAndDetail(product);
-
-                    return RedirectToAction("Index", "Home"); // TODO: Redirect naar Beheer of Profiel, niet index.
-                }
-                catch (Exception e)
-                {
-                    ViewBag.FoutMelding("Er is iets fout gegaan: " + e);
-                    return View();
-                }
-            }
-            else
-            {
-                return View(product);
-            }
-        }
+        
 
         /*
          * 

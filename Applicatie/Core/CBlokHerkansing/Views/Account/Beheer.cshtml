@@ -55,6 +55,7 @@
                             <th>Begin Datum</th>
                             <th>Eind Datum</th>
                             <th>KortingsPercentage</th>
+                            <th>Functies</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -65,9 +66,13 @@
                                 <td>@Model.productAanbiedingOverzicht[i].BeginDatum</td>
                                 <td>@Model.productAanbiedingOverzicht[i].EindDatum</td>
                                 <td>@Model.productAanbiedingOverzicht[i].KortingsPercentage</td>
-                                <td>@Html.ActionLink("wijzig", "WijzigProduct", new { id = @Model.productAanbiedingOverzicht[i].AanbiedingId }, new { onclick = "return confirm('Weet u zeker dat u dit wilt wijzigen?')" })</td>
+                                <td>@Html.ActionLink("Wijzigen", "WijzigProductAanbieding", "Product", new { id = @Model.productAanbiedingOverzicht[i].AanbiedingId }, new { onclick = "return confirm('Weet u zeker dat u dit wilt wijzigen?')" })</td>
+                                <td>@Html.ActionLink("Verwijderen", "VerwijderProductAanbieding", "Product", new { id = @Model.productAanbiedingOverzicht[i].AanbiedingId }, new { onclick = "return confirm('Weet u zeker dat u dit wilt verwijderen?')" })</td>
                             </tr>
                         }
+                        <tr>
+                            <td>@Html.ActionLink("Toevoegen", "ToevoegenProductAanbieding", "Product")</td>
+                        </tr>
                     </tbody>
                 </table>
             }
