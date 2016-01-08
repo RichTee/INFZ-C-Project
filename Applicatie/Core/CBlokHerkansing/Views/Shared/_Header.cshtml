@@ -56,6 +56,16 @@
                             </ul>
                         </li>
                     }
+                    else if (User.IsInRole("MANAGER"))
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("Manager", "Manager", "Account")</li>
+                                <li>@Html.ActionLink("Uitloggen", "Logout", "Account")</li>
+                            </ul>
+                        </li>
+                    }
                     else if (User.IsInRole("KLANT"))
                     {
                         <li class="dropdown">

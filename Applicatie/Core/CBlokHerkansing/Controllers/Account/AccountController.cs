@@ -207,5 +207,11 @@ namespace CBlokHerkansing.Controllers
 
             return View(viewModel);
         }
+
+        [CustomUnauthorized(Roles = "MANAGER")]
+        public ActionResult Manager()
+        {
+            return View();
+        }
     }
 }

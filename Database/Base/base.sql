@@ -225,7 +225,7 @@ CREATE TABLE `gebruiker` (
 
 LOCK TABLES `gebruiker` WRITE;
 /*!40000 ALTER TABLE `gebruiker` DISABLE KEYS */;
-INSERT INTO `gebruiker` VALUES(1,'bram','test','test','test','test','test',1);
+INSERT INTO `gebruiker` VALUES(1,'bram','test','test','bram@test.nl','test','test',1), (2, 'manager', 'manager','test','manager@test.nl','test','test',3), (3, 'klant', 'klant','test','klant@test.nl','test','test',2);
 /*!40000 ALTER TABLE `gebruiker` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -307,7 +307,7 @@ CREATE TABLE `rol` (
 
 LOCK TABLES `rol` WRITE;
 /*!40000 ALTER TABLE `rol` DISABLE KEYS */;
-INSERT INTO `rol` VALUES (1,'admin'),(2,'klant');
+INSERT INTO `rol` VALUES (1,'admin'),(2,'klant'), (3, 'manager');
 /*!40000 ALTER TABLE `rol` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

@@ -152,6 +152,7 @@
     <Content Include="Views\Account\WijzigKlant.cshtml" />
     <Content Include="Views\Product\ToevoegenProductAanbieding.cshtml" />
     <Content Include="Views\Product\WijzigProductAanbieding.cshtml" />
+    <Content Include="Views\Account\Manager.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
