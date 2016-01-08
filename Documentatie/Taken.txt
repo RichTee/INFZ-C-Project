@@ -5,7 +5,7 @@ Undef
 - Goed zichtbaar voor kleurenblidnen
 - Mobile compatible
 - Groen kleurenschema
-- Elke pagina binnen 3 seconden
+- Elke pagina binnen 3 secondenx
 
 
 Hans
@@ -20,8 +20,6 @@ Hans
 9. Bestelling apart bezorg adres op kunnen geven
 10. ProductDetail aan een bestaand product toevoegen
 11. ProductDetail CRUD
-12. Redirect direct na inloggen naar manager pagina(Manager)
-13. Aanbiedingen CRUD
 
 Bram
 1. Producten zien op voorpagina

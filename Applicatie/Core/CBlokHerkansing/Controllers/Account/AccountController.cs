@@ -57,6 +57,8 @@ namespace CBlokHerkansing.Controllers
                     {
                         if (User.IsInRole("ADMIN"))
                             return RedirectToAction("Beheer");
+                        if (User.IsInRole("MANAGER"))
+                            return RedirectToAction("Manager");
                         else
                             return RedirectToAction("Index", "Home");
                     }
