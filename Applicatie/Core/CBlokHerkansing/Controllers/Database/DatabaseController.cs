@@ -23,7 +23,7 @@ namespace CBlokHerkansing.Controllers.Database
          */
         public DatabaseController()
         {
-            conn = new MySqlConnection("Server=localhost;Port=3306;Database=dierenzaak;Uid=root;Pwd=Killerby1579;");
+            conn = new MySqlConnection("Server=localhost;Port=3306;Database=dierenzaak;Uid=root;Pwd=root;");
         }
 
         /*
@@ -101,8 +101,8 @@ namespace CBlokHerkansing.Controllers.Database
             int aanbiedingId = dataReader.GetInt32("aanbiedingId");
             //string beginDatum = String.IsNullOrEmpty(dataReader.GetDateTime("beginDatum")) ? "Geen" : dataReader.GetString("beginDatum").ToString();
             //string eindDatum = String.IsNullOrEmpty(dataReader.GetString("eindDatum")) ? "Geen" : dataReader.GetString("eindDatum").ToString();
-            string beginDatum = dataReader.GetDateTime("beginDatum") == null ? "geen" : dataReader.GetDateTime("beginDatum").ToString();
-            string eindDatum = dataReader.GetDateTime("eindDatum") == null ? "geen" : dataReader.GetDateTime("eindDatum").ToString();
+            string beginDatum = dataReader.GetDateTime("beginDatum") == null ? "geen" : dataReader.GetDateTime("beginDatum").ToString("yyyy/M/%d");
+            string eindDatum = dataReader.GetDateTime("eindDatum") == null ? "geen" : dataReader.GetDateTime("eindDatum").ToString("yyyy/%M/%d");
             int kortingsPercentage = dataReader.GetInt32("kortingsPercentage");
 
             ProductAanbieding aanbieding = new ProductAanbieding

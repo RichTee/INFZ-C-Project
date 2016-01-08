@@ -140,8 +140,8 @@ namespace CBlokHerkansing.Controllers.Database
                 MySqlParameter kortingspercentageParam = new MySqlParameter("@kortingspercentage", MySqlDbType.Int32);
 
                 aanbiedingIdParam.Value = aanbieding.AanbiedingId;
-                beginDatumParam.Value = Convert.ToDateTime(aanbieding.BeginDatum.ToString());
-                eindDatumParam.Value = Convert.ToDateTime(aanbieding.EindDatum.ToString());
+                beginDatumParam.Value = aanbieding.BeginDatum;
+                eindDatumParam.Value = aanbieding.EindDatum;
                 kortingspercentageParam.Value = aanbieding.KortingsPercentage;
 
                 cmd.Parameters.Add(aanbiedingIdParam);
