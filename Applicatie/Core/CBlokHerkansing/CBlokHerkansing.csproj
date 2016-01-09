@@ -120,6 +120,8 @@
     <Compile Include="Controllers\Database\ProductDBController.cs" />
     <Compile Include="Controllers\Home\HomeController.cs" />
     <Compile Include="Controllers\Product\ProductController.cs" />
+    <Compile Include="Controllers\User\KlantController.cs" />
+    <Compile Include="Controllers\Winkelwagen\WinkelwagenController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -153,6 +155,7 @@
     <Content Include="Views\Product\ToevoegenProductAanbieding.cshtml" />
     <Content Include="Views\Product\WijzigProductAanbieding.cshtml" />
     <Content Include="Views\Account\Manager.cshtml" />
+    <Content Include="Views\Winkelwagen\Winkelwagen.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -164,9 +167,8 @@
     <Folder Include="App_Data\" />
     <Folder Include="Content\Images\Product\" />
     <Folder Include="Controllers\Beheer\" />
-    <Folder Include="Controllers\User\" />
-    <Folder Include="Controllers\Winkelwagen\" />
     <Folder Include="Enum\" />
+    <Folder Include="Views\Klant\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

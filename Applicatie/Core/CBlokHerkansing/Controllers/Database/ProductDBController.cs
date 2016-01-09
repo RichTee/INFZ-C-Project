@@ -80,9 +80,44 @@ namespace CBlokHerkansing.Controllers.Database
             }
         }
 
-        /*
+        // Insert aanbieding
+        public void InsertProduct(ProductBase product)
+        {
+            try
+            {
+                conn.Open();
+                string insertString = @"insert into product (naam, omschrijving, categorieId) " +
+                                        "values (@naam, @omschrijving, @categorieId)";
+
+                MySqlCommand cmd = new MySqlCommand(insertString, conn);
+                MySqlParameter naamParam = new MySqlParameter("@naam", MySqlDbType.VarChar);
+                MySqlParameter omschrijvingParam = new MySqlParameter("@omschrijving", MySqlDbType.VarChar);
+                MySqlParameter categorieIdParam = new MySqlParameter("@categorieId", MySqlDbType.Int32);
+
+                naamParam.Value = product.Naam;
+                omschrijvingParam.Value = product.Omschrijving;
+                categorieIdParam.Value = product.CategorieId;
+
+                cmd.Parameters.Add(naamParam);
+                cmd.Parameters.Add(omschrijvingParam);
+                cmd.Parameters.Add(categorieIdParam);
+
+                cmd.Prepare();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.Write("Product niet toegevoegd: " + e);
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
         // Update 1 product met details
-        public void UpdateProductAndDetail(ProductViewModel viewModel)
+        public ProductDetail UpdateProductAndDetail(ProductDetail productDetail)
         {
             try
             {
@@ -111,8 +146,35 @@ namespace CBlokHerkansing.Controllers.Database
             {
                 conn.Close();
             }
-         * 
         }
-         * */
+
+        public void VerwijderProduct(int id)
+        {
+            try
+            {
+                conn.Open();
+
+                string insertString = @"delete from product where productId=@productId";
+
+                MySqlCommand cmd = new MySqlCommand(insertString, conn);
+                MySqlParameter productIdParam = new MySqlParameter("@productId", MySqlDbType.Int32);
+
+                productIdParam.Value = id;
+
+                cmd.Parameters.Add(productIdParam);
+
+                cmd.Prepare();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.Write("Product niet verwijderd: " + e);
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
     }
 }

@@ -73,17 +73,12 @@ namespace CBlokHerkansing.Controllers.Database
         // Haal overzicht van producten binnen
         protected ProductBase GetProductFromDataReader(MySqlDataReader dataReader)
         {
-            int productId = dataReader.GetInt32("productId");
-            string productNaam = dataReader.GetString("naam");
-            string productOmschrijving = dataReader.GetString("omschrijving");
-            int categorieId = dataReader.GetInt32("categorieId");
-
             ProductBase product = new ProductBase
             {
-                ProductId = productId,
-                Naam = productNaam,
-                Omschrijving = productOmschrijving,
-                CategorieId = categorieId,
+                ProductId = dataReader.GetInt32("productId"),
+                Naam = dataReader.GetString("naam"),
+                Omschrijving = dataReader.GetString("omschrijving"),
+                CategorieId = dataReader.GetInt32("categorieId"),
             };
 
             return product;
@@ -98,19 +93,12 @@ namespace CBlokHerkansing.Controllers.Database
         // Haal overzicht van aanbiedingen binnen
         protected ProductAanbieding GetAanbiedingFromDataReader(MySqlDataReader dataReader)
         {
-            int aanbiedingId = dataReader.GetInt32("aanbiedingId");
-            //string beginDatum = String.IsNullOrEmpty(dataReader.GetDateTime("beginDatum")) ? "Geen" : dataReader.GetString("beginDatum").ToString();
-            //string eindDatum = String.IsNullOrEmpty(dataReader.GetString("eindDatum")) ? "Geen" : dataReader.GetString("eindDatum").ToString();
-            string beginDatum = dataReader.GetDateTime("beginDatum") == null ? "geen" : dataReader.GetDateTime("beginDatum").ToString("yyyy/M/%d");
-            string eindDatum = dataReader.GetDateTime("eindDatum") == null ? "geen" : dataReader.GetDateTime("eindDatum").ToString("yyyy/%M/%d");
-            int kortingsPercentage = dataReader.GetInt32("kortingsPercentage");
-
             ProductAanbieding aanbieding = new ProductAanbieding
             {
-                AanbiedingId = aanbiedingId,
-                BeginDatum = beginDatum,
-                EindDatum = eindDatum,
-                KortingsPercentage = kortingsPercentage,
+                AanbiedingId = dataReader.GetInt32("aanbiedingId"),
+                BeginDatum = dataReader.GetDateTime("beginDatum") == null ? "geen" : dataReader.GetDateTime("beginDatum").ToString("yyyy/M/%d"),
+                EindDatum = dataReader.GetDateTime("eindDatum") == null ? "geen" : dataReader.GetDateTime("eindDatum").ToString("yyyy/%M/%d"),
+                KortingsPercentage = dataReader.GetInt32("kortingsPercentage"),
             };
 
             return aanbieding;

@@ -87,6 +87,51 @@ namespace CBlokHerkansing.Controllers.Database
             return klant;
         }
 
+        // Gebruiker toevoegen
+        public void InsertKlant(Klant klant)
+        {
+            try
+            {
+                conn.Open();
+
+                // Column                                          1           2          3         4       5           6
+                string insertString = @"insert into gebruiker (voornaam,  achternaam, wachtwoord, email, goldStatus, telefoonnummer) 
+                                                        values (@voornaam,@achternaam, @wachtwoord, @email, @goldStatus, @telefoonnummer)";
+
+                MySqlCommand cmd = new MySqlCommand(insertString, conn);
+                MySqlParameter voornaamParam = new MySqlParameter("@voornaam", MySqlDbType.VarChar);
+                MySqlParameter achternaamParam = new MySqlParameter("@achternaam", MySqlDbType.VarChar);
+                MySqlParameter wachtwoordParam = new MySqlParameter("@wachtwoord", MySqlDbType.VarChar);
+                MySqlParameter emailParam = new MySqlParameter("@email", MySqlDbType.VarChar);
+                MySqlParameter goldStatusParam = new MySqlParameter("@goldStatus", MySqlDbType.VarChar);
+                MySqlParameter telefoonnummerParam = new MySqlParameter("@telefoonnummer", MySqlDbType.VarChar);
+
+                voornaamParam.Value = klant.Voornaam;
+                achternaamParam.Value = klant.Achternaam;
+                wachtwoordParam.Value = klant.Wachtwoord;
+                emailParam.Value = klant.Email;
+                telefoonnummerParam.Value = klant.Telefoonnummer;
+
+                cmd.Parameters.Add(voornaamParam);
+                cmd.Parameters.Add(achternaamParam);
+                cmd.Parameters.Add(wachtwoordParam);
+                cmd.Parameters.Add(emailParam);
+                cmd.Parameters.Add(goldStatusParam);
+                cmd.Parameters.Add(telefoonnummerParam);
+                cmd.Prepare();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.Write("Klant niet toegevoegd: " + e); // TODO: Show exception to user via Viewbag
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
         // Update 1 klant
         public void UpdateKlant(Klant klant)
         {
@@ -125,6 +170,35 @@ namespace CBlokHerkansing.Controllers.Database
             catch (Exception e)
             {
                 Console.Write("Updaten klant niet gelukt: " + e); // TODO: ViewBag message
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public void VerwijderKlant(string email)
+        {
+            try
+            {
+                conn.Open();
+
+                string insertString = @"delete from gebruiker where email=@email";
+
+                MySqlCommand cmd = new MySqlCommand(insertString, conn);
+                MySqlParameter emailParam = new MySqlParameter("@email", MySqlDbType.VarChar);
+
+                emailParam.Value = email;
+
+                cmd.Parameters.Add(emailParam);
+
+                cmd.Prepare();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.Write("Klant niet verwijderd: " + e);
                 throw e;
             }
             finally

@@ -185,13 +185,6 @@ namespace CBlokHerkansing.Controllers
 
         /*
          * 
-         * Alle CRUD aanbiedingen naar AanbiedingController?
-         * 
-         */
-        
-
-        /*
-         * 
          * Should AccountController handle CRUD profile(CMS) and all of the belonging functions?
          * 
          */

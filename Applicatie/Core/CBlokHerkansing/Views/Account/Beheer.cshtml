@@ -37,9 +37,12 @@
                                 <td>@Model.productBaseOverzicht[i].Naam</td>
                                 <td>@Model.productBaseOverzicht[i].Omschrijving</td>
                                 <td>@Model.productBaseOverzicht[i].CategorieId</td>
-                                <td>@Html.ActionLink("wijzig", "WijzigProduct", new { id = @Model.productBaseOverzicht[i].ProductId }, new { onclick = "return confirm('Weet u zeker dat u dit wilt wijzigen?')" })</td>
+                                <td>@Html.ActionLink("wijzig", "WijzigProduct", "Product", new { id = @Model.productBaseOverzicht[i].ProductId }, new { onclick = "return confirm('Weet u zeker dat u dit wilt wijzigen?')" })</td>
                             </tr>
                         }
+                        <tr>
+                            <td>@Html.ActionLink("Toevoegen", "ToevoegenProductAanbieding", "Product")</td>
+                        </tr>
                     </tbody>
                 </table>
             }
@@ -106,8 +109,12 @@
                                 <td>@Model.klantOverzicht[i].GoldStatus</td>
                                 <td>@Model.klantOverzicht[i].Rol</td>
                                 <td>@Html.ActionLink("wijzig", "WijzigKlant", new { email = @Model.klantOverzicht[i].Email }, new { onclick = "return confirm('Weet u zeker dat u dit wilt wijzigen?')" })</td>
+                                <td>@Html.ActionLink("Verwijderen", "VerwijderKlant", "User", new { id = @Model.klantOverzicht[i].Email }, new { onclick = "return confirm('Weet u zeker dat u dit wilt verwijderen?')" })</td>
                             </tr>
                         }
+                        <tr>
+                            <td>@Html.ActionLink("Toevoegen", "ToevoegenKlant", "User")</td>
+                        </tr>
                     </tbody>
                 </table>
             }
