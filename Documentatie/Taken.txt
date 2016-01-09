@@ -14,12 +14,11 @@ Hans
 3. Hoeveelheid van producten aanpassen in winkelwagen
 4. Product uit winkelwagen verwijderen
 5. Klant kunnen aanmaken
-6. Klant kunnen wijzigen
-7. Bestelling kunnen plaatsen
-8. Bestelling apart factuur adres op kunnen geven
-9. Bestelling apart bezorg adres op kunnen geven
-10. ProductDetail aan een bestaand product toevoegen
-11. ProductDetail CRUD
+6. Bestelling kunnen plaatsen
+7. Bestelling apart factuur adres op kunnen geven
+8. Bestelling apart bezorg adres op kunnen geven
+9. ProductDetail aan een bestaand product toevoegen.
+10. ProductDetail CRUD
 
 Bram
 1. Producten zien op voorpagina
