@@ -36,7 +36,7 @@
                                 <td>@Model.klantOverzicht.Achternaam</td>
                                 <td>@Model.klantOverzicht.Telefoonnummer</td>
                                 <td>@Model.klantOverzicht.GoldStatus</td>
-                                <td>@Html.ActionLink("wijzig", "WijzigKlant", new { email = @Model.klantOverzicht.Email }, new { onclick = "return confirm('Weet u zeker dat u dit wilt wijzigen?')" })</td>
+                                <td>@Html.ActionLink("wijzig", "WijzigKlant", "Klant", new { email = @Model.klantOverzicht.Email }, new { onclick = "return confirm('Weet u zeker dat u dit wilt wijzigen?')" })</td>
                             </tr>
                     </tbody>
                 </table>

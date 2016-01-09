@@ -1,4 +1,5 @@
 ﻿using CBlokHerkansing.Models.Account;
+using CBlokHerkansing.Models.Klant;
 using CBlokHerkansing.Models.Product;
 using MySql.Data.MySqlClient;
 using System;
@@ -33,32 +34,24 @@ namespace CBlokHerkansing.Controllers.Database
          */
 
         // Haal overzicht van klanten binnen
-        protected Klant GetKlantFromDataReader(MySqlDataReader dataReader)
+        protected KlantBase GetKlantFromDataReader(MySqlDataReader dataReader)
         {
-            int klantId = dataReader.GetInt32("gebruikerId");
-            string klantEmail = dataReader.GetString("email");
-            string klantWachtwoord = dataReader.GetString("wachtwoord");
-            string klantVoornaam = dataReader.GetString("voornaam");
-            string klantAchternaam = dataReader.GetString("achternaam");
-            string klantTelefoonnummer = String.IsNullOrEmpty(dataReader["telefoonnummer"].ToString()) ? "Geen" : dataReader.GetString("telefoonnummer");
-            string klantGoldStatus = String.IsNullOrEmpty(dataReader["goldStatus"].ToString()) ? "Geen" : dataReader.GetString("goldStatus");
-            string klantRechten = dataReader.GetString("rol");
             /*
              * 
              * Adres gegevens indien beschikbaar ook hier
              * 
              */
 
-            Klant klant = new Klant
+            KlantBase klant = new KlantBase
             {
-                Id = klantId,
-                Email = klantEmail,
-                Wachtwoord = klantWachtwoord,
-                Voornaam = klantVoornaam,
-                Achternaam = klantAchternaam,
-                Telefoonnummer = klantTelefoonnummer,
-                GoldStatus = klantGoldStatus,
-                Rol = klantRechten
+                Id = dataReader.GetInt32("gebruikerId"),
+                Email = dataReader.GetString("email"),
+                Wachtwoord = dataReader.GetString("wachtwoord"),
+                Voornaam = dataReader.GetString("voornaam"),
+                Achternaam = dataReader.GetString("achternaam"),
+                Telefoonnummer = String.IsNullOrEmpty(dataReader["telefoonnummer"].ToString()) ? "Geen" : dataReader.GetString("telefoonnummer"),
+                GoldStatus = String.IsNullOrEmpty(dataReader["goldStatus"].ToString()) ? "Geen" : dataReader.GetString("goldStatus"),
+                Rol = dataReader.GetString("rol")
             };
 
             return klant;

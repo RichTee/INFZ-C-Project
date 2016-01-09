@@ -108,12 +108,12 @@
                                 <td>@Model.klantOverzicht[i].Telefoonnummer</td>
                                 <td>@Model.klantOverzicht[i].GoldStatus</td>
                                 <td>@Model.klantOverzicht[i].Rol</td>
-                                <td>@Html.ActionLink("wijzig", "WijzigKlant", new { email = @Model.klantOverzicht[i].Email }, new { onclick = "return confirm('Weet u zeker dat u dit wilt wijzigen?')" })</td>
-                                <td>@Html.ActionLink("Verwijderen", "VerwijderKlant", "User", new { id = @Model.klantOverzicht[i].Email }, new { onclick = "return confirm('Weet u zeker dat u dit wilt verwijderen?')" })</td>
+                                <td>@Html.ActionLink("wijzig", "WijzigKlant", "Klant", new { email = @Model.klantOverzicht[i].Email }, new { onclick = "return confirm('Weet u zeker dat u dit wilt wijzigen?')" })</td>
+                                <td>@Html.ActionLink("Verwijderen", "VerwijderKlant", "Klant", new { id = @Model.klantOverzicht[i].Email }, new { onclick = "return confirm('Weet u zeker dat u dit wilt verwijderen?')" })</td>
                             </tr>
                         }
                         <tr>
-                            <td>@Html.ActionLink("Toevoegen", "ToevoegenKlant", "User")</td>
+                            <td>@Html.ActionLink("Toevoegen", "ToevoegenKlant", "Klant")</td>
                         </tr>
                     </tbody>
                 </table>

@@ -1,4 +1,4 @@
-﻿using CBlokHerkansing.Models.Account;
+﻿using CBlokHerkansing.Models.Klant;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -13,9 +13,9 @@ namespace CBlokHerkansing.Controllers.Database
         public KlantDBController() { }
 
         // Get alle klanten
-        public List<Klant> GetKlanten()
+        public List<KlantBase> GetKlanten()
         {
-            List<Klant> klanten = new List<Klant>();
+            List<KlantBase> klanten = new List<KlantBase>();
             try
             {
                 conn.Open();
@@ -28,7 +28,7 @@ namespace CBlokHerkansing.Controllers.Database
                 {
                     while (dataReader.Read())
                     {
-                        Klant klant = GetKlantFromDataReader(dataReader);
+                        KlantBase klant = GetKlantFromDataReader(dataReader);
                         klanten.Add(klant);
                     }
                 }
@@ -48,12 +48,12 @@ namespace CBlokHerkansing.Controllers.Database
         }
 
         // Get 1 klant
-        public Klant GetKlantInformatie(string usr)
+        public KlantBase GetKlantInformatie(string usr)
         {
             if (string.IsNullOrEmpty(usr))
                 return null;
 
-            Klant klant = new Klant();
+            KlantBase klant = new KlantBase();
             try
             {
                 conn.Open();
@@ -88,7 +88,7 @@ namespace CBlokHerkansing.Controllers.Database
         }
 
         // Gebruiker toevoegen
-        public void InsertKlant(Klant klant)
+        public void InsertKlant(KlantBase klant)
         {
             try
             {
@@ -133,7 +133,7 @@ namespace CBlokHerkansing.Controllers.Database
         }
 
         // Update 1 klant
-        public void UpdateKlant(Klant klant)
+        public void UpdateKlant(KlantBase klant)
         {
             try
             {

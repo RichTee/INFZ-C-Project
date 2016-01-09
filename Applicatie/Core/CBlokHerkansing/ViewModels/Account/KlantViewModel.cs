@@ -1,4 +1,4 @@
-﻿using CBlokHerkansing.Models.Account;
+﻿using CBlokHerkansing.Models.Klant;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +8,6 @@ namespace CBlokHerkansing.ViewModels.Account
 {
     public class KlantViewModel
     {
-        public Klant klantOverzicht { get; set; }
+        public KlantBase klantOverzicht { get; set; }
     }
 }

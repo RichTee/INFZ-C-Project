@@ -1,6 +1,6 @@
 ﻿using CBlokHerkansing.Authorisation;
 using CBlokHerkansing.Controllers.Database;
-using CBlokHerkansing.Models.Account;
+using CBlokHerkansing.Models.Klant;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +21,7 @@ namespace CBlokHerkansing.Controllers.User
 
         [HttpPost]
         [CustomUnauthorized(Roles = "ADMIN")]
-        public ActionResult ToevoegenKlant(Klant klant)
+        public ActionResult ToevoegenKlant(KlantBase klant)
         {
             if (ModelState.IsValid)
             {
@@ -42,12 +42,12 @@ namespace CBlokHerkansing.Controllers.User
             }
         }
 
-        [CustomUnauthorized(Roles = "ADMIN")]
+        [CustomUnauthorized(Roles = "KLANT, ADMIN")]
         public ActionResult WijzigKlant(string email)
         {
             try
             {
-                Klant klant = klantDBController.GetKlantInformatie(email);
+                KlantBase klant = klantDBController.GetKlantInformatie(email);
                 return View(klant);
             }
             catch (Exception e)
@@ -58,8 +58,8 @@ namespace CBlokHerkansing.Controllers.User
         }
 
         [HttpPost]
-        [CustomUnauthorized(Roles = "ADMIN")]
-        public ActionResult WijzigKlant(Klant klant)
+        [CustomUnauthorized(Roles = "KLANT, ADMIN")]
+        public ActionResult WijzigKlant(KlantBase klant)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,6 @@ namespace CBlokHerkansing.Controllers.User
                 return View(klant);
             }
         }
-
 
         [CustomUnauthorized(Roles = "ADMIN")]
         public ActionResult VerwijderKlant(string email)

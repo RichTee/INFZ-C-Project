@@ -10,6 +10,7 @@ using CBlokHerkansing.Authorisation;
 using CBlokHerkansing.ViewModels.Account;
 using CBlokHerkansing.Models.Product;
 using CBlokHerkansing.ViewModels.Product;
+using CBlokHerkansing.Models.Klant;
 
 namespace CBlokHerkansing.Controllers
 {
@@ -129,7 +130,7 @@ namespace CBlokHerkansing.Controllers
         {
             string usr = User.Identity.Name;
 
-            Klant klantGegevens = klantDBController.GetKlantInformatie(usr);
+            KlantBase klantGegevens = klantDBController.GetKlantInformatie(usr);
 
             if (klantGegevens == null)
             {
@@ -142,47 +143,6 @@ namespace CBlokHerkansing.Controllers
             return View(viewModel);
         }
 
-        [CustomUnauthorized(Roles = "KLANT, ADMIN")]
-        public ActionResult WijzigKlant(string email)
-        {
-            if (!User.IsInRole("ADMIN") && !User.Identity.Name.Equals(email))
-                return View();
-            try
-            {
-                Klant klant = klantDBController.GetKlantInformatie(email);
-                return View(klant);
-            }
-            catch (Exception e)
-            {
-                ViewBag.FoutMelding("Er is iets fout gegaan: " + e);
-                return View();
-            }
-        }
-
-        [HttpPost]
-        [CustomUnauthorized(Roles = "KLANT, ADMIN")]
-        public ActionResult WijzigKlant(Klant klant)
-        {
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    klantDBController.UpdateKlant(klant);
-
-                    return RedirectToAction("Index", "Home"); // TODO: Redirect naar Beheer of Profiel, niet index.
-                }
-                catch (Exception e)
-                {
-                    ViewBag.FoutMelding("Er is iets fout gegaan: " + e);
-                    return View();
-                }
-            }
-            else
-            {
-                return View(klant);
-            }
-        }
-
         /*
          * 
          * Should AccountController handle CRUD profile(CMS) and all of the belonging functions?
@@ -191,7 +151,7 @@ namespace CBlokHerkansing.Controllers
         [CustomUnauthorized(Roles = "ADMIN")]
         public ActionResult Beheer()
         {
-            List<Klant> klanten = klantDBController.GetKlanten();
+            List<KlantBase> klanten = klantDBController.GetKlanten();
             List<ProductBase> producten = productDBController.GetProducten();
             List<ProductAanbieding> aanbiedingen = aanbiedingDBController.GetAanbiedingen();
 

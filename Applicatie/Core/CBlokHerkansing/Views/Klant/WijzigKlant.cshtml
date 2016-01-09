@@ -1,11 +1,11 @@
-﻿@model CBlokHerkansing.Models.Account.Klant
+﻿@model CBlokHerkansing.Models.Klant.KlantBase
 
 @{
     ViewBag.Title = "KlantWijzigen";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm("WijzigKlant", "Account"))
+@using (Html.BeginForm("WijzigKlant", "Klant"))
 {
     <div class="container">
         <div class="row">

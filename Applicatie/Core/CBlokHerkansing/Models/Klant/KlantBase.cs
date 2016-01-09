@@ -4,9 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace CBlokHerkansing.Models.Account
+namespace CBlokHerkansing.Models.Klant
 {
-    public class Klant
+    public class KlantBase
     {
         public int Id { get; set; }
 
