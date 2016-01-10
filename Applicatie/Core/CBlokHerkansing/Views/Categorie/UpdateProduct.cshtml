@@ -1,0 +1,28 @@
+﻿@model CBlokHerkansing.Models.Categorie
+@{
+    ViewBag.Title = "UpdateProduct";
+}
+
+<h2>Update Categorie</h2>
+<h4 style="color:green">@ViewBag.succes</h4>
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+        @using (Html.BeginForm("UpdateCategorie", "Portal", FormMethod.Post))
+        {
+        @Html.TextBoxFor(model => model.Naam, new { placeholder = "Naam", @class = "form-control" })
+        <div style="color: red">
+            @Html.ValidationMessageFor(Model => Model.Naam)
+        </div>
+        @Html.TextAreaFor(model => model.Omschrijving, new { placeholder = "Omschrijving", @class = "form-control" })
+        <div style="color: red">
+            @Html.ValidationMessageFor(Model => Model.Omschrijving)
+        </div>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">
+        Voeg product toe
+        </button>
+     }
+    </div>
+    <div class="col-md-4"></div>
+</div>
+

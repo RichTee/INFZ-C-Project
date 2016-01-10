@@ -1,0 +1,25 @@
+﻿@model List<CBlokHerkansing.Models.Categorie>
+@{
+    ViewBag.Title = "AlleCategorieen";
+}
+<div class=""></div>
+@foreach (CBlokHerkansing.Models.Categorie categorie in Model)
+{
+    <div class="row">
+    <div class="col-md-1">
+    @categorie.Id
+    </div>
+        <div class="col-md-2">
+            @categorie.Naam
+        </div>
+        <div class="col-md-4">
+            @categorie.Omschrijving
+        </div>
+        <div class="col-md-3">
+            @categorie.HoofdcategorieId
+        </div>
+        <div class="col-md-1"><a href="@Url.Action("UpdateCategorie", "Categorie", new { categorieId = @categorie.Id })"><i class="fa fa-wrench"></i></a></div>
+        <div class="col-md-2"><a href="@Url.Action("DeleteCategorie", "Categorie", new { categorieId = @categorie.Id })"><i class="fa fa-times" style="color:red"></i></a></div>
+    </div>
+}
+

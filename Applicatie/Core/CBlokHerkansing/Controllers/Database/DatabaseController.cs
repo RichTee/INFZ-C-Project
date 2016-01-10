@@ -1,4 +1,5 @@
-﻿using CBlokHerkansing.Models.Account;
+﻿using CBlokHerkansing.Models;
+using CBlokHerkansing.Models.Account;
 using CBlokHerkansing.Models.Klant;
 using CBlokHerkansing.Models.Product;
 using MySql.Data.MySqlClient;
@@ -41,7 +42,6 @@ namespace CBlokHerkansing.Controllers.Database
              * Adres gegevens indien beschikbaar ook hier
              * 
              */
-
             KlantBase klant = new KlantBase
             {
                 Id = dataReader.GetInt32("gebruikerId"),
@@ -111,6 +111,17 @@ namespace CBlokHerkansing.Controllers.Database
                 product = GetProductFromDataReader(datareader)
             };
             return productDetail;
+        }
+
+        protected Categorie getFullCategorieFromDataReader(MySqlDataReader datareader)
+        {
+            Categorie categorie = new Categorie
+            {
+                Id = datareader.GetInt32("id"),
+                Naam = datareader.GetString("naam"),
+                Omschrijving = datareader.GetString("omschrijving")
+            };
+            return categorie;
         }
 
     }
