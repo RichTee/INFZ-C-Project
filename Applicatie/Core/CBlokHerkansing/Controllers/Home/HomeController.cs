@@ -21,5 +21,21 @@ namespace CBlokHerkansing.Controllers
         {
             return View();
         }
+
+        public ActionResult Search(string search, int type)
+        {
+            //product search from product name
+            ProductDBController productController = new ProductDBController();
+            if (type == 0)
+            {                
+                return View(productController.getListProductFromNameSearch(search));
+            }
+            else
+            {
+                //product search from categorie id
+                CategorieDbController categorie = new CategorieDbController();
+                return View(productController.getListProductFromCategorie(categorie.getCategorieIdByName(search)));
+            }
+        }
     }
 }

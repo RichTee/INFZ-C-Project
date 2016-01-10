@@ -176,5 +176,79 @@ namespace CBlokHerkansing.Controllers.Database
                 conn.Close();
             }
         }
+        public List<ProductBase> getListProductFromCategorie(int categorieId)
+        {
+            
+            List<ProductBase> producten = new List<ProductBase>();
+            try
+            {
+                conn.Open();
+
+                string selectQuery = "SELECT productId, naam, omschrijving from product where categorieId = @categorieId";
+                MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
+                MySqlParameter categorieIdParam = new MySqlParameter("@categorieId", MySqlDbType.Int32);
+                categorieIdParam.Value = categorieId;
+                cmd.Parameters.Add(categorieIdParam);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                if (dataReader != null)
+                {
+                    while (dataReader.Read())
+                    {
+                        ProductBase productBase = GetProductFromDataReader(dataReader);
+                        producten.Add(productBase);
+                    }
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.Write("Ophalen van producten mislukt " + e);
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return producten;
+        }
+        public List<ProductBase> getListProductFromNameSearch(string search)
+        {
+
+            List<ProductBase> producten = new List<ProductBase>();
+            try
+            {
+                conn.Open();
+
+                string selectQuery = "SELECT productId, naam, omschrijving from product where naam like %@search%";
+                MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
+                MySqlParameter naamParam = new MySqlParameter("@search", MySqlDbType.VarChar);
+                naamParam.Value = search;
+                cmd.Parameters.Add(naamParam);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                if (dataReader != null)
+                {
+                    while (dataReader.Read())
+                    {
+                        ProductBase productBase = GetProductFromDataReader(dataReader);
+                        producten.Add(productBase);
+                    }
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.Write("Ophalen van producten mislukt " + e);
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return producten;
+        }
     }
 }

@@ -49,7 +49,7 @@ namespace CBlokHerkansing.Controllers.Database
             {
                 conn.Open();
 
-                string insertString = "Update Categorie set naam = @naam, omschrijving = @omschrijving, hoofdId = @hoofdId where categorieId = @categorieId";
+                string insertString = "Update categorie set naam = @naam, omschrijving = @omschrijving, hoofdId = @hoofdId where categorieId = @categorieId";
                 
                 MySqlCommand cmd = new MySqlCommand(insertString, conn);
                 MySqlParameter naamParam = new MySqlParameter("@naam", MySqlDbType.VarChar);
@@ -113,7 +113,7 @@ namespace CBlokHerkansing.Controllers.Database
             {
                 conn.Open();
 
-                string selectQuery = "SELECT categorieId, naam, omschrijving FROM product where hoofdId = @hoofdId;";
+                string selectQuery = "SELECT categorieId, naam, omschrijving FROM categorie where hoofdId = @hoofdId;";
                 MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
                 MySqlParameter idParam = new MySqlParameter("@id", MySqlDbType.Int32);
                 idParam.Value = categorieId;
@@ -139,7 +139,6 @@ namespace CBlokHerkansing.Controllers.Database
             {
                 conn.Close();
             }
-
             return categorieen;
         }
         public List<Categorie> getListWithAllCategorieen(){
@@ -148,7 +147,7 @@ namespace CBlokHerkansing.Controllers.Database
             {
                 conn.Open();
 
-                string selectQuery = "SELECT categorieId, naam, omschrijving FROM product;";
+                string selectQuery = "SELECT categorieId, naam, omschrijving FROM categorie;";
                 MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
                 MySqlDataReader dataReader = cmd.ExecuteReader();
 
@@ -209,6 +208,40 @@ namespace CBlokHerkansing.Controllers.Database
             }
 
             return categorie;
+        }
+        public int getCategorieIdByName(string search)
+        {
+            int categorieId = 0;
+            try
+            {
+                conn.Open();
+
+                string selectQuery = "SELECT categorieId FROM categorie where naam like %@search%;";
+                MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
+                MySqlParameter searchParam = new MySqlParameter("@search", MySqlDbType.VarChar);
+                searchParam.Value = search;
+                cmd.Parameters.Add(searchParam);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                if (dataReader != null)
+                {
+                    while (dataReader.Read())
+                    {
+                        categorieId = dataReader.GetInt32("categorieId");
+                    }
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.Write("Ophalen van producten mislukt " + e);
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return categorieId;  
         }
     }
 }
