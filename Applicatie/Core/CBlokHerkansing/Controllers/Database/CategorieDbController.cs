@@ -20,15 +20,15 @@ namespace CBlokHerkansing.Controllers.Database
                 MySqlCommand cmd = new MySqlCommand(insertString, conn);
                 MySqlParameter naamParam = new MySqlParameter("@naam", MySqlDbType.VarChar);
                 MySqlParameter omschrijvingParam = new MySqlParameter("@omschrijving", MySqlDbType.VarChar);
-                MySqlParameter hoofdIdPercentageParam = new MySqlParameter("@hoofdId", MySqlDbType.Int32);
+                MySqlParameter hoofdIdParam = new MySqlParameter("@hoofdId", MySqlDbType.Int32);
 
                 naamParam.Value = categorie.Naam;
                 omschrijvingParam.Value = categorie.Omschrijving;
-                hoofdIdPercentageParam.Value = categorie.HoofdcategorieId;
+                hoofdIdParam.Value = categorie.HoofdcategorieId;
 
                 cmd.Parameters.Add(naamParam);
                 cmd.Parameters.Add(omschrijvingParam);
-                cmd.Parameters.Add(hoofdIdPercentageParam);
+                cmd.Parameters.Add(hoofdIdParam);
 
                 cmd.Prepare();
                 cmd.ExecuteNonQuery();

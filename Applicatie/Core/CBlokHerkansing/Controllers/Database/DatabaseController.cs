@@ -117,11 +117,24 @@ namespace CBlokHerkansing.Controllers.Database
         {
             Categorie categorie = new Categorie
             {
-                Id = datareader.GetInt32("id"),
+                Id = datareader.GetInt32("categorieId"),
                 Naam = datareader.GetString("naam"),
                 Omschrijving = datareader.GetString("omschrijving")
             };
             return categorie;
+        }
+        protected Adres getFullAdresFromDataReader(MySqlDataReader datareader)
+        {
+            Adres adres = new Adres
+            {
+                Id = datareader.GetInt32("adresId"),
+                Straat = datareader.GetString("straat"),
+                Postcode = datareader.GetString("postcode"),
+                Huisnummer = datareader.GetInt32("huisnummer"),
+                HuisnummerToevoegsel = datareader.GetString("huisnummertoevoegsel"),
+                Stad = datareader.GetString("stad"),
+            };
+            return adres;
         }
 
     }

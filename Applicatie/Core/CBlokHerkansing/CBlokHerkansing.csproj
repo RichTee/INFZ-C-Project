@@ -151,6 +151,7 @@
     <Compile Include="Controllers\Beheer\CategorieController.cs" />
     <Compile Include="Controllers\Database\AanbiedingDBController.cs" />
     <Compile Include="Controllers\Database\AccountDBController.cs" />
+    <Compile Include="Controllers\Database\AdresDBController.cs" />
     <Compile Include="Controllers\Database\AuthDBController.cs" />
     <Compile Include="Controllers\Database\CategorieDbController.cs" />
     <Compile Include="Controllers\Database\DatabaseController.cs" />

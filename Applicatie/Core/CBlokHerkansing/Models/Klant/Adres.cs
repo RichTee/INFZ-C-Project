@@ -7,13 +7,13 @@ namespace CBlokHerkansing.Models.Klant
 {
     public class Adres
     {
-        public int id { get; set; }
-        public string straat { get; set; }
-        public string postcode { get; set; }
-        public string huisnummer { get; set; }
-        public string huisnummertoevoeging { get; set; }
-        public string stad { get; set; }
-        public int gebruikerId { get; set; }
+        public int Id { get; set; }
+        public string Straat { get; set; }
+        public string Postcode { get; set; }
+        public int Huisnummer { get; set; }
+        public string HuisnummerToevoegsel { get; set; }
+        public string Stad { get; set; }
+        public int GebruikerId { get; set; }
 
     }
 }
