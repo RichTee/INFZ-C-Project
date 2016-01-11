@@ -37,7 +37,8 @@ Bram
 14. Winst van de afgelopen 6 maanden (Manager)
 
 Jeroen
-1. Use Case
-2. Use Case Diagram
-3. Sitemap
-4. Viewbag Messages
+1. Use Cases								// 100% Af
+2. Use Case Diagram							// 100% Af
+3. Use Case Beschrijving						// 0% To-Do
+4. Sitemap
+5. Viewbag Messages

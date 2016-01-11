@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `dierenzaak` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `dierenzaak`;
--- MySQL dump 10.13  Distrib 5.6.24, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
 -- Host: localhost    Database: dierenzaak
 -- ------------------------------------------------------
--- Server version	5.6.26-log
+-- Server version	5.6.25-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -28,7 +28,7 @@ CREATE TABLE `aanbieding` (
   `aanbiedingId` int(11) NOT NULL AUTO_INCREMENT,
   `beginDatum` date DEFAULT NULL,
   `eindDatum` date DEFAULT NULL,
-  `kortingsPercentage` int(11) DEFAULT 0,
+  `kortingsPercentage` int(11) DEFAULT '0',
   PRIMARY KEY (`aanbiedingId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -180,10 +180,10 @@ CREATE TABLE `categorie` (
   `categorieId` int(11) NOT NULL AUTO_INCREMENT,
   `naam` varchar(45) DEFAULT NULL,
   `omschrijving` varchar(100) DEFAULT NULL,
-  `subId` int(11) DEFAULT NULL,
+  `hoofdId` int(11) DEFAULT NULL,
   PRIMARY KEY (`categorieId`),
-  KEY `SubID` (`subId`),
-  CONSTRAINT `FK_SubCatergorie` FOREIGN KEY (`subId`) REFERENCES `categorie` (`categorieId`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `SubID` (`hoofdId`),
+  CONSTRAINT `FK_SubCatergorie` FOREIGN KEY (`hoofdId`) REFERENCES `categorie` (`categorieId`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -212,11 +212,11 @@ CREATE TABLE `gebruiker` (
   `email` varchar(45) DEFAULT NULL,
   `telefoonnummer` varchar(45) DEFAULT NULL,
   `goldStatus` varchar(45) DEFAULT NULL,
-  `rolId` int(11) DEFAULT 2,
+  `rolId` int(11) DEFAULT '2',
   PRIMARY KEY (`gebruikerId`),
   KEY `FK_GebruikerRol_idx` (`rolId`),
   CONSTRAINT `FK_GebruikerRol` FOREIGN KEY (`rolId`) REFERENCES `rol` (`rolId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -225,7 +225,7 @@ CREATE TABLE `gebruiker` (
 
 LOCK TABLES `gebruiker` WRITE;
 /*!40000 ALTER TABLE `gebruiker` DISABLE KEYS */;
-INSERT INTO `gebruiker` VALUES(1,'bram','test','test','bram@test.nl','test','test',1), (2, 'manager', 'manager','test','manager@test.nl','test','test',3), (3, 'klant', 'klant','test','klant@test.nl','test','test',2);
+INSERT INTO `gebruiker` VALUES (1,'bram','test','test','bram@test.nl','test','test',1),(2,'manager','manager','test','manager@test.nl','test','test',3),(3,'klant','klant','test','klant@test.nl','test','test',2);
 /*!40000 ALTER TABLE `gebruiker` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -307,7 +307,7 @@ CREATE TABLE `rol` (
 
 LOCK TABLES `rol` WRITE;
 /*!40000 ALTER TABLE `rol` DISABLE KEYS */;
-INSERT INTO `rol` VALUES (1,'admin'),(2,'klant'), (3, 'manager');
+INSERT INTO `rol` VALUES (1,'admin'),(2,'klant'),(3,'manager');
 /*!40000 ALTER TABLE `rol` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -320,4 +320,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-12-14 22:03:00
+-- Dump completed on 2016-01-11 10:44:08
