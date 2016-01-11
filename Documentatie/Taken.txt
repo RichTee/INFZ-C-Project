@@ -21,16 +21,16 @@ Hans
 10. ProductDetail CRUD
 
 Bram
-1. Producten zien op voorpagina
+1. Producten zien op voorpagina 					//Alleen nog afbeeldingen op de front end
 2. Producten wijzigen(beheer)
 3. Producten toevoegen(beheer)
-4. Aanbiedingen op de homepagina kunnen zien //Allen nog afbeeldingen in kunnen laden
-5. Categorieën zoeken //Alleen nog testen en front end afvangen
-6. Product zoeken op naam //Alleen nog testen en front end afvangen
-7. Klant Adres CRUD
+4. Aanbiedingen op de homepagina kunnen zien 				//Alleen nog afbeeldingen in kunnen laden
+5. Categorieën zoeken 							//Alleen nog testen en front end afvangen
+6. Product zoeken op naam 						//Alleen nog testen en front end afvangen
+7. Klant Adres CRUD 							//Alleen nog implementeren
 8. Redirect direct na inloggen naar beheer pagina(Beheer)
 9 Status bestelling aanpassen
-10. Categorie CRUD //Bijna uitgewerkt voornamelijk alleen nog testen
+10. Categorie CRUD 							//Bijna uitgewerkt voornamelijk alleen nog testen
 11. 10 best lopende producten kunnen zien (Manager)
 12. 10 slechtst lopende producten kunnen zien (Manager)
 13. Omzet van de winkel zien van afgelopen 6 maanden (Manager)
