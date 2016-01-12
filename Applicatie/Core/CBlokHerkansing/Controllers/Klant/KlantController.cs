@@ -66,6 +66,10 @@ namespace CBlokHerkansing.Controllers.User
                 try
                 {
                     klantDBController.UpdateKlant(klant);
+                    if (User.IsInRole("KLANT"))
+                        return RedirectToAction("Profiel", "Account");
+                    else if (User.IsInRole("ADMIN"))
+                        return RedirectToAction("Beheer", "Account");
                     return RedirectToAction("index", "Home"); // TODO: Redirect naar user profiel of beheerder
                 }
                 catch (Exception e)
