@@ -7,6 +7,7 @@ namespace CBlokHerkansing.Models.Product
 {
     public class ProductDetail
     {
+        // TODO: Add [Required] Attributes
         public int detailId { get; set; }
         public double verkoopprijs { get; set; }
         public double inkoopprijs { get; set; }

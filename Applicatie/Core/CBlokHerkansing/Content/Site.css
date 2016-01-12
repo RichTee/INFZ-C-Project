@@ -45,13 +45,27 @@ textarea {
 /******/
 /*Body*/
 /******/
+.panel-footer {
+    overflow: hidden;
+}
+
 .price {
     display: block;
     font-size: 20px;
-    line-height: 20px;
     text-align: right;
+    float: right;
     color: gray;
     padding-right: 5px;
+}
+
+.order {
+    display: block;
+    font-size: 20px;
+    max-height: 30px;
+    text-align: left;
+    float: left;
+    color: #161;
+    padding-left: 5px;
 }
 
 /*Tab System*/

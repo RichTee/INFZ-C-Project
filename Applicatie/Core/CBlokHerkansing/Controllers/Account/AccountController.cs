@@ -11,6 +11,7 @@ using CBlokHerkansing.ViewModels.Account;
 using CBlokHerkansing.Models.Product;
 using CBlokHerkansing.ViewModels.Product;
 using CBlokHerkansing.Models.Klant;
+using CBlokHerkansing.Models.Bestelling;
 
 namespace CBlokHerkansing.Controllers
 {
@@ -23,6 +24,7 @@ namespace CBlokHerkansing.Controllers
         private KlantDBController klantDBController = new KlantDBController();
         private ProductDBController productDBController = new ProductDBController();
         private AanbiedingDBController aanbiedingDBController = new AanbiedingDBController();
+        private BestellingDBController bestellingDBController = new BestellingDBController();
 
         // GET: Account
         public ActionResult Index()
@@ -152,13 +154,17 @@ namespace CBlokHerkansing.Controllers
         public ActionResult Beheer()
         {
             List<KlantBase> klanten = klantDBController.GetKlanten();
-            List<ProductBase> producten = productDBController.GetProducten();
+            List<ProductBase> producten = productDBController.GetProducten(); // TODO: Remove, productDetail heeft productBase
+            List<ProductDetail> productenDetail = productDBController.getProductenDetail();
             List<ProductAanbieding> aanbiedingen = aanbiedingDBController.GetAanbiedingen();
+            List<BestelRegel> bestellingRegel = bestellingDBController.GetBestellingen();
 
             BeheerderViewModel viewModel = new BeheerderViewModel();
             viewModel.klantOverzicht = klanten;
             viewModel.productBaseOverzicht = producten;
+            viewModel.productDetailOverzicht = productenDetail;
             viewModel.productAanbiedingOverzicht = aanbiedingen;
+            viewModel.bestellingDetailOverzicht = bestellingRegel;
 
             return View(viewModel);
         }

@@ -9,16 +9,9 @@ Undef
 
 
 Hans
-1. Product in winkelwagen doen						// 60%, Alleen nog via sessie doen
-2. Producten in winkelwagen zien					// 60%, Alleen nog via sessie doen
-3. Hoeveelheid van producten aanpassen in winkelwagen			// 0%,  Importeren vanuit oud project
-4. Product uit winkelwagen verwijderen					// 80%, Importeren vanuit oud project
-5. Klant kunnen aanmaken						// 70%, View maken
-6. Bestelling kunnen plaatsen						// 0%. Methodes maken
-7. Bestelling apart factuur adres op kunnen geven			// 0%
-8. Bestelling apart bezorg adres op kunnen geven			// 0%
-9. ProductDetail aan een bestaand product toevoegen.			// 0%
-10. ProductDetail CRUD							// 0% 
+1. Bestelling kunnen plaatsen						// 70%. Methodes maken
+2. Bestelling apart factuur adres op kunnen geven			// 0%
+3. Bestelling apart bezorg adres op kunnen geven			// 0%
 
 Bram
 1. Producten zien op voorpagina 					//Alleen nog afbeeldingen op de front end
