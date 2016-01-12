@@ -4,9 +4,6 @@
     ViewBag.Title = "Profiel";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Hi, @User.Identity.Name</h2>
-
 <div class="centered-pills">
     <h2>Beheer</h2>
     <ul class="nav nav-tabs">
@@ -36,7 +33,18 @@
                                 <td>@Model.klantOverzicht.Achternaam</td>
                                 <td>@Model.klantOverzicht.Telefoonnummer</td>
                                 <td>@Model.klantOverzicht.GoldStatus</td>
-                                <td>@Html.ActionLink("wijzig", "WijzigKlant", "Klant", new { email = @Model.klantOverzicht.Email }, new { onclick = "return confirm('Weet u zeker dat u dit wilt wijzigen?')" })</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-danger">Action</button>
+                                        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#">@Html.ActionLink("Wijzig", "WijzigKlant", "Klant", new { email = @Model.klantOverzicht.Email }, new { onclick = "return confirm('Weet u zeker dat u dit wilt wijzigen?')" })</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
                             </tr>
                     </tbody>
                 </table>
