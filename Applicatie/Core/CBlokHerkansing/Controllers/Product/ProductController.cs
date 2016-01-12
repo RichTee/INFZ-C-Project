@@ -180,5 +180,94 @@ namespace CBlokHerkansing.Controllers.Product
             }
             return RedirectToAction("Beheer", "Account");
         }
+
+        /*
+         * 
+         * ProductDetail
+         * 
+         */
+        [CustomUnauthorized(Roles = "ADMIN")]
+        public ActionResult ToevoegenProductDetail()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [CustomUnauthorized(Roles = "ADMIN")]
+        public ActionResult ToevoegenProductDetail(ProductDetail productDetail)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    productDBController.InsertProductDetail(productDetail);
+                    return RedirectToAction("Beheer", "Account");
+                }
+                catch (Exception e)
+                {
+                    ViewBag.FoutMelding("Er is iets fout gegaan: " + e);
+                    return View();
+                }
+            }
+            else
+            {
+                return View(productDetail);
+            }
+        }
+
+        [CustomUnauthorized(Roles = "ADMIN")]
+        public ActionResult WijzigProductDetail(int id)
+        {
+            try
+            {
+                ProductDetail product = productDBController.GetProductDetail(id);
+                return View(product);
+            }
+            catch (Exception e)
+            {
+                ViewBag.FoutMelding("Er is iets fout gegaan: " + e);
+                return View();
+            }
+        }
+
+        [HttpPost]
+        [CustomUnauthorized(Roles = "ADMIN")]
+        public ActionResult WijzigProductDetail(ProductDetail productDetailModel)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    productDBController.UpdateProductDetail(productDetailModel);
+
+                    return RedirectToAction("Beheer", "Account");
+                }
+                catch (Exception e)
+                {
+                    ViewBag.FoutMelding("Er is iets fout gegaan: " + e);
+                    return View();
+                }
+            }
+            else
+            {
+                return View(productDetailModel);
+            }
+        }
+
+
+        [CustomUnauthorized(Roles = "ADMIN")]
+        public ActionResult VerwijderProductDetail(int id)
+        {
+            try
+            {
+                productDBController.VerwijderProductDetail(id);
+            }
+            catch (Exception e)
+            {
+                ViewBag.FoutMelding("Er is iets fout gegaan: " + e);
+            }
+
+            return RedirectToAction("Beheer", "Account");
+        }
     }
 }

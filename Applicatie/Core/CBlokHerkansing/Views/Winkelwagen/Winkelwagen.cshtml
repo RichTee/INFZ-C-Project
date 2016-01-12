@@ -1,7 +1,47 @@
-﻿
+﻿@model CBlokHerkansing.Models.Winkelwagen.WinkelwagenItem
+
 @{
     ViewBag.Title = "Winkelwagen";
 }
 
 <h2>Winkelwagen</h2>
+
+@if (Model != null)
+{
+    <table class="table table-striped" style="margin: 0 auto !important; float: none !important; max-width: 1000px; width: 80%">
+        <tbody>
+            @for (int i = 0; i < Model.product.Count; i++ )
+            {
+                <tr>
+                    <td style="width:20%"><img src="~/Content/images/test.jpg" class="img-responsive" style="width:100%; max-width: 100px" alt="Image"></td>
+                    <td style="width: 50%">
+                        <b>@Model.product[i].product.Naam</b>
+                        <br />
+                        @Model.product[i].product.Omschrijving
+                        <br />
+                        Kleur: @Model.product[i].kleur
+                        <br />
+                        Maat: @Model.product[i].maat
+                    </td>
+                    <td style="width: 15%">
+                        @Model.hoeveelheid[i]
+                        @Html.ActionLink("+", "WinkelwagenProductPlus", "Winkelwagen", new { id = @Model.product[i].product.ProductId }, null)
+                        @Html.ActionLink("-", "WinkelwagenProductMinus", "Winkelwagen", new { id = @Model.product[i].product.ProductId }, null)
+                        <br />
+                        <br />
+                    @Html.ActionLink("Verwijder Product", "WinkelwagenVerwijderProduct", "Winkelwagen", new { id = @Model.product[i].product.ProductId }, new { onclick = "return confirm('Weet u zeker dat u dit wilt wijzigen?')" })
+
+                    </td>
+                    <td style="width: 15%">
+                        <b>@Model.product[i].verkoopprijs ,-</b>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p><b>Put items to your cart!</b></p>
+}
 
