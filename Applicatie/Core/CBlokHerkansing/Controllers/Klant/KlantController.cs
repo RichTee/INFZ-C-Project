@@ -12,7 +12,8 @@ namespace CBlokHerkansing.Controllers.User
     public class KlantController : Controller
     {
         private KlantDBController klantDBController = new KlantDBController();
-        
+        private AccountDBController accountDBController = new AccountDBController();
+
         [CustomUnauthorized(Roles = "ADMIN")]
         public ActionResult ToevoegenKlant()
         {
@@ -27,6 +28,9 @@ namespace CBlokHerkansing.Controllers.User
             {
                 try
                 {
+                    if (!accountDBController.checkGebruikerDuplicaat(User.Identity.Name))
+                        return View(klant);
+
                     klantDBController.InsertKlant(klant);
                     return RedirectToAction("Beheer", "Account");
                 }
@@ -70,7 +74,7 @@ namespace CBlokHerkansing.Controllers.User
                         return RedirectToAction("Profiel", "Account");
                     else if (User.IsInRole("ADMIN"))
                         return RedirectToAction("Beheer", "Account");
-                    return RedirectToAction("index", "Home"); // TODO: Redirect naar user profiel of beheerder
+                    return RedirectToAction("index", "Home");
                 }
                 catch (Exception e)
                 {

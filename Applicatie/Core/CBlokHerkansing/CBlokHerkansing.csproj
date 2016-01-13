@@ -212,6 +212,7 @@
     <Content Include="Views\Product\ToevoegenProductDetail.cshtml" />
     <Content Include="Views\Product\WijzigProductDetail.cshtml" />
     <Content Include="Views\Bestelling\WijzigBestelling.cshtml" />
+    <Content Include="Views\Bestelling\Bestellen.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

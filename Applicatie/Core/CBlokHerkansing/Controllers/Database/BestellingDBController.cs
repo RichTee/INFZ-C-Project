@@ -1,4 +1,6 @@
 ﻿using CBlokHerkansing.Models.Bestelling;
+using CBlokHerkansing.Models.Product;
+using CBlokHerkansing.Models.Winkelwagen;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -46,15 +48,110 @@ namespace CBlokHerkansing.Controllers.Database
 
             return bestellingen;
         }
-        
-        public void InsertBestelBase()
-        {
 
+        public bool InsertBestelling(WinkelwagenItem item, string datum, int gebruikerId, int adresId, int aanbiedingId)
+        {
+            MySqlTransaction trans = null;
+            try
+            {
+                conn.Open();
+
+                trans = conn.BeginTransaction();
+
+                // Insert BestelBase & Retrieve last inserted Id
+                int bestellingId = InsertBestelBase(datum, gebruikerId, adresId);
+                
+                // Doorloop alle winkelwagen items
+                for (int i = 0; i < item.product.Count; i++)
+                    InsertBestelRegel(item.product[i].detailId, datum, item.hoeveelheid[i],bestellingId, aanbiedingId);
+                    
+
+                trans.Commit();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Exceptie in Insert Bestelling en BestellingRegel, Transactie mislukt");
+                trans.Rollback();
+                return false;
+            }
+
+            return true;
+        }
+        
+        public int InsertBestelBase(string datum, int gebruikerId, int adresId)
+        {
+            int id = 0;
+            MySqlCommand cmd = null;
+            try
+            {
+                // TODO: Haal alleen data binnen dat relevant is, niet alles.
+                string insertQuery = @"insert into bestelling (bezorgStatus,  bezorgTijd, bestelDatum, adresId, gebruikerId) 
+                                                        values (@bezorgStatus,@bezorgTijd, @bestelDatum, @adresId, @gebruikerId)";
+
+                cmd = new MySqlCommand(insertQuery, conn);
+                MySqlParameter bezorgStatusParam = new MySqlParameter("@bezorgStatus", MySqlDbType.VarChar);
+                MySqlParameter bezorgTijdParam = new MySqlParameter("@bezorgTijd", MySqlDbType.VarChar);
+                MySqlParameter bestelDatumParam = new MySqlParameter("@bestelDatum", MySqlDbType.VarChar);
+                MySqlParameter adresIdParam = new MySqlParameter("@adresId", MySqlDbType.Int32);
+                MySqlParameter gebruikerIdParam = new MySqlParameter("@gebruikerId", MySqlDbType.Int32);
+
+                bezorgStatusParam.Value = "Pending"; // TODO: Enum
+                bezorgTijdParam.Value = "3 dagen";
+                bestelDatumParam.Value = datum;
+                adresIdParam.Value = adresId;
+                gebruikerIdParam.Value = gebruikerId;
+
+                cmd.Parameters.Add(bezorgStatusParam);
+                cmd.Parameters.Add(bezorgTijdParam);
+                cmd.Parameters.Add(bestelDatumParam);
+                cmd.Parameters.Add(adresIdParam);
+                cmd.Parameters.Add(gebruikerIdParam);
+                cmd.Prepare();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.Write("Toevoegen van bestelling mislukt " + e);
+                throw e;
+            }
+
+            return id = (int) cmd.LastInsertedId;
         }
 
-        public void InsertBestelRegel()
+        public void InsertBestelRegel(int detailId, string datum, int hoeveelheid, int bestellingId, int aanbiedingId)
         {
+            try
+            {
+                // TODO: Haal alleen data binnen dat relevant is, niet alles.
+                string insertQuery = @"insert into bestelregel (hoeveelheid,  datum, bestelId, detailid, aanbiedingId) 
+                                                        values (@hoeveelheid, @datum, @bestelId, @detailid, @aanbiedingId)";
 
+                MySqlCommand cmd = new MySqlCommand(insertQuery, conn);
+                MySqlParameter hoeveelheidParam = new MySqlParameter("@hoeveelheid", MySqlDbType.VarChar);
+                MySqlParameter datumParam = new MySqlParameter("@datum", MySqlDbType.VarChar);
+                MySqlParameter bestelIdParam = new MySqlParameter("@bestelId", MySqlDbType.VarChar);
+                MySqlParameter detailIdParam = new MySqlParameter("@detailid", MySqlDbType.Int32);
+                MySqlParameter aanbiedingIdParam = new MySqlParameter("@aanbiedingId", MySqlDbType.Int32);
+
+                hoeveelheidParam.Value = hoeveelheid;
+                datumParam.Value = datum;
+                bestelIdParam.Value = bestellingId;
+                detailIdParam.Value = detailId;
+                aanbiedingIdParam.Value = aanbiedingId == 0 ? (int?) null : aanbiedingId;
+
+                cmd.Parameters.Add(hoeveelheidParam);
+                cmd.Parameters.Add(datumParam);
+                cmd.Parameters.Add(bestelIdParam);
+                cmd.Parameters.Add(detailIdParam);
+                cmd.Parameters.Add(aanbiedingIdParam);
+                cmd.Prepare();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.Write("Toevoegen van bestelregel mislukt " + e);
+                throw e;
+            }
         }
 
 

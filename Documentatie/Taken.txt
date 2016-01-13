@@ -9,9 +9,14 @@ Undef
 
 
 Hans
-1. Bestelling kunnen plaatsen						// 70%. Methodes maken
-2. Bestelling apart factuur adres op kunnen geven			// 0%
-3. Bestelling apart bezorg adres op kunnen geven			// 0%
+1. Bestelling apart factuur adres op kunnen geven			// 0%
+2. Bestelling apart bezorg adres op kunnen geven			// 0%
+3. Code Cleanup								// 0%
+4. Dropdown menu's							// 0%
+5. Verminderen, verhogen & Verwijderen van items in winkelwagen via productdetail // 0%
+6. ENUMS								// 0%
+7. TempData(UX/Usability)						// 0%
+8. Viewbag messages(UX/Usability)					// 0%
 
 Bram
 1. Producten zien op voorpagina 					//Alleen nog afbeeldingen op de front end
