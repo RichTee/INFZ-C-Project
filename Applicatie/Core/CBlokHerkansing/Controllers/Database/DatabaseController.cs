@@ -1,5 +1,6 @@
 ﻿using CBlokHerkansing.Models;
 using CBlokHerkansing.Models.Account;
+using CBlokHerkansing.Models.Bestelling;
 using CBlokHerkansing.Models.Klant;
 using CBlokHerkansing.Models.Product;
 using MySql.Data.MySqlClient;
@@ -25,6 +26,7 @@ namespace CBlokHerkansing.Controllers.Database
          */
         public DatabaseController()
         {
+<<<<<<< HEAD
             try
             {
                 conn = new MySqlConnection("Server=localhost;Port=3306;Database=dierenzaak;Uid=root;Pwd=root;");
@@ -33,6 +35,9 @@ namespace CBlokHerkansing.Controllers.Database
             {
                 conn = new MySqlConnection("Server=85.214.97.236; Database=CBlokHerkansing;Uid=dierenwinkel;Pwd=Ear98@8g;");
             }
+=======
+            conn = new MySqlConnection("Server=localhost;Port=3306;Database=dierenzaak;Uid=root;Pwd=alpine;");
+>>>>>>> cdcd945528ec61cbcbc1d671d2bc350517331182
         }
 
         /*
@@ -104,6 +109,7 @@ namespace CBlokHerkansing.Controllers.Database
             return aanbieding;
         }
 
+        // Haal Product & Detail binnen
         protected ProductDetail getFullProductFromDataReader(MySqlDataReader datareader)
         {
 
@@ -116,6 +122,21 @@ namespace CBlokHerkansing.Controllers.Database
                 kleur = datareader.GetString("kleur"),
                 voorraad = datareader.GetInt32("voorraad"),
                 product = GetProductFromDataReader(datareader)
+            };
+            return productDetail;
+        }
+
+        protected ProductDetail getProductDetailFromDataReader(MySqlDataReader datareader)
+        {
+
+            ProductDetail productDetail = new ProductDetail
+            {
+                detailId = datareader.GetInt32("detailID"),
+                verkoopprijs = datareader.GetDouble("verkoopprijs"),
+                inkoopprijs = datareader.GetDouble("inkoopprijs"),
+                maat = datareader.GetInt32("maat"),
+                kleur = datareader.GetString("kleur"),
+                voorraad = datareader.GetInt32("voorraad"),
             };
             return productDetail;
         }
@@ -138,11 +159,67 @@ namespace CBlokHerkansing.Controllers.Database
                 Straat = datareader.GetString("straat"),
                 Postcode = datareader.GetString("postcode"),
                 Huisnummer = datareader.GetInt32("huisnummer"),
-                HuisnummerToevoegsel = datareader.GetString("huisnummertoevoegsel"),
+                HuisnummerToevoegsel = String.IsNullOrEmpty(datareader["huisnummertoevoeging"].ToString()) ? "Geen" : datareader.GetString("huisnummertoevoeging"),
                 Stad = datareader.GetString("stad"),
             };
             return adres;
         }
 
+        /*
+         * 
+         * Bestelling
+         * 
+         */
+        protected BestellingBase getBestellingFromDataReader(MySqlDataReader datareader)
+        {
+            BestellingBase bestellingBase = new BestellingBase
+            {
+                BestellingId = datareader.GetInt32("bestellingId"),
+                BezorgStatus = datareader.GetString("bezorgStatus"),
+                BezorgTijd = datareader.GetString("bezorgTijd"),
+                BestelDatum = datareader.GetString("bestelDatum"),
+                Adres = getFullAdresFromDataReader(datareader),
+                Gebruiker = GetKlantFromDataReader(datareader),
+            };
+            return bestellingBase;
+        }
+
+        protected BestelRegel getFullBestellingFromDataReader(MySqlDataReader datareader)
+        {
+            BestelRegel bestellingRegel = null;
+            if (GetIntValue(datareader, "aanbiedingId") == 0)
+            {
+                ProductAanbieding productAanbieding = new ProductAanbieding();
+                bestellingRegel = new BestelRegel
+                {
+                    RegelId = datareader.GetInt32("regelId"),
+                    Hoeveelheid = datareader.GetInt32("hoeveelheid"),
+                    Datum = datareader.GetDateTime("datum") == null ? "geen" : datareader.GetDateTime("datum").ToString("yyyy/M/%d"),
+                    Bestelling = getBestellingFromDataReader(datareader),
+                    ProductDetail = getProductDetailFromDataReader(datareader),
+                    ProductAanbieding = productAanbieding,
+                };
+            }
+            else
+            {
+                bestellingRegel = new BestelRegel
+                {
+                    RegelId = datareader.GetInt32("regelId"),
+                    Hoeveelheid = datareader.GetInt32("hoeveelheid"),
+                    Datum = datareader.GetDateTime("datum") == null ? "geen" : datareader.GetDateTime("datum").ToString("yyyy/M/%d"),
+                    Bestelling = getBestellingFromDataReader(datareader),
+                    ProductDetail = getProductDetailFromDataReader(datareader),
+                    ProductAanbieding = GetAanbiedingFromDataReader(datareader),
+                };
+            }
+
+            return bestellingRegel;
+        }
+
+        // Check if int DB value is DBNull or null
+        private int GetIntValue(MySqlDataReader reader, String columnName)
+        {
+            return (reader[columnName] != null && reader[columnName] != DBNull.Value) ? Convert.ToInt32(reader[columnName]) : 0;
+        }
     }
 }

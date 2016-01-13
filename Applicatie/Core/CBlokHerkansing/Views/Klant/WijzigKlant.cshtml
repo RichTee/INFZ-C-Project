@@ -55,15 +55,26 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
+                        @if (User.IsInRole("ADMIN"))
+                        {
                             <label for="inputEmail3" class="col-sm-2 control-label">Wachtwoord Check</label>
-                            <div class="col-sm-10">
-                                @Html.TextBoxFor(model => model.WachtwoordCheck, new { placeholder = "Wachtwoord", type = "password", @class = "form-control" })
-                                <div style="color: red">
-                                    @Html.ValidationMessageFor(model => model.WachtwoordCheck)
+                            <div class="col-sm-10"> <!-- TODO: Fix dubbel klik op Update wanneer Admin nieuw wachtwoord invoert-->
+                                @Html.TextBoxFor(model => model.WachtwoordCheck, new { placeholder = "Wachtwoord", type="password", @Value = Model.Wachtwoord, @readonly="readonly" })
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="form-group">
+                                <label for="inputEmail3" class="col-sm-2 control-label">Wachtwoord Check</label>
+                                <div class="col-sm-10">
+                                    @Html.TextBoxFor(model => model.WachtwoordCheck, new { placeholder = "Wachtwoord", type = "password", @class = "form-control" })
+                                    <div style="color: red">
+                                        @Html.ValidationMessageFor(model => model.WachtwoordCheck)
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        }
+
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-10">
                                 <button type="submit" class="btn btn-default">Update</button>

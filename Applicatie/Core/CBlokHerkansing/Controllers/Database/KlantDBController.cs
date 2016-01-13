@@ -87,6 +87,40 @@ namespace CBlokHerkansing.Controllers.Database
             return klant;
         }
 
+        public int GetAdresId(int id)
+        {
+            int adresId = 0;
+            try
+            {
+                conn.Open();
+
+                string selectQuery = "SELECT adresId FROM adres WHERE gebruikerId = @gebruikerId;";
+                MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
+                MySqlParameter gebruikerIdParam = new MySqlParameter("@gebruikerId", MySqlDbType.Int32);
+
+                gebruikerIdParam.Value = id;
+
+                cmd.Parameters.Add(gebruikerIdParam);
+                cmd.Prepare();
+
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                while (dataReader.Read())
+                    adresId = dataReader.GetInt32("adresId");
+            }
+            catch (Exception e)
+            {
+                Console.Write("Ophalen van klant mislukt " + e); // TODO: ViewBag message
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return adresId;
+        }
+
         // Gebruiker toevoegen
         public void InsertKlant(KlantBase klant)
         {
