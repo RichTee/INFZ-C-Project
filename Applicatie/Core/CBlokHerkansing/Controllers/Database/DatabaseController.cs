@@ -25,7 +25,14 @@ namespace CBlokHerkansing.Controllers.Database
          */
         public DatabaseController()
         {
-            conn = new MySqlConnection("Server=localhost;Port=3306;Database=dierenzaak;Uid=root;Pwd=root;");
+            try
+            {
+                conn = new MySqlConnection("Server=localhost;Port=3306;Database=dierenzaak;Uid=root;Pwd=root;");
+            }
+            catch (Exception e)
+            {
+                conn = new MySqlConnection("Server=85.214.97.236; Database=CBlokHerkansing;Uid=dierenwinkel;Pwd=Ear98@8g;");
+            }
         }
 
         /*
