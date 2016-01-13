@@ -49,23 +49,25 @@ namespace CBlokHerkansing.Controllers.Database
             return producten;
         }
 
-        // Get 1 product met details
-        public ProductDetail GetProductAndDetail(int id)
+        // Get alle producten met details
+        public List<ProductDetail> getProductenDetail()
         {
-            try{                
-            conn.Open();
+            List<ProductDetail> producten = new List<ProductDetail>();
+            try
+            {
+                conn.Open();
 
-            string selectQuery = "SELECT detailId, verkoopprijs, inkoopprijs, maat, kleur, voorraad, naam, omschrijving, categorieId, productId FROM productdetail LEFT JOIN product on productdetail.productId = product.productId;";
+                string selectQuery = "SELECT detailId, verkoopprijs, inkoopprijs, maat, kleur, voorraad, naam, omschrijving, categorieId, pd.productId FROM productdetail pd LEFT JOIN product p on pd.productId = p.productId;";
                 MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
                 MySqlDataReader dataReader = cmd.ExecuteReader();
 
                 if (dataReader != null)
                 {
-                    return getFullProductFromDataReader(dataReader);
-                }
-                else
-                {
-                    return null;
+                    while (dataReader.Read())
+                    {
+                        ProductDetail productDetail = getFullProductFromDataReader(dataReader);
+                        producten.Add(productDetail);
+                    }
                 }
 
             }
@@ -78,9 +80,116 @@ namespace CBlokHerkansing.Controllers.Database
             {
                 conn.Close();
             }
+
+            return producten;
         }
 
-        // Insert aanbieding
+        // Get 1 product zonder details
+        public ProductBase GetProduct(int id)
+        {
+            ProductBase product = null;
+            try
+            {
+                conn.Open();
+
+                string selectQuery = "SELECT * FROM product WHERE productId = @productId;";
+
+                MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
+                MySqlParameter productIdParam = new MySqlParameter("@productId", MySqlDbType.Int32);
+
+                productIdParam.Value = id;
+
+                cmd.Parameters.Add(productIdParam);
+
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    product = GetProductFromDataReader(dataReader);
+                }
+
+                return product;
+            }
+            catch (Exception e)
+            {
+                Console.Write("Ophalen van product mislukt " + e);
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+        // Get 1 product met details
+        public ProductDetail GetProductAndDetail(int id)
+        {
+            ProductDetail productDetail = null;
+            try{                
+            conn.Open();
+
+            string selectQuery = "SELECT detailId, verkoopprijs, inkoopprijs, maat, kleur, voorraad, naam, omschrijving, categorieId, pd.productId FROM productdetail pd LEFT JOIN product on pd.productId = @productId;";
+                MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
+                MySqlParameter productIdParam = new MySqlParameter("@productId", MySqlDbType.Int32);
+
+                productIdParam.Value = id;
+
+                cmd.Parameters.Add(productIdParam);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                if (dataReader != null)
+                    while(dataReader.Read())
+                        productDetail = getFullProductFromDataReader(dataReader);
+
+            }
+            catch (Exception e)
+            {
+                Console.Write("Ophalen van producten mislukt " + e);
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return productDetail;
+        }
+
+        // Get 1 productdetail
+        public ProductDetail GetProductDetail(int id)
+        {
+            ProductDetail productDetail = new ProductDetail();
+            try
+            {
+                conn.Open();
+
+                string selectQuery = "SELECT detailId, verkoopprijs, inkoopprijs, maat, kleur, voorraad, naam, omschrijving, categorieId, pd.productId FROM productdetail pd LEFT JOIN product p on pd.productId = p.productId where pd.detailId = @detailId;";
+                MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
+                MySqlParameter detailIdParam = new MySqlParameter("@detailId", MySqlDbType.Int32);
+
+                detailIdParam.Value = id;
+
+                cmd.Parameters.Add(detailIdParam);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                if (dataReader != null)
+                    while (dataReader.Read())
+                        productDetail = getFullProductFromDataReader(dataReader);
+
+            }
+            catch (Exception e)
+            {
+                Console.Write("Ophalen van producten mislukt " + e);
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return productDetail;
+        }
+
+        // Insert Product
         public void InsertProduct(ProductBase product)
         {
             try
@@ -176,6 +285,127 @@ namespace CBlokHerkansing.Controllers.Database
                 conn.Close();
             }
         }
+
+        // Insert 1 productDetail
+        public void InsertProductDetail(ProductDetail productDetail)
+        {
+            try
+            {
+                conn.Open();
+                string insertString = @"insert into productdetail (verkoopprijs, inkoopprijs, maat, kleur, voorraad, productId) " +
+                                        "values (@verkoopprijs, @inkoopprijs, @maat, @kleur, @voorraad, @productId)";
+
+                MySqlCommand cmd = new MySqlCommand(insertString, conn);
+                MySqlParameter verkoopprijsParam = new MySqlParameter("@verkoopprijs", MySqlDbType.Double);
+                MySqlParameter inkoopprijsParam = new MySqlParameter("@inkoopprijs", MySqlDbType.Double);
+                MySqlParameter maatParam = new MySqlParameter("@maat", MySqlDbType.Int32);
+                MySqlParameter kleurParam = new MySqlParameter("@kleur", MySqlDbType.VarChar);
+                MySqlParameter voorraadParam = new MySqlParameter("@voorraad", MySqlDbType.Int32);
+                MySqlParameter productIdParam = new MySqlParameter("@productId", MySqlDbType.Int32);
+
+                verkoopprijsParam.Value = productDetail.verkoopprijs;
+                inkoopprijsParam.Value = productDetail.inkoopprijs;
+                maatParam.Value = productDetail.maat;
+                kleurParam.Value = productDetail.kleur;
+                voorraadParam.Value = productDetail.voorraad;
+                productIdParam.Value = productDetail.product.ProductId;
+
+                cmd.Parameters.Add(verkoopprijsParam);
+                cmd.Parameters.Add(inkoopprijsParam);
+                cmd.Parameters.Add(maatParam);
+                cmd.Parameters.Add(kleurParam);
+                cmd.Parameters.Add(voorraadParam);
+                cmd.Parameters.Add(productIdParam);
+
+                cmd.Prepare();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.Write("ProductDetail niet toegevoegd: " + e);
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        // Update 1 productdetail
+        public void UpdateProductDetail(ProductDetail productDetail)
+        {
+            try
+            {
+                conn.Open();
+
+                string updateQuery = @"UPDATE productdetail SET verkoopprijs = @verkoopprijs, inkoopprijs = @inkoopprijs, maat = @maat, 
+                                        kleur = @kleur, voorraad = @voorraad WHERE detailId = @detailId;";
+                MySqlCommand cmd = new MySqlCommand(updateQuery, conn);
+                MySqlParameter verkoopprijsParam = new MySqlParameter("@verkoopprijs", MySqlDbType.Double);
+                MySqlParameter inkoopprijsParam = new MySqlParameter("@inkoopprijs", MySqlDbType.Double);
+                MySqlParameter maatParam = new MySqlParameter("@maat", MySqlDbType.Int32);
+                MySqlParameter kleurParam = new MySqlParameter("@kleur", MySqlDbType.VarChar);
+                MySqlParameter voorraadParam = new MySqlParameter("@voorraad", MySqlDbType.Int32);
+                MySqlParameter detailIdParam = new MySqlParameter("@detailId", MySqlDbType.Int32);
+
+                verkoopprijsParam.Value = productDetail.verkoopprijs;
+                inkoopprijsParam.Value = productDetail.inkoopprijs;
+                maatParam.Value = productDetail.maat;
+                kleurParam.Value = productDetail.kleur;
+                voorraadParam.Value = productDetail.voorraad;
+                detailIdParam.Value = productDetail.detailId;
+
+                cmd.Parameters.Add(verkoopprijsParam);
+                cmd.Parameters.Add(inkoopprijsParam);
+                cmd.Parameters.Add(maatParam);
+                cmd.Parameters.Add(kleurParam);
+                cmd.Parameters.Add(voorraadParam);
+                cmd.Parameters.Add(detailIdParam);
+
+                cmd.Prepare();
+                cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception e)
+            {
+                Console.Write("ProductDetail update mislukt " + e);
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public void VerwijderProductDetail(int id)
+        {
+            try
+            {
+                conn.Open();
+
+                string insertString = @"delete from productdetail where detailId = @detailId";
+
+                MySqlCommand cmd = new MySqlCommand(insertString, conn);
+                MySqlParameter detailidParam = new MySqlParameter("@detailId", MySqlDbType.Int32);
+
+                detailidParam.Value = id;
+
+                cmd.Parameters.Add(detailidParam);
+
+                cmd.Prepare();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.Write("Product niet verwijderd: " + e);
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
         public List<ProductBase> getListProductFromCategorie(int categorieId)
         {
             

@@ -1,0 +1,76 @@
+﻿@model CBlokHerkansing.Models.Product.ProductDetail
+
+@{
+    ViewBag.Title = "WijzigProductDetail";
+}
+
+<h2 class="text-center login-title">WijzigProductDetail</h2>
+
+@using (Html.BeginForm("WijzigProductDetail", "Product"))
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-6 col-md-offset-4">
+                @if (Model != null)
+                {
+                    @Html.ValidationSummary(true)
+                    <form class="form-horizontal">
+                        <input type="hidden" value="@Model.detailId" name="DetailId" />
+                        <input type="hidden" value="@Model.product.ProductId" name="ProductId" />
+                        <h1 class="text-center login-title">Vul gegevens in om een product detail toe te voegen.</h1>
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-4 control-label">Verkoopprijs</label>
+                            <div class="col-sm-6">
+                                @Html.TextBoxFor(model => model.verkoopprijs, new { placeholder = "Verkoopprijs", @class = "form-control" })
+                                <div style="color: red">
+                                    @Html.ValidationMessageFor(model => model.verkoopprijs)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-4 control-label">Inkoopprijs</label>
+                            <div class="col-sm-6">
+                                @Html.TextBoxFor(model => model.inkoopprijs, new { placeholder = "Inkoopprijs", @class = "form-control" })
+                                <div style="color: red">
+                                    @Html.ValidationMessageFor(model => model.inkoopprijs)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-4 control-label">Maat</label>
+                            <div class="col-sm-6">
+                                @Html.TextBoxFor(model => model.maat, new { placeholder = "Maat", @class = "form-control" })
+                                <div style="color: red">
+                                    @Html.ValidationMessageFor(model => model.maat)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-4 control-label">Kleur</label>
+                            <div class="col-sm-6">
+                                @Html.TextBoxFor(model => model.kleur, new { placeholder = "Kleur", @class = "form-control" })
+                                <div style="color: red">
+                                    @Html.ValidationMessageFor(model => model.kleur)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail3" class="col-sm-4 control-label">Voorraad</label>
+                            <div class="col-sm-6">
+                                @Html.TextBoxFor(model => model.voorraad, new { placeholder = "Voorraad", @class = "form-control" })
+                                <div style="color: red">
+                                    @Html.ValidationMessageFor(model => model.voorraad)
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="submit" class="btn btn-default">Update</button>
+                            </div>
+                        </div>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+}
