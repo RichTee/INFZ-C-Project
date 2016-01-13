@@ -52,10 +52,40 @@
         </div>
         <div id="menu1" class="tab-pane fade">
             <h3>Uw Bestelling informatie</h3>
-            <p>
-                Lemon drops chocolate cake cake tiramisu cake dessert. Bonbon jujubes pudding halvah dessert. Dragée danish candy topping sweet roll liquorice. Sesame snaps chocolate bar donut chupa chups chocolate bar chocolate cake. Jujubes sweet pastry sweet roll. Cake marshmallow pie. Cheesecake caramels donut caramels cotton candy cotton candy sweet roll lemon drops candy canes. Brownie dragée sesame snaps chocolate croissant chupa chups jelly-o wafer cake. Tiramisu sweet roll cake liquorice fruitcake. Tootsie roll bear claw tart gummi bears brownie donut jelly cotton candy. Cake marshmallow chocolate bar candy. Croissant sweet roll sugar plum candy candy canes jujubes sesame snaps candy caramels.
-                Toffee cookie gingerbread cupcake candy chocolate bar pastry lollipop. Jelly fruitcake marzipan cake pudding dragée caramels. Chocolate tiramisu gummies caramels cake cheesecake tart. Icing toffee halvah apple pie sweet roll macaroon cake. Chocolate gummies sweet roll. Tootsie roll danish oat cake. Chocolate gingerbread icing tart dragée jelly beans carrot cake cake. Powder marzipan donut tiramisu cookie tootsie roll pudding. Biscuit chocolate apple pie carrot cake tiramisu. Cotton candy macaroon cupcake bear claw gummi bears. Dessert chupa chups dessert chocolate cake cotton candy candy jelly beans. Cake tiramisu candy liquorice wafer muffin sweet wafer marshmallow.
-            </p>
+            @if (Model != null)
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Id</th> <!-- TODO: Belangrijk voor beheerder?-->
+                            <th>Status</th>
+                            <th>Tijd</th>
+                            <th>Datum</th>
+                            <th>Product Naam</th>
+                            <th>Product Verkoopprijs</th>
+                            <th>Product Kleur</th>
+                            <th>Product Maat</th>
+                            <th>Adres</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.bestellingOverzicht.Count; i++)
+                        {
+                            <tr>
+                                <td>@Model.bestellingOverzicht[i].Bestelling.BestellingId</td>
+                                <td>@Model.bestellingOverzicht[i].Bestelling.BezorgStatus</td>
+                                <td>@Model.bestellingOverzicht[i].Bestelling.BezorgTijd</td>
+                                <td>@Model.bestellingOverzicht[i].Bestelling.BestelDatum</td>
+                                <td>Product Naam</td>
+                                <td>@Model.bestellingOverzicht[i].ProductDetail.verkoopprijs</td>
+                                <td>@Model.bestellingOverzicht[i].ProductDetail.kleur</td>
+                                <td>@Model.bestellingOverzicht[i].ProductDetail.maat</td>
+                                <td>@Model.bestellingOverzicht[i].Bestelling.Adres.Straat</td> <!-- TODO: Volledig adres-->
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
         </div>
     </div>
 </div>
