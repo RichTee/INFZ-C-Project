@@ -5,7 +5,8 @@ Undef
 - Goed zichtbaar voor kleurenblidnen
 - Mobile compatible
 - Groen kleurenschema
-- Elke pagina binnen 3 secondenx
+- Elke pagina binnen 3 seconden
+- Procesverslag
 
 
 Hans
