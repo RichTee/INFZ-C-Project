@@ -5,6 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (@ViewBag.Foutmelding != null)
+{
+    <div class="alert alert-danger text-center">
+        <strong>Foutmelding</strong> @ViewBag.Foutmelding
+    </div>
+}
+
 @using (Html.BeginForm("Login", "Account"))
 {
     <div class="container">

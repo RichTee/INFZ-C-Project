@@ -13,11 +13,9 @@ namespace CBlokHerkansing.Models.Account
         /*
          * TODO:
          * Check String Length does not exceed Database VarChar length 
-         * Set up regeular expression for email.
          * Encrypt Password with BCrypt
          */
-        [Required(ErrorMessage = "Een email is verplicht")]
-        //[RegularExpression(reg ,ErrorMessage = "Dit is geen geldig email adres.")]
+        [CustomEmailValidator] // Is al required
         [StringLength(25, ErrorMessage = "Een Email mag maximaal 25 karakters hebben")]
         public string Email { get; set; }
 
@@ -31,12 +29,16 @@ namespace CBlokHerkansing.Models.Account
         [DataType(DataType.Password)]
         public string WachtwoordCheck { get; set; }
         [Required(ErrorMessage = "Een voornaam is verplicht")]
+        [RegularExpression("^[a-zA-Z ]*$", ErrorMessage = "Vul een valide Voornaam in")]
         public string Voornaam { get; set; }
 
         [Required(ErrorMessage = "Een achternaam is verplicht")]
+        [RegularExpression("^[a-zA-Z ]*$", ErrorMessage = "Vul een valide Achternaam in")]
         public string Achternaam { get; set; }
 
-        [Required(ErrorMessage = "Een telefoonnummer is verplicht")]
+        [Required(ErrorMessage = "Een telefoonnummer is verplicht. Voorbeeld: 0640535921")]
+        // TODO: REGEX telefoonnummer
+        [DataAnnotationsExtensions.Integer(ErrorMessage = "Mogen alleen nummers zijn! Voorbeeld: 0640535921")]
         public int Telefoonnummer { get; set; }
     }
 }

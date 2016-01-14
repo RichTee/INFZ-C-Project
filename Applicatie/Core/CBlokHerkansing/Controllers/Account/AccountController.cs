@@ -68,12 +68,13 @@ namespace CBlokHerkansing.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("loginfout", "Username en Password zijn incorrect");
+                    ViewBag.Foutmelding = "Uw email en/of wachtwoord is fout";
                     return View();
                 }
             }
             else
             {
+                ViewBag.Foutmelding = "Uw email en/of wachtwoord is fout";
                 return View();
             }
         }

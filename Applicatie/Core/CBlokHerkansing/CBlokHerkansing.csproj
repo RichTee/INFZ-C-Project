@@ -181,6 +181,7 @@
     <Compile Include="Models\Bestelling\BestellingBase.cs" />
     <Compile Include="Models\Bestelling\BestelRegel.cs" />
     <Compile Include="Models\Categorie.cs" />
+    <Compile Include="Models\CustomEmailValidator.cs" />
     <Compile Include="Models\Klant\KlantBase.cs" />
     <Compile Include="Models\Account\LoginModel.cs" />
     <Compile Include="Models\Account\RegistrationModel.cs" />
