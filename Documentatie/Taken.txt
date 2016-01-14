@@ -1,11 +1,12 @@
-In Word gooien:
+ï»¿In Word gooien:
 
 Undef
 - Gold Membership kunnen halen
 - Goed zichtbaar voor kleurenblidnen
 - Mobile compatible
 - Groen kleurenschema
-- Elke pagina binnen 3 secondenx
+- Elke pagina binnen 3 seconden
+- Procesverslag
 
 
 Hans
@@ -20,23 +21,30 @@ Hans
 
 Bram
 1. Producten zien op voorpagina 					//Alleen nog afbeeldingen op de front end
-2. Producten wijzigen(beheer)
-3. Producten toevoegen(beheer)
-4. Aanbiedingen op de homepagina kunnen zien 				//Alleen nog afbeeldingen in kunnen laden
-5. Categorieën zoeken 							//Alleen nog testen en front end afvangen
+2. Producten wijzigen(beheer)						//0%
+3. Producten toevoegen(beheer)					//0%
+4. Aanbiedingen op de homepagina kunnen zien 			//Alleen nog afbeeldingen in kunnen laden
+5. Categorieï¿½n zoeken 							//Alleen nog testen en front end afvangen
 6. Product zoeken op naam 						//Alleen nog testen en front end afvangen
 7. Klant Adres CRUD 							//Alleen nog implementeren
-8. Redirect direct na inloggen naar beheer pagina(Beheer)
-9 Status bestelling aanpassen
+8. Redirect direct na inloggen naar beheer pagina(Beheer)	//0%
+9 Status bestelling aanpassen						//0%
 10. Categorie CRUD 							//Bijna uitgewerkt voornamelijk alleen nog testen
-11. 10 best lopende producten kunnen zien (Manager)
-12. 10 slechtst lopende producten kunnen zien (Manager)
-13. Omzet van de winkel zien van afgelopen 6 maanden (Manager)
-14. Winst van de afgelopen 6 maanden (Manager)
+11. 10 best lopende producten kunnen zien (Manager)		//0%
+12. 10 slechtst lopende producten kunnen zien (Manager)	//0%
+13. Omzet van de winkel zien van afgelopen 6 maanden (Manager)	//0%
+14. Winst van de afgelopen 6 maanden (Manager)			//0%
 
 Jeroen
+<<<<<<< HEAD
+1. Use Case
+2. Use Case Diagram
+3. Sitemap
+4. Viewbag Messages
+=======
 1. Use Cases								// 100% Af
 2. Use Case Diagram							// 100% Af
 3. Use Case Beschrijving						// 10% To-Do
 4. Sitemap
 5. Viewbag Messages
+>>>>>>> b255f816e9ff605732567fde81ab1526677c49d4

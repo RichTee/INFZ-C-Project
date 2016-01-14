@@ -133,6 +133,7 @@ namespace CBlokHerkansing.Controllers
             string usr = User.Identity.Name;
 
             KlantBase klantGegevens = klantDBController.GetKlantInformatie(usr);
+            List<BestelRegel> klantBestelling = bestellingDBController.GetBestelling(klantGegevens.Id);
 
             if (klantGegevens == null)
             {
@@ -141,6 +142,7 @@ namespace CBlokHerkansing.Controllers
 
             KlantViewModel viewModel = new KlantViewModel();
             viewModel.klantOverzicht = klantGegevens;
+            viewModel.bestellingOverzicht = klantBestelling;
 
             // TempData Toevoeging
             if (TempData[Enum.ViewMessage.TOEVOEGING.ToString()] != null)
