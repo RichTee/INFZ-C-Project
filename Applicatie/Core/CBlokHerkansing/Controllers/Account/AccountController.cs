@@ -142,6 +142,20 @@ namespace CBlokHerkansing.Controllers
             KlantViewModel viewModel = new KlantViewModel();
             viewModel.klantOverzicht = klantGegevens;
 
+            // TempData Toevoeging
+            if (TempData[Enum.ViewMessage.TOEVOEGING.ToString()] != null)
+            {
+                ViewBag.Wijziging = "U heeft " + TempData[Enum.ViewMessage.TOEVOEGING.ToString()] + " toegevoegt";
+                TempData.Remove(Enum.ViewMessage.TOEVOEGING.ToString());
+            }
+
+            // TempData Wijziging
+            if (TempData[Enum.ViewMessage.WIJZIGING.ToString()] != null)
+            {
+                ViewBag.Wijziging = "U heeft " + TempData[Enum.ViewMessage.WIJZIGING.ToString()] + " is gewijzigt";
+                TempData.Remove(Enum.ViewMessage.WIJZIGING.ToString());
+            }
+
             return View(viewModel);
         }
 
@@ -165,6 +179,27 @@ namespace CBlokHerkansing.Controllers
             viewModel.productDetailOverzicht = productenDetail;
             viewModel.productAanbiedingOverzicht = aanbiedingen;
             viewModel.bestellingDetailOverzicht = bestellingRegel;
+
+            // TempData Toevoeging
+            if (TempData[Enum.ViewMessage.TOEVOEGING.ToString()] != null)
+            {
+                ViewBag.Wijziging = "U heeft " + TempData[Enum.ViewMessage.TOEVOEGING.ToString()] + " toegevoegt";
+                TempData.Remove(Enum.ViewMessage.TOEVOEGING.ToString());
+            }
+
+            // TempData Wijziging
+            if (TempData[Enum.ViewMessage.WIJZIGING.ToString()] != null)
+            {
+                ViewBag.Wijziging = "U heeft " + TempData[Enum.ViewMessage.WIJZIGING.ToString()] + " gewijzigt";
+                TempData.Remove(Enum.ViewMessage.WIJZIGING.ToString());
+            }
+
+            // TempData Verwijdering
+            if (TempData[Enum.ViewMessage.VERWIJDERING.ToString()] != null)
+            {
+                ViewBag.Wijziging = "U heeft " + TempData[Enum.ViewMessage.VERWIJDERING.ToString()] + " verwijdert";
+                TempData.Remove(Enum.ViewMessage.VERWIJDERING.ToString());
+            }
 
             return View(viewModel);
         }

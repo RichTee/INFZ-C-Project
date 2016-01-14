@@ -4,6 +4,21 @@
     ViewBag.Title = "Profiel";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@if (@ViewBag.Foutmelding != null)
+{
+    <div class="alert alert-danger text-center">
+        <strong>Foutmelding</strong> @ViewBag.Foutmelding
+    </div>
+}
+
+@if (ViewBag.Wijziging != null)
+{
+    <div class="alert alert-success text-center">
+        <strong>Success!</strong>  @ViewBag.Wijziging
+    </div>
+}
+
 <div class="centered-pills">
     <h2>Beheer</h2>
     <ul class="nav nav-tabs">

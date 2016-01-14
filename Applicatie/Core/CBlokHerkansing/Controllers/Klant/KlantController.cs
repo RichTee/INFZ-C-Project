@@ -32,6 +32,9 @@ namespace CBlokHerkansing.Controllers.User
                         return View(klant);
 
                     klantDBController.InsertKlant(klant);
+
+                    TempData[Enum.ViewMessage.TOEVOEGING.ToString()] = "Klant Id: " + klant.Id + ", Email: " + klant.Email;
+
                     return RedirectToAction("Beheer", "Account");
                 }
                 catch (Exception e)
@@ -70,10 +73,19 @@ namespace CBlokHerkansing.Controllers.User
                 try
                 {
                     klantDBController.UpdateKlant(klant);
+
                     if (User.IsInRole("KLANT"))
+                    {
+                        TempData[Enum.ViewMessage.WIJZIGING.ToString()] = "uw klant gegevens";
+
                         return RedirectToAction("Profiel", "Account");
+                    }
                     else if (User.IsInRole("ADMIN"))
+                    {
+                        TempData[Enum.ViewMessage.WIJZIGING.ToString()] = klant.Email;
+
                         return RedirectToAction("Beheer", "Account");
+                    }
                     return RedirectToAction("index", "Home");
                 }
                 catch (Exception e)
@@ -94,6 +106,7 @@ namespace CBlokHerkansing.Controllers.User
             try
             {
                 klantDBController.VerwijderKlant(email);
+                TempData[Enum.ViewMessage.VERWIJDERING.ToString()] = "het";
             }
             catch (Exception e)
             {

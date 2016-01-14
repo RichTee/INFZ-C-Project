@@ -5,6 +5,32 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (@ViewBag.Foutmelding != null)
+{
+    <div class="alert alert-danger text-center">
+        <strong>Foutmelding</strong> @ViewBag.Foutmelding
+    </div>
+}
+
+@if (ViewBag.Toevoeging != null)
+{
+    <div class="alert alert-success text-center">
+        <strong>Success!</strong>  @ViewBag.Toevoeging
+    </div>
+}
+else if (ViewBag.Wijziging != null)
+{
+    <div class="alert alert-success text-center">
+        <strong>Success!</strong>  @ViewBag.Wijziging
+    </div>
+}
+else if (ViewBag.Verwijdering != null)
+{
+    <div class="alert alert-success text-center">
+        <strong>Success!</strong>  @ViewBag.Verwijdering
+    </div>
+}
+
 <div class="centered-pills">
     <div class="table-responsive">
     <h2>Beheer</h2>

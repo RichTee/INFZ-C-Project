@@ -31,6 +31,8 @@ namespace CBlokHerkansing.Controllers.Product
                 try
                 {
                     aanbiedingDBController.InsertAanbieding(aanbieding);
+                    TempData[Enum.ViewMessage.TOEVOEGING.ToString()] = "Aanbieding Id: " + aanbieding.AanbiedingId + ", KortingsPercentage: " + aanbieding.KortingsPercentage;
+
                     return RedirectToAction("Beheer", "Account");
                 }
                 catch (Exception e)
@@ -69,6 +71,7 @@ namespace CBlokHerkansing.Controllers.Product
                 try
                 {
                     aanbiedingDBController.WijzigAanbieding(aanbieding);
+                    TempData[Enum.ViewMessage.WIJZIGING.ToString()] = "Aanbieding Id: " + aanbieding.AanbiedingId;
                     return RedirectToAction("Beheer", "Account");
                 }
                 catch (Exception e)
@@ -89,7 +92,7 @@ namespace CBlokHerkansing.Controllers.Product
             try
             {
                 aanbiedingDBController.VerwijderAanbieding(id);
-                // TempData["Wijziging"] = productcode;
+                TempData[Enum.ViewMessage.VERWIJDERING.ToString()] = "de aanbieding";
             }
             catch (Exception e)
             {
@@ -113,6 +116,7 @@ namespace CBlokHerkansing.Controllers.Product
                 try
                 {
                     productDBController.InsertProduct(product);
+                    TempData[Enum.ViewMessage.TOEVOEGING.ToString()] = "Product Id: " + product.ProductId + ", Naam: " + product.Naam;
                     return RedirectToAction("Beheer", "Account");
                 }
                 catch (Exception e)
@@ -151,7 +155,7 @@ namespace CBlokHerkansing.Controllers.Product
                 try
                 {
                     productDBController.UpdateProductAndDetail(productDetailModel);
-
+                    TempData[Enum.ViewMessage.WIJZIGING.ToString()] = "Product: " + productDetailModel.product.Naam;
                     return RedirectToAction("Beheer", "Account");
                 }
                 catch (Exception e)
@@ -172,7 +176,7 @@ namespace CBlokHerkansing.Controllers.Product
         {
             try
             {
-                
+                TempData[Enum.ViewMessage.VERWIJDERING.ToString()] = "het";
             }
             catch (Exception e)
             {
@@ -201,6 +205,7 @@ namespace CBlokHerkansing.Controllers.Product
                 try
                 {
                     productDBController.InsertProductDetail(productDetail);
+                    TempData[Enum.ViewMessage.TOEVOEGING.ToString()] = "Detail Id: " + productDetail.detailId + ", Voorraad: " + productDetail.voorraad + ", Maat: " + productDetail.maat + ", Verkoopprijs: " + productDetail.verkoopprijs + ", Inkoopprijs: " + productDetail.inkoopprijs;
                     return RedirectToAction("Beheer", "Account");
                 }
                 catch (Exception e)
@@ -239,6 +244,7 @@ namespace CBlokHerkansing.Controllers.Product
                 try
                 {
                     productDBController.UpdateProductDetail(productDetailModel);
+                    TempData[Enum.ViewMessage.WIJZIGING.ToString()] = "Detail: " + productDBController.GetProductByDetail(productDetailModel.detailId).Naam;
 
                     return RedirectToAction("Beheer", "Account");
                 }
@@ -260,6 +266,7 @@ namespace CBlokHerkansing.Controllers.Product
         {
             try
             {
+                TempData[Enum.ViewMessage.VERWIJDERING.ToString()] = "het detail";
                 productDBController.VerwijderProductDetail(id);
             }
             catch (Exception e)

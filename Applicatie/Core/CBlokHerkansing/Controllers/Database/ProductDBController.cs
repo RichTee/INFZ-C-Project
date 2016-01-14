@@ -120,6 +120,43 @@ namespace CBlokHerkansing.Controllers.Database
                 conn.Close();
             }
         }
+
+        // Get 1 product zonder details via detailId
+        public ProductBase GetProductByDetail(int id)
+        {
+            ProductBase product = null;
+            try
+            {
+                conn.Open();
+
+                string selectQuery = "SELECT * from product WHERE productId = (SELECT pd.productId FROM productDetail pd WHERE detailId = @detailId);";
+
+                MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
+                MySqlParameter detailIdParam = new MySqlParameter("@detailId", MySqlDbType.Int32);
+
+                detailIdParam.Value = id;
+
+                cmd.Parameters.Add(detailIdParam);
+
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    product = GetProductFromDataReader(dataReader);
+                }
+
+                return product;
+            }
+            catch (Exception e)
+            {
+                Console.Write("Ophalen van product mislukt " + e);
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
         // Get 1 product met details
         public ProductDetail GetProductAndDetail(int id)
         {

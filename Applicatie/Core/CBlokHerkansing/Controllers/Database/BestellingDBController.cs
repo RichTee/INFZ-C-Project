@@ -1,4 +1,5 @@
-﻿using CBlokHerkansing.Models.Bestelling;
+﻿using CBlokHerkansing.Enum;
+using CBlokHerkansing.Models.Bestelling;
 using CBlokHerkansing.Models.Product;
 using CBlokHerkansing.Models.Winkelwagen;
 using MySql.Data.MySqlClient;
@@ -95,8 +96,8 @@ namespace CBlokHerkansing.Controllers.Database
                 MySqlParameter adresIdParam = new MySqlParameter("@adresId", MySqlDbType.Int32);
                 MySqlParameter gebruikerIdParam = new MySqlParameter("@gebruikerId", MySqlDbType.Int32);
 
-                bezorgStatusParam.Value = "Pending"; // TODO: Enum
-                bezorgTijdParam.Value = "3 dagen";
+                bezorgStatusParam.Value = BestelStatus.PENDING; // TODO: Enum
+                bezorgTijdParam.Value = BestelEnum.GetDescription(BestelTijd.DEFAULT);
                 bestelDatumParam.Value = datum;
                 adresIdParam.Value = adresId;
                 gebruikerIdParam.Value = gebruikerId;

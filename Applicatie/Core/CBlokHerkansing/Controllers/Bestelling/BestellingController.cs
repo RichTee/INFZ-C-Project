@@ -49,6 +49,8 @@ namespace CBlokHerkansing.Controllers.Bestelling
         [CustomUnauthorized(Roles = "ADMIN")]
         public ActionResult WijzigBestelling(BestellingBase bestellingBaseModel)
         {
+            TempData[Enum.ViewMessage.WIJZIGING.ToString()] = " Bestelling Id: " + bestellingBaseModel.BestellingId;
+
             return View();
         }
 
