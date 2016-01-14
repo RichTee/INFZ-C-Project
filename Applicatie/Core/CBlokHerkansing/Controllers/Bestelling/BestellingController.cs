@@ -3,6 +3,7 @@ using CBlokHerkansing.Controllers.Database;
 using CBlokHerkansing.Models.Bestelling;
 using CBlokHerkansing.Models.Klant;
 using CBlokHerkansing.Models.Winkelwagen;
+using CBlokHerkansing.ViewModels.Bestelling;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -42,16 +43,54 @@ namespace CBlokHerkansing.Controllers.Bestelling
         [CustomUnauthorized(Roles = "ADMIN")]
         public ActionResult WijzigBestelling(int id)
         {
-            return View();
+            BestelBaseViewModel bestelling = new BestelBaseViewModel();
+            bestelling.bestelling = bestellingDBController.GetBestellingById(id);
+            bestelling.listStatus = selectListBestelling();
+
+            return View(bestelling);
         }
 
         [HttpPost]
         [CustomUnauthorized(Roles = "ADMIN")]
-        public ActionResult WijzigBestelling(BestellingBase bestellingBaseModel)
+        public ActionResult WijzigBestelling(BestelBaseViewModel bestellingBaseModel)
         {
-            TempData[Enum.ViewMessage.WIJZIGING.ToString()] = " Bestelling Id: " + bestellingBaseModel.BestellingId;
+            bestellingBaseModel.bestelling.BezorgStatus = bestellingBaseModel.SelectedStatus;
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    bestellingDBController.UpdateBestellingStatus(bestellingBaseModel.bestelling.BestellingId, bestellingBaseModel.bestelling.BezorgStatus);
+                    TempData[Enum.ViewMessage.WIJZIGING.ToString()] = " Bestelling Id: " + bestellingBaseModel.bestelling.BestellingId;
 
-            return View();
+                    return RedirectToAction("Beheer", "Account");
+                }
+                catch (Exception e)
+                {
+                    ViewBag.FoutMelding("Er is iets fout gegaan: " + e);
+                    return View();
+                }
+            }
+            else
+            {
+                bestellingBaseModel.listStatus = selectListBestelling();
+                return View(bestellingBaseModel);
+            }
+        }
+
+        private SelectList selectListBestelling()
+        {
+            List<String> list = new List<String>();
+            list.Add(Enum.BestelStatus.PENDING.ToString());
+            list.Add(Enum.BestelStatus.PROCESSING.ToString());
+            list.Add(Enum.BestelStatus.DELIVERED.ToString());
+
+            var selectListItems = list.Select(x => new SelectListItem
+            {
+                Text = x.ToString(),
+                Value = x.ToString()
+            }).ToList();
+
+            return new SelectList(selectListItems, "Text", "Value");
         }
 
         private bool bestellingAfronden(WinkelwagenItem winkelwagenItemModel)

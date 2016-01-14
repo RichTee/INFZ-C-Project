@@ -194,6 +194,7 @@
     <Compile Include="Models\Klant\Adres.cs" />
     <Compile Include="ViewModels\Account\BeheerderViewModel.cs" />
     <Compile Include="ViewModels\Account\KlantViewModel.cs" />
+    <Compile Include="ViewModels\Bestelling\BestelBaseViewModel.cs" />
     <Compile Include="ViewModels\Product\ProductViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

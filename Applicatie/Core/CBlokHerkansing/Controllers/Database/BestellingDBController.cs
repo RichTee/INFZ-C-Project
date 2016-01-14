@@ -52,7 +52,6 @@ namespace CBlokHerkansing.Controllers.Database
             catch (Exception e)
             {
                 Console.Write("Ophalen van bestellingen mislukt " + e);
-                throw e;
             }
             finally
             {
@@ -87,7 +86,6 @@ namespace CBlokHerkansing.Controllers.Database
             catch (Exception e)
             {
                 Console.Write("Ophalen van bestellingen mislukt " + e);
-                throw e;
             }
             finally
             {
@@ -96,6 +94,45 @@ namespace CBlokHerkansing.Controllers.Database
 
             return bestellingen;
         }
+
+        // Get Bestelling by Id
+        public BestellingBase GetBestellingById(int id)
+        {
+            try
+            {
+                conn.Open();
+                // TODO: Haal alleen data binnen dat relevant is, niet alles.
+                string selectQuery = "SELECT bestellingId, bezorgStatus, bezorgTijd, bestelDatum FROM bestelling WHERE bestellingId = @bestellingId";
+                MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
+                MySqlParameter bestellingIdParam = new MySqlParameter("@bestellingId", MySqlDbType.Int32);
+
+                bestellingIdParam.Value = id;
+
+                cmd.Parameters.Add(bestellingIdParam);
+                cmd.Prepare();
+
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+                while (dataReader.Read())
+                {
+                    BestellingBase bestelling = new BestellingBase();
+                    bestelling.BestellingId = dataReader.GetInt32("bestellingId");
+                    bestelling.BezorgStatus = dataReader.GetString("bezorgStatus");
+                    bestelling.BezorgTijd = dataReader.GetString("bezorgTijd");
+                    bestelling.BestelDatum = dataReader.GetString("bestelDatum");
+                    return bestelling;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.Write("Ophalen van bestelling mislukt " + e);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return null;
+        }
+
 
         public List<BestelRegel> GetBestelling(int usr)
         {
@@ -125,7 +162,6 @@ namespace CBlokHerkansing.Controllers.Database
             catch (Exception e)
             {
                 Console.Write("Ophalen van bestelling mislukt " + e);
-                throw e;
             }
             finally
             {
@@ -198,7 +234,6 @@ namespace CBlokHerkansing.Controllers.Database
             catch (Exception e)
             {
                 Console.Write("Toevoegen van bestelling mislukt " + e);
-                throw e;
             }
 
             return id = (int) cmd.LastInsertedId;
@@ -236,10 +271,41 @@ namespace CBlokHerkansing.Controllers.Database
             catch (Exception e)
             {
                 Console.Write("Toevoegen van bestelregel mislukt " + e);
-                throw e;
             }
         }
 
+        // Update 1 Bestelling status
+        public void UpdateBestellingStatus(int adresId, string status)
+        {
+            try
+            {
+                conn.Open();
 
+                string updateString = @"UPDATE bestelling SET bezorgStatus = @bezorgStatus WHERE bestellingId = @bestellingId";
+
+                MySqlCommand cmd = new MySqlCommand(updateString, conn);
+                MySqlParameter bestellingStatus = new MySqlParameter("@bezorgStatus", MySqlDbType.VarChar);
+                MySqlParameter bestellingIdParam = new MySqlParameter("@bestellingId", MySqlDbType.Int32);
+
+                bestellingStatus.Value = status;
+                bestellingIdParam.Value = adresId;
+
+                cmd.Parameters.Add(bestellingStatus);
+                cmd.Parameters.Add(bestellingIdParam);
+
+                cmd.Prepare();
+                cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception e)
+            {
+                Console.Write("Updaten bestelling status niet gelukt: " + e); // TODO: ViewBag message
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
     }
 }

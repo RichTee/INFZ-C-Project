@@ -265,7 +265,7 @@ else if (ViewBag.Verwijdering != null)
                                                 <span class="sr-only">Toggle Dropdown</span>
                                             </button>
                                             <ul class="dropdown-menu" role="menu">
-                                                <li><a href="#">@Html.ActionLink("Wijzig", "WijzigBestelling", "Bestelling", new { id = @Model.bestellingDetailOverzicht[i].Bestelling.BestellingId }, new { onclick = "return confirm('Weet u zeker dat u dit wilt wijzigen?')" })</a></li>
+                                                <li><a href="#">@Html.ActionLink("Wijzig Bestel Status", "WijzigBestelling", "Bestelling", new { id = @Model.bestellingDetailOverzicht[i].Bestelling.BestellingId }, new { onclick = "return confirm('Weet u zeker dat u dit wilt wijzigen?')" })</a></li>
                                             </ul>
                                         </div>
                                     </td>
