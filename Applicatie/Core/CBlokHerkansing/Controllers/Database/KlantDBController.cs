@@ -47,6 +47,43 @@ namespace CBlokHerkansing.Controllers.Database
             return klanten;
         }
 
+        public bool CheckKlantMaxAdres(int id)
+        {
+            try
+            {
+                conn.Open();
+
+                String insertString = "SELECT count(*) as count FROM adres WHERE gebruikerId = @gebruikerId;";
+
+                MySqlCommand cmd = new MySqlCommand(insertString, conn);
+                MySqlParameter gebruikerIdParam = new MySqlParameter("@gebruikerId", MySqlDbType.Int32);
+
+                gebruikerIdParam.Value = id;
+
+                cmd.Parameters.Add(gebruikerIdParam);
+                cmd.Prepare();
+
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    if (3 == dataReader.GetInt32("count"))
+                        return true;
+                }
+            }
+            catch (Exception e)
+            {
+                throw e; // TODO: Show exception to user via Viewbag
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return false;
+        }
+
+        // Retrieve klant id met Email
         public int GetKlantId(string email)
         {
             int klantId = 0;

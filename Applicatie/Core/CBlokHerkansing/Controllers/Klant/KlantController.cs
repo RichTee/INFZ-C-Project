@@ -140,6 +140,8 @@ namespace CBlokHerkansing.Controllers.User
         [CustomUnauthorized(Roles = "KLANT, ADMIN")]
         public ActionResult ToevoegenAdres()
         {
+            if (User.IsInRole("KLANT") && klantDBController.CheckKlantMaxAdres(klantDBController.GetKlantId(User.Identity.Name)))
+                return RedirectToAction("Profiel", "Account");
             return View();
         }
 
