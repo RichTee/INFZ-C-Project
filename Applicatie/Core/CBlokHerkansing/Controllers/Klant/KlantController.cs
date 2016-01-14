@@ -58,6 +58,9 @@ namespace CBlokHerkansing.Controllers.User
         {
             try
             {
+                if (User.IsInRole("KLANT") ? !User.Identity.Name.Equals(email) : false)
+                    return RedirectToAction("Profiel", "Account");
+
                 KlantBase klant = klantDBController.GetKlantInformatie(email);
                 return View(klant);
             }
@@ -74,6 +77,8 @@ namespace CBlokHerkansing.Controllers.User
         {
             if (ModelState.IsValid)
             {
+                if (User.IsInRole("KLANT") ? !User.Identity.Name.Equals(klant.Email) : false)
+                    return RedirectToAction("Profiel", "Account");
                 try
                 {
                     klantDBController.UpdateKlant(klant);
@@ -170,6 +175,8 @@ namespace CBlokHerkansing.Controllers.User
         [CustomUnauthorized(Roles = "KLANT, ADMIN")]
         public ActionResult WijzigAdres(int id)
         {
+            if (User.IsInRole("KLANT") ? !klantDBController.UserHasAdres(id, User.Identity.Name) : false)
+                return RedirectToAction("Profiel", "Account");
             try
             {
                 Adres adres = klantDBController.GetKlantAdresByAdresId(id);
@@ -188,6 +195,8 @@ namespace CBlokHerkansing.Controllers.User
         {
             if (ModelState.IsValid)
             {
+                if (User.IsInRole("KLANT") ? !klantDBController.UserHasAdres(adres.Id, User.Identity.Name) : false)
+                    return RedirectToAction("Profiel", "Account");
                 try
                 {
                     klantDBController.UpdateAdres(adres);
@@ -224,6 +233,8 @@ namespace CBlokHerkansing.Controllers.User
             try
             {
                 // TODO: Check if User is klant, if so, only give access to own data
+                if (User.IsInRole("KLANT") ? !klantDBController.UserHasAdres(id, User.Identity.Name) : false)
+                    return RedirectToAction("Profiel", "Account");
 
                 if(bestellingDBController.CheckActiveBestellingenByAdres(id))
                 {

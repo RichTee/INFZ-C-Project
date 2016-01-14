@@ -125,6 +125,41 @@ namespace CBlokHerkansing.Controllers.Database
          * Adres
          * 
          */
+        public bool UserHasAdres(int id, string email)
+        {
+            try
+            {
+                conn.Open();
+
+                String insertString = "SELECT adresId FROM adres ad WHERE adresId = @adresId AND ad.gebruikerId = (SELECT gr.gebruikerId FROM gebruiker gr WHERE gr.email = @email);";
+
+                MySqlCommand cmd = new MySqlCommand(insertString, conn);
+                MySqlParameter adresIdParam = new MySqlParameter("@adresId", MySqlDbType.VarChar);
+                MySqlParameter emailParam = new MySqlParameter("@email", MySqlDbType.VarChar);
+
+                adresIdParam.Value = id;
+                emailParam.Value = email;
+
+                cmd.Parameters.Add(adresIdParam);
+                cmd.Parameters.Add(emailParam);
+                cmd.Prepare();
+
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                if (dataReader.Read())
+                    return true;
+                else
+                    return false;
+            }
+            catch (Exception e)
+            {
+                throw e; // TODO: Show exception to user via Viewbag
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
         public int GetAdresId(int id)
         {
             int adresId = 0;
