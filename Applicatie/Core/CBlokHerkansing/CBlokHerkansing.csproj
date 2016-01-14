@@ -93,7 +93,9 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\background.jpg" />
+    <Content Include="Content\Images\bg-section-simple.png" />
     <Content Include="Content\Images\Logo.png" />
+    <Content Include="Content\Images\support-online-store.png" />
     <Content Include="Content\Images\test.jpg" />
     <Content Include="Content\Site.css" />
     <Content Include="font-awesome\css\font-awesome.css" />
