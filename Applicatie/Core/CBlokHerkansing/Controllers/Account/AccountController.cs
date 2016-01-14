@@ -100,15 +100,14 @@ namespace CBlokHerkansing.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (accountDBController.checkGebruikerDuplicaat(registrationModel.Email))
+                if (!accountDBController.checkGebruikerDuplicaat(registrationModel.Email))
                 {
                     accountDBController.InsertKlant(registrationModel);
-                    // TODO: User melden dat email al in gebruik is via een ViewBag message.
                     return RedirectToAction("Login", "Account");
                 }
                 else
                 {
-                    ModelState.AddModelError("registratieFout", "Gebruikersnaam bestaat al");
+                    ModelState.AddModelError("registratieFout", "email bestaat al");
                     return View();
                 }
 
@@ -134,6 +133,7 @@ namespace CBlokHerkansing.Controllers
 
             KlantBase klantGegevens = klantDBController.GetKlantInformatie(usr);
             List<BestelRegel> klantBestelling = bestellingDBController.GetBestelling(klantGegevens.Id);
+            List<Adres> klantAdres = klantDBController.GetKlantAdressen(klantGegevens.Id);
 
             if (klantGegevens == null)
             {
@@ -143,6 +143,14 @@ namespace CBlokHerkansing.Controllers
             KlantViewModel viewModel = new KlantViewModel();
             viewModel.klantOverzicht = klantGegevens;
             viewModel.bestellingOverzicht = klantBestelling;
+            viewModel.adresOverzicht = klantAdres;
+
+            // TempData Foutmelding
+            if (TempData[Enum.ViewMessage.FOUTMELDING.ToString()] != null)
+            {
+                ViewBag.Foutmelding = TempData[Enum.ViewMessage.FOUTMELDING.ToString()];
+                TempData.Remove(Enum.ViewMessage.FOUTMELDING.ToString());
+            }
 
             // TempData Toevoeging
             if (TempData[Enum.ViewMessage.TOEVOEGING.ToString()] != null)
@@ -156,6 +164,13 @@ namespace CBlokHerkansing.Controllers
             {
                 ViewBag.Wijziging = "U heeft " + TempData[Enum.ViewMessage.WIJZIGING.ToString()] + " is gewijzigt";
                 TempData.Remove(Enum.ViewMessage.WIJZIGING.ToString());
+            }
+
+            // TempData Verwijdering
+            if (TempData[Enum.ViewMessage.VERWIJDERING.ToString()] != null)
+            {
+                ViewBag.Wijziging = "U heeft " + TempData[Enum.ViewMessage.VERWIJDERING.ToString()] + " verwijdert";
+                TempData.Remove(Enum.ViewMessage.VERWIJDERING.ToString());
             }
 
             return View(viewModel);
@@ -181,6 +196,13 @@ namespace CBlokHerkansing.Controllers
             viewModel.productDetailOverzicht = productenDetail;
             viewModel.productAanbiedingOverzicht = aanbiedingen;
             viewModel.bestellingDetailOverzicht = bestellingRegel;
+
+            // TempData Foutmelding
+            if (TempData[Enum.ViewMessage.FOUTMELDING.ToString()] != null)
+            {
+                ViewBag.Foutmelding = TempData[Enum.ViewMessage.FOUTMELDING.ToString()];
+                TempData.Remove(Enum.ViewMessage.FOUTMELDING.ToString());
+            }
 
             // TempData Toevoeging
             if (TempData[Enum.ViewMessage.TOEVOEGING.ToString()] != null)

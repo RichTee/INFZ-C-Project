@@ -15,6 +15,53 @@ namespace CBlokHerkansing.Controllers.Database
     {
         public BestellingDBController() { }
 
+        // Check of een klant actieve bestellingen heeft op een adres
+        public Boolean CheckActiveBestellingenByAdres(int id)
+        {
+            try
+            {
+                conn.Open();
+                // TODO: Haal alleen data binnen dat relevant is, niet alles.
+                string selectQuery = "SELECT * FROM bestelling WHERE bezorgStatus IN (@bezorgStatus , @bezorgStatus2 )AND adresId = @adresId GROUP BY adresId;";
+                MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
+                MySqlParameter bezorgStatusParam = new MySqlParameter("@bezorgStatus", MySqlDbType.VarChar);
+                MySqlParameter bezorgStatus2Param = new MySqlParameter("@bezorgStatus2", MySqlDbType.VarChar);
+                MySqlParameter adresIdParam = new MySqlParameter("@adresId", MySqlDbType.Int32);
+
+                bezorgStatusParam.Value = Enum.BestelStatus.PENDING.ToString();
+                bezorgStatus2Param.Value = Enum.BestelStatus.PROCESSING.ToString();
+                adresIdParam.Value = id;
+
+                cmd.Parameters.Add(bezorgStatusParam);
+                cmd.Parameters.Add(bezorgStatus2Param);
+                cmd.Parameters.Add(adresIdParam);
+
+                cmd.Prepare();
+
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                if (dataReader != null)
+                {
+                    if (dataReader.Read())
+                        return true;
+                    else
+                        return false;
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.Write("Ophalen van bestellingen mislukt " + e);
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return false;
+        }
+
         public List<BestelRegel> GetBestellingen()
         {
             List<BestelRegel> bestellingen = new List<BestelRegel>();

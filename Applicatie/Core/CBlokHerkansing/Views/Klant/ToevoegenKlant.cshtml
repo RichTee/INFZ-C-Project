@@ -4,7 +4,12 @@
     ViewBag.Title = "ToevoegenKlant";
 }
 
-<h2 class="text-center login-title">ToevoegenKlant</h2>
+@if (@ViewBag.Foutmelding != null)
+{
+    <div class="alert alert-danger text-center">
+        <strong>Foutmelding</strong> @ViewBag.Foutmelding
+    </div>
+}
 
 @using (Html.BeginForm("ToevoegenKlant", "Klant"))
 {

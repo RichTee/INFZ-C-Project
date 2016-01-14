@@ -10,6 +10,9 @@ namespace CBlokHerkansing.ViewModels.Account
     public class KlantViewModel
     {
         public KlantBase klantOverzicht { get; set; }
+
+        public List<Adres> adresOverzicht { get; set; }
+
         public List<BestelRegel> bestellingOverzicht { get; set; }
     }
 }

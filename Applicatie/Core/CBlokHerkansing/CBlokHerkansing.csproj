@@ -38,6 +38,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DataAnnotationsExtensions, Version=1.1.0.0, Culture=neutral, PublicKeyToken=358a5681c50fd84c, processorArchitecture=MSIL">
+      <HintPath>..\packages\DataAnnotationsExtensions.1.1.0.0\lib\NETFramework40\DataAnnotationsExtensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MVC Foolproof Validation">
       <HintPath>..\packages\MVC Foolproof Validation.dll</HintPath>
@@ -217,6 +221,8 @@
     <Content Include="Views\Product\WijzigProductDetail.cshtml" />
     <Content Include="Views\Bestelling\WijzigBestelling.cshtml" />
     <Content Include="Views\Bestelling\Bestellen.cshtml" />
+    <Content Include="Views\Klant\ToevoegenAdres.cshtml" />
+    <Content Include="Views\Klant\WijzigAdres.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

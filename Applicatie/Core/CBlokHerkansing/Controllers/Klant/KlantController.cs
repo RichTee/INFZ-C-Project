@@ -13,6 +13,7 @@ namespace CBlokHerkansing.Controllers.User
     {
         private KlantDBController klantDBController = new KlantDBController();
         private AccountDBController accountDBController = new AccountDBController();
+        private BestellingDBController bestellingDBController = new BestellingDBController();
 
         [CustomUnauthorized(Roles = "ADMIN")]
         public ActionResult ToevoegenKlant()
@@ -28,8 +29,11 @@ namespace CBlokHerkansing.Controllers.User
             {
                 try
                 {
-                    if (!accountDBController.checkGebruikerDuplicaat(User.Identity.Name))
+                    if (accountDBController.checkGebruikerDuplicaat(klant.Email))
+                    {
+                        ViewBag.Foutmelding = "Email bestaat al";
                         return View(klant);
+                    }
 
                     klantDBController.InsertKlant(klant);
 
@@ -105,6 +109,13 @@ namespace CBlokHerkansing.Controllers.User
         {
             try
             {
+                int id = klantDBController.GetKlantId(email);
+                if (bestellingDBController.CheckActiveBestellingenByAdres(klantDBController.GetAdresId(id)))
+                {
+                    TempData[Enum.ViewMessage.FOUTMELDING.ToString()] = "Klant heeft een actieve bestelling!";
+                    return RedirectToAction("Beheer", "Account");
+                }
+
                 klantDBController.VerwijderKlant(email);
                 TempData[Enum.ViewMessage.VERWIJDERING.ToString()] = "het";
             }
@@ -112,6 +123,123 @@ namespace CBlokHerkansing.Controllers.User
             {
                 ViewBag.FoutMelding("Er is iets fout gegaan: " + e);
             }
+            return RedirectToAction("Beheer", "Account");
+        }
+
+        /*
+         * 
+         * Adres
+         * 
+         */
+
+        [CustomUnauthorized(Roles = "KLANT, ADMIN")]
+        public ActionResult ToevoegenAdres()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [CustomUnauthorized(Roles = "KLANT, ADMIN")]
+        public ActionResult ToevoegenAdres(Adres adres)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    adres.GebruikerId = klantDBController.GetKlantId(User.Identity.Name);
+                    klantDBController.InsertAdres(adres);
+                    TempData[Enum.ViewMessage.TOEVOEGING.ToString()] = "Straat: " + adres.Straat + ", Postcode: " + adres.Postcode;
+
+                    if (User.IsInRole("KLANT"))
+                        return RedirectToAction("Profiel", "Account");
+
+                    return RedirectToAction("Beheer", "Account");
+                }
+                catch (Exception e)
+                {
+                    ViewBag.FoutMelding("Er is iets fout gegaan: " + e);
+                    return View();
+                }
+            }
+            else
+            {
+                return View(adres);
+            }
+        }
+
+        [CustomUnauthorized(Roles = "KLANT, ADMIN")]
+        public ActionResult WijzigAdres(int id)
+        {
+            try
+            {
+                Adres adres = klantDBController.GetKlantAdresByAdresId(id);
+                return View(adres);
+            }
+            catch (Exception e)
+            {
+                ViewBag.FoutMelding("Er is iets fout gegaan: " + e);
+                return View();
+            }
+        }
+
+        [HttpPost]
+        [CustomUnauthorized(Roles = "KLANT, ADMIN")]
+        public ActionResult WijzigAdres(Adres adres)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    klantDBController.UpdateAdres(adres);
+
+                    if (User.IsInRole("KLANT"))
+                    {
+                        TempData[Enum.ViewMessage.WIJZIGING.ToString()] = "uw adres gegevens zijn";
+
+                        return RedirectToAction("Profiel", "Account");
+                    }
+                    else if (User.IsInRole("ADMIN"))
+                    {
+                        TempData[Enum.ViewMessage.WIJZIGING.ToString()] = adres.Straat + ", " + adres.Huisnummer;
+
+                        return RedirectToAction("Beheer", "Account");
+                    }
+                    return RedirectToAction("index", "Home");
+                }
+                catch (Exception e)
+                {
+                    ViewBag.FoutMelding("Er is iets fout gegaan: " + e);
+                    return View();
+                }
+            }
+            else
+            {
+                return View(adres);
+            }
+        }
+
+        [CustomUnauthorized(Roles = "KLANT, ADMIN")]
+        public ActionResult VerwijderAdres(int id)
+        {
+            try
+            {
+                // TODO: Check if User is klant, if so, only give access to own data
+
+                if(bestellingDBController.CheckActiveBestellingenByAdres(id))
+                {
+                    TempData[Enum.ViewMessage.FOUTMELDING.ToString()] = "U heeft een actieve bestelling op dit adres!" + "\n Adres kan pas verwijdert worden wanneer de bestelling bij u ontvangen is";
+                    return RedirectToAction("Profiel", "Account");
+                }
+
+                klantDBController.VerwijderAdres(id);
+                TempData[Enum.ViewMessage.VERWIJDERING.ToString()] = "het";
+            }
+            catch (Exception e)
+            {
+                ViewBag.FoutMelding("Er is iets fout gegaan: " + e);
+            }
+            if (User.IsInRole("KLANT"))
+                return RedirectToAction("Profiel", "Account");
             return RedirectToAction("Beheer", "Account");
         }
     }

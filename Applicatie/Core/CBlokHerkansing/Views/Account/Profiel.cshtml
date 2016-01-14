@@ -23,13 +23,14 @@
     <h2>Beheer</h2>
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#home">Account Gegevens</a></li>
-        <li><a data-toggle="tab" href="#menu1">Bestellingen</a></li>
+        <li><a data-toggle="tab" href="#menu1">Adres</a></li>
+        <li><a data-toggle="tab" href="#menu2">Bestellingen</a></li>
     </ul>
 
     <div class="tab-content" style="max-width: 75%; margin: 0 auto;">
         <div id="home" class="tab-pane fade in active">
             <h3>Uw Account Gegevens</h3>
-            @if (Model != null)
+            @if (Model.klantOverzicht != null)
             {
                 <table class="table table-striped">
                     <thead>
@@ -66,8 +67,58 @@
             }
         </div>
         <div id="menu1" class="tab-pane fade">
+            <h3>Uw adres informatie</h3>
+            <h4>U mag maximaal 3 adres gegevens hebben.</h4>
+            @if (Model.adresOverzicht != null)
+            {
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Straat</th>
+                            <th>Postcode</th>
+                            <th>Huisnummer</th>
+                            <th>Huisnummertoevoegsel</th>
+                            <th>Stad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.adresOverzicht.Count; i++)
+                        {
+                            <tr>
+                                <td>@Model.adresOverzicht[i].Straat</td>
+                                <td>@Model.adresOverzicht[i].Postcode</td>
+                                <td>@Model.adresOverzicht[i].Huisnummer</td>
+                                <td>@Model.adresOverzicht[i].HuisnummerToevoegsel</td>
+                                <td>@Model.adresOverzicht[i].Stad</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-danger">Action</button>
+                                        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#">@Html.ActionLink("Wijzigen", "WijzigAdres", "Klant", new { id = @Model.adresOverzicht[i].Id }, new { onclick = "return confirm('Weet u zeker dat u dit wilt wijzigen?')" })</a></li>
+                                            <li><a href="#">@Html.ActionLink("Verwijderen", "VerwijderAdres", "Klant", new { id = @Model.adresOverzicht[i].Id }, new { onclick = "return confirm('Weet u zeker dat u dit wilt verwijderen?')" })</a></li>
+                                        </ul>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                        <tr>
+                            <td>@Html.ActionLink("Toevoegen", "ToevoegenAdres", "Klant")</td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                @Html.ActionLink("Toevoegen", "ToevoegenAdres", "Klant", null,  new { @class = "btn btn-lg btn-primary btn-block", style = "float: none" })            
+            }
+        </div>
+        <div id="menu2" class="tab-pane fade">
             <h3>Uw Bestelling informatie</h3>
-            @if (Model != null)
+            @if (Model.bestellingOverzicht != null)
             {
                 <table class="table table-striped">
                     <thead>

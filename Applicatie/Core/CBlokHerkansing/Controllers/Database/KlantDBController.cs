@@ -47,6 +47,40 @@ namespace CBlokHerkansing.Controllers.Database
             return klanten;
         }
 
+        public int GetKlantId(string email)
+        {
+            int klantId = 0;
+            try
+            {
+                conn.Open();
+
+                string selectQuery = "SELECT gebruikerId FROM gebruiker WHERE email = @email;";
+                MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
+                MySqlParameter emailParam = new MySqlParameter("@email", MySqlDbType.VarChar);
+
+                emailParam.Value = email;
+
+                cmd.Parameters.Add(emailParam);
+                cmd.Prepare();
+
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                while (dataReader.Read())
+                    klantId = dataReader.GetInt32("gebruikerId");
+            }
+            catch (Exception e)
+            {
+                Console.Write("Ophalen van klant mislukt " + e); // TODO: ViewBag message
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return klantId;
+        }
+
         // Get 1 klant
         public KlantBase GetKlantInformatie(string usr)
         {
@@ -87,6 +121,10 @@ namespace CBlokHerkansing.Controllers.Database
             return klant;
         }
 
+        /*
+         * Adres
+         * 
+         */
         public int GetAdresId(int id)
         {
             int adresId = 0;
@@ -121,6 +159,115 @@ namespace CBlokHerkansing.Controllers.Database
             return adresId;
         }
 
+        public Adres GetKlantAdresByUserId(int id)
+        {
+            try
+            {
+                conn.Open();
+
+                string selectQuery = "SELECT * FROM adres WHERE gebruikerId = @gebruikerId";
+                MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
+                MySqlParameter gebruikerIdParam = new MySqlParameter("@gebruikerId", MySqlDbType.VarChar);
+
+                gebruikerIdParam.Value = id;
+
+                cmd.Parameters.Add(gebruikerIdParam);
+                cmd.Prepare();
+
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                while (dataReader.Read())
+                    return getFullAdresFromDataReader(dataReader);
+            }
+            catch (Exception e)
+            {
+                Console.Write("Ophalen van adres mislukt " + e); // TODO: ViewBag message
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return null;
+        }
+
+        public Adres GetKlantAdresByAdresId(int id)
+        {
+            try
+            {
+                conn.Open();
+
+                string selectQuery = "SELECT * FROM adres WHERE adresId = @adresId";
+                MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
+                MySqlParameter adresIdParam = new MySqlParameter("@adresId", MySqlDbType.Int32);
+
+                adresIdParam.Value = id;
+
+                cmd.Parameters.Add(adresIdParam);
+                cmd.Prepare();
+
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                while (dataReader.Read())
+                {
+                    Adres adres = getFullAdresFromDataReader(dataReader);
+                    adres.GebruikerId = dataReader.GetInt32("gebruikerId");
+                    return adres;
+                }
+            }
+            catch (Exception e)
+            {
+                Console.Write("Ophalen van adres mislukt " + e); // TODO: ViewBag message
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return null;
+        }
+
+        public List<Adres> GetKlantAdressen(int id)
+        {
+            List<Adres> adres = new List<Adres>();
+            try
+            {
+                conn.Open();
+
+                string selectQuery = "SELECT * FROM adres WHERE gebruikerId = @gebruikerId";
+                MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
+                MySqlParameter gebruikerIdParam = new MySqlParameter("@gebruikerId", MySqlDbType.VarChar);
+
+                gebruikerIdParam.Value = id;
+
+                cmd.Parameters.Add(gebruikerIdParam);
+                cmd.Prepare();
+
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                while (dataReader.Read())
+                    adres.Add(getFullAdresFromDataReader(dataReader));
+            }
+            catch (Exception e)
+            {
+                Console.Write("Ophalen van klant mislukt " + e); // TODO: ViewBag message
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return adres;
+        }
+
+        /*
+         * 
+         * CRUD
+         * 
+         */
         // Gebruiker toevoegen
         public void InsertKlant(KlantBase klant)
         {
@@ -233,6 +380,141 @@ namespace CBlokHerkansing.Controllers.Database
             catch (Exception e)
             {
                 Console.Write("Klant niet verwijderd: " + e);
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        /*
+         * 
+         * adres
+         * 
+         */
+        public void InsertAdres(Adres adres)
+        {
+            try
+            {
+                conn.Open();
+
+                // Column                                          1           2          3         4       5           6
+                string insertString = @"insert into adres (straat,  postcode, huisnummer, huisnummertoevoeging, stad, gebruikerId) 
+                                                        values (@straat,@postcode, @huisnummer, @huisnummertoevoeging, @stad, @gebruikerId)";
+
+                MySqlCommand cmd = new MySqlCommand(insertString, conn);
+                MySqlParameter straatParam = new MySqlParameter("@straat", MySqlDbType.VarChar);
+                MySqlParameter postcodeParam = new MySqlParameter("@postcode", MySqlDbType.VarChar);
+                MySqlParameter huisnummerParam = new MySqlParameter("@huisnummer", MySqlDbType.VarChar);
+                MySqlParameter huisnummerToevoegingParam = new MySqlParameter("@huisnummertoevoeging", MySqlDbType.VarChar);
+                MySqlParameter stadParam = new MySqlParameter("@stad", MySqlDbType.VarChar);
+                MySqlParameter gebruikerIdParam = new MySqlParameter("@gebruikerId", MySqlDbType.Int32);
+
+
+                straatParam.Value = adres.Straat;
+                postcodeParam.Value = adres.Postcode;
+                huisnummerParam.Value = adres.Huisnummer;
+                if (string.IsNullOrEmpty(adres.HuisnummerToevoegsel))
+                    huisnummerToevoegingParam.Value = adres.HuisnummerToevoegsel;
+                else
+                    huisnummerToevoegingParam.Value = DBNull.Value;
+                stadParam.Value = adres.Stad;
+                gebruikerIdParam.Value = adres.GebruikerId;
+
+                cmd.Parameters.Add(straatParam);
+                cmd.Parameters.Add(postcodeParam);
+                cmd.Parameters.Add(huisnummerParam);
+                cmd.Parameters.Add(huisnummerToevoegingParam);
+                cmd.Parameters.Add(stadParam);
+                cmd.Parameters.Add(gebruikerIdParam);
+                cmd.Prepare();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.Write("Klant adres niet toegevoegd: " + e); // TODO: Show exception to user via Viewbag
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        // Update 1 klant
+        public void UpdateAdres(Adres adres)
+        {
+            try
+            {
+                conn.Open();
+
+                string insertString = @"UPDATE adres SET straat=@straat, postcode=@postcode, huisnummer=@huisnummer, huisnummertoevoeging=@huisnummertoevoeging, stad=@stad, gebruikerId=@gebruikerId WHERE adresId = @adresId";
+
+                MySqlCommand cmd = new MySqlCommand(insertString, conn);
+                MySqlParameter adresStraatParam = new MySqlParameter("@straat", MySqlDbType.VarChar);
+                MySqlParameter adresPostcodeParam = new MySqlParameter("@postcode", MySqlDbType.VarChar);
+                MySqlParameter adresHuisnummerParam = new MySqlParameter("@huisnummer", MySqlDbType.VarChar);
+                MySqlParameter adresHuisnummerToevoegingParam = new MySqlParameter("@huisnummertoevoeging", MySqlDbType.VarChar);
+                MySqlParameter adresStadParam = new MySqlParameter("@stad", MySqlDbType.VarChar);
+                MySqlParameter gebruikerIdParam = new MySqlParameter("gebruikerId", MySqlDbType.Int32);
+                MySqlParameter adresIdParam = new MySqlParameter("@adresId", MySqlDbType.Int32);
+
+                adresStraatParam.Value = adres.Straat;
+                adresPostcodeParam.Value = adres.Postcode;
+                adresHuisnummerParam.Value = adres.Huisnummer;
+                adresHuisnummerToevoegingParam.Value = adres.HuisnummerToevoegsel;
+                adresStadParam.Value = adres.Stad;
+                gebruikerIdParam.Value = adres.GebruikerId;
+                adresIdParam.Value = adres.Id;
+
+                cmd.Parameters.Add(adresStraatParam);
+                cmd.Parameters.Add(adresPostcodeParam);
+                cmd.Parameters.Add(adresHuisnummerParam);
+                if (!string.IsNullOrEmpty(adres.HuisnummerToevoegsel))
+                    cmd.Parameters.Add(adresHuisnummerToevoegingParam);
+                else
+                    cmd.Parameters.Add(DBNull.Value);
+                cmd.Parameters.Add(adresStadParam);
+                cmd.Parameters.Add(gebruikerIdParam);
+                cmd.Parameters.Add(adresIdParam);
+
+                cmd.Prepare();
+                cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception e)
+            {
+                Console.Write("Updaten klant adres niet gelukt: " + e); // TODO: ViewBag message
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public void VerwijderAdres(int id)
+        {
+            try
+            {
+                conn.Open();
+
+                string insertString = @"delete from adres where adresId=@adresId";
+
+                MySqlCommand cmd = new MySqlCommand(insertString, conn);
+                MySqlParameter adresIdParam = new MySqlParameter("@adresId", MySqlDbType.Int32);
+
+                adresIdParam.Value = id;
+
+                cmd.Parameters.Add(adresIdParam);
+
+                cmd.Prepare();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.Write("Klant adres niet verwijderd: " + e);
                 throw e;
             }
             finally

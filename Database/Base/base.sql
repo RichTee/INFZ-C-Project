@@ -1,10 +1,10 @@
 CREATE DATABASE  IF NOT EXISTS `dierenzaak` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `dierenzaak`;
--- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.17, for Win64 (x86_64)
 --
--- Host: localhost    Database: dierenzaak
+-- Host: 127.0.0.1    Database: dierenzaak
 -- ------------------------------------------------------
--- Server version	5.6.25-log
+-- Server version	5.5.41
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -60,7 +60,7 @@ CREATE TABLE `adres` (
   `gebruikerId` int(11) NOT NULL,
   PRIMARY KEY (`adresId`),
   KEY `FK_KlantAdres_idx` (`gebruikerId`),
-  CONSTRAINT `FK_KlantAdres` FOREIGN KEY (`gebruikerId`) REFERENCES `gebruiker` (`gebruikerId`)
+  CONSTRAINT `FK_KlantAdres` FOREIGN KEY (`gebruikerId`) REFERENCES `gebruiker` (`gebruikerId`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -120,8 +120,8 @@ CREATE TABLE `bestelling` (
   PRIMARY KEY (`bestellingId`),
   KEY `FK_BestellingAdres_idx` (`adresId`),
   KEY `FK_BestellingGebruiker_idx` (`gebruikerId`),
-  CONSTRAINT `FK_BestellingAdres` FOREIGN KEY (`adresId`) REFERENCES `adres` (`adresId`),
-  CONSTRAINT `FK_BestellingGebruiker` FOREIGN KEY (`gebruikerId`) REFERENCES `gebruiker` (`gebruikerId`)
+  CONSTRAINT `FK_BestellingAdres` FOREIGN KEY (`adresId`) REFERENCES `adres` (`adresId`) ON DELETE CASCADE,
+  CONSTRAINT `FK_BestellingGebruiker` FOREIGN KEY (`gebruikerId`) REFERENCES `gebruiker` (`gebruikerId`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -320,4 +320,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-11 10:44:08
+-- Dump completed on 2016-01-14 20:03:50

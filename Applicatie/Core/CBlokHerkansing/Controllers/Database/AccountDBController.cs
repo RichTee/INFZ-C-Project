@@ -76,7 +76,7 @@ namespace CBlokHerkansing.Controllers.Database
 
                 MySqlDataReader dataReader = cmd.ExecuteReader();
 
-                if (!dataReader.Read())
+                if (dataReader.Read())
                     return true;
                 else
                     return false;
