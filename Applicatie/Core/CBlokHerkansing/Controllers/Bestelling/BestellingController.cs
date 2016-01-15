@@ -4,6 +4,7 @@ using CBlokHerkansing.Models.Bestelling;
 using CBlokHerkansing.Models.Klant;
 using CBlokHerkansing.Models.Winkelwagen;
 using CBlokHerkansing.ViewModels.Bestelling;
+using CBlokHerkansing.ViewModels.Klant;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -20,24 +21,65 @@ namespace CBlokHerkansing.Controllers.Bestelling
         protected String CartKey = "MyCart";
 
         // GET: Bestelling
-        [HttpPost]
-        public ActionResult Bestellen(WinkelwagenItem winkelwagenItemModel)
+        [CustomUnauthorized(Roles = "KLANT")]
+        public ActionResult Bestellen()
         {
-            /*if (winkelwagenItemModel.product == null || winkelwagenItemModel.hoeveelheid == null)
-                return RedirectToAction("Index", "Home");
-            */
+            KlantBase klantBase = klantDBController.GetKlantInformatie(User.Identity.Name);
+            List<Adres> klantAdres = klantDBController.GetKlantAdressen(klantDBController.GetKlantId(User.Identity.Name));
+            KlantBaseEnAdresViewModel viewModel = new KlantBaseEnAdresViewModel();
+            viewModel.klantBase = klantBase;
+            viewModel.klantAdressen = klantAdres;
 
-            // TODO: Check if Cookie value is WinkelwagenItem class
+            // TempData Foutmelding
+            if (TempData[Enum.ViewMessage.FOUTMELDING.ToString()] != null)
+            {
+                ViewBag.Foutmelding = TempData[Enum.ViewMessage.FOUTMELDING.ToString()];
+                TempData.Remove(Enum.ViewMessage.FOUTMELDING.ToString());
+            }
 
-            // Check if item exists, if so, increment quantity.
-            // else add item and quantity
-            WinkelwagenItem item = JsonConvert.DeserializeObject<WinkelwagenItem>(Request.Cookies[CartKey].Value);
-            if (item.product == null)
-                return RedirectToAction("Index", "Home");
-            // Temp
-            bestellingAfronden(item);
+            return View(viewModel);
+        }
 
-            return View();
+        [HttpPost]
+        [CustomUnauthorized(Roles = "KLANT")]
+        public ActionResult Bestellen(KlantBaseEnAdresViewModel viewModel)
+        {
+                try
+                {
+                    if (viewModel.adresKeuze == 0)
+                    {
+                        TempData[Enum.ViewMessage.FOUTMELDING.ToString()] = "U moet een adres selecteren!";
+                        return RedirectToAction("Bestellen");
+                    }
+
+                    WinkelwagenItem item = JsonConvert.DeserializeObject<WinkelwagenItem>(Request.Cookies[CartKey].Value);
+                    if (item.product == null)
+                        return RedirectToAction("Index", "Home");
+
+                    string bestelKeuze = "";
+                    int adresKeuze = viewModel.adresKeuze;
+                    switch (viewModel.bestelKeuze)
+                    {
+                        case 0:
+                            bestelKeuze = Enum.VerzendKeuze.ONLINE.ToString();
+                            break;
+                        case 1:
+                            bestelKeuze = Enum.VerzendKeuze.FACTUUR.ToString();
+                            break;
+                        default:
+                            break;
+                    }
+
+                    bestellingAfronden(item, bestelKeuze, adresKeuze);
+                    TempData[Enum.ViewMessage.TOEVOEGING.ToString()] = "uw bestelling naar ons verzonden. Deze is in ons process";
+
+                    return RedirectToAction("Profiel", "Account");
+                }
+                catch (Exception e)
+                {
+                    ViewBag.FoutMelding("Er is iets fout gegaan: " + e);
+                    return View();
+                }
         }
 
         [CustomUnauthorized(Roles = "ADMIN")]
@@ -93,7 +135,7 @@ namespace CBlokHerkansing.Controllers.Bestelling
             return new SelectList(selectListItems, "Text", "Value");
         }
 
-        private bool bestellingAfronden(WinkelwagenItem winkelwagenItemModel)
+        private bool bestellingAfronden(WinkelwagenItem winkelwagenItemModel, string bestelKeuze, int adres)
         {
             // Retrieve User Data
             KlantBase klant = klantDBController.GetKlantInformatie(User.Identity.Name);
@@ -101,10 +143,10 @@ namespace CBlokHerkansing.Controllers.Bestelling
             if (adresId == 0)
                 RedirectToAction("Winkelwagen", "Winkelwagen"); // Temp Data over Adres niet ingevult
 
-            int aanbiedingId = 0; // Get AanbiedingId indien beschikbaar
+            int aanbiedingId = 0; // TODO: Get aanbieding
 
             // Insert Bestelling
-            if(bestellingDBController.InsertBestelling(winkelwagenItemModel, "2016-01-28" /*TODO: Datum */, klant.Id, adresId, aanbiedingId))
+            if(bestellingDBController.InsertBestelling(winkelwagenItemModel, DateTime.Today.ToString("yyyy/M/%d"), klant.Id, adres, bestelKeuze, aanbiedingId))
             {
                 // Succesful Insert
                 if (Request.Cookies[CartKey] != null)

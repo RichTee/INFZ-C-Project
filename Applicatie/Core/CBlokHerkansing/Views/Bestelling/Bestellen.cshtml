@@ -1,8 +1,121 @@
-﻿
+﻿@model CBlokHerkansing.ViewModels.Klant.KlantBaseEnAdresViewModel
+
 @{
     ViewBag.Title = "Bestellen";
 }
 
-<h2 class="text-center login-title">Uw Gegevens</h2>
+@if (@ViewBag.Foutmelding != null)
+{
+    <div class="alert alert-danger text-center">
+        <strong>Foutmelding</strong> @ViewBag.Foutmelding
+    </div>
+}
 
-
+<div class="container">
+    <div class="row">
+        <div class="col-sm-6 col-md-6 col-md-offset-4">
+            @if (Model.klantBase != null && Model.klantAdressen != null)
+                {
+                @Html.ValidationSummary(true)
+                <form action="/Bestelling/Bestellen" method="post" class="form-horizontal">
+                    <h1 class="text-center login-title">Klant Gegevens</h1>
+                    <h2 class="text-center">Zorg dat uw gegevens kloppen</h2>
+                    @Html.HiddenFor(m => m.klantBase.Id)
+                    @Html.HiddenFor(m => m.klantBase.GoldStatus)
+                    @Html.HiddenFor(m => m.klantBase.Rol)
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-4 control-label">Email</label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(model => model.klantBase.Email, new { placeholder = "Email", @readonly = "readonly", @class = "form-control" })
+                            <div style="color: red">
+                                @Html.ValidationMessageFor(model => model.klantBase.Email)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-4 control-label">Voornaam</label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(model => model.klantBase.Voornaam, new { placeholder = "Voornaam", @readonly = "readonly", @class = "form-control" })
+                            <div style="color: red">
+                                @Html.ValidationMessageFor(model => model.klantBase.Voornaam)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-4 control-label">Achternaam</label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(model => model.klantBase.Achternaam, new { placeholder = "Achternaam", @readonly = "readonly", @class = "form-control" })
+                            <div style="color: red">
+                                @Html.ValidationMessageFor(model => model.klantBase.Achternaam)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-4 control-label">Telefoonnummer</label>
+                        <div class="col-sm-4">
+                            @Html.TextBoxFor(model => model.klantBase.Telefoonnummer, new { placeholder = "Telefoonnummer", @readonly = "readonly", @class = "form-control" })
+                            <div style="color: red">
+                                @Html.ValidationMessageFor(model => model.klantBase.Telefoonnummer)
+                            </div>
+                        </div>
+                    </div>
+                    <h1 class ="text-center">Adres Gegevens</h1>
+                    <h2 class="text-center">Kies een adres voor verzending</h2>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Straat</th>
+                                <th>Postcode</th>
+                                <th>Huisnummer</th>
+                                <th>Huisnummertoevoegsel</th>
+                                <th>Stad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.klantAdressen.Count; i++)
+                            {
+                                <tr>
+                                    <td>@Model.klantAdressen[i].Straat</td>
+                                    <td>@Model.klantAdressen[i].Postcode</td>
+                                    <td>@Model.klantAdressen[i].Huisnummer</td>
+                                    <td>@Model.klantAdressen[i].HuisnummerToevoegsel</td>
+                                    <td>@Model.klantAdressen[i].Stad</td>
+                                    <td>@Html.RadioButtonFor(m => m.adresKeuze, Model.klantAdressen[i].Id)</td>
+                                </tr>
+                            }
+                            <tr>
+                                <td>
+                                    <div style="color: red">
+                                        @Html.ValidationMessageFor(model => model.adresKeuze)
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="form-group">
+                        <h2 class="text-center">Factuur thuis ontvangen?</h2>
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <div class="radio">
+                                <label>
+                                    @Html.RadioButtonFor(x => x.bestelKeuze, "1")
+                                    @Html.Label("Ja, ik wil betalen via factuur")
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    @Html.RadioButtonFor(x => x.bestelKeuze, "0", new { @checked = "checked" })
+                                    @Html.Label("Nee, ik wil online betalen")
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">Bestelling Voltooien</button>
+                        </div>
+                    </div>
+                </form>
+                }
+        </div>
+    </div>
+</div>

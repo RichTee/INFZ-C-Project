@@ -30,6 +30,14 @@ namespace CBlokHerkansing.Enum
         LONG = 3
     }
 
+    public enum VerzendKeuze
+    {
+        [Description("Factuur")]
+        FACTUUR = 0,
+        [Description("Online")]
+        ONLINE = 1
+    }
+
     public class BestelEnum
     {
         public static string GetDescription(BestelTijd value)

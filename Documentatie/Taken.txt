@@ -10,11 +10,10 @@ Undef
 
 
 Hans
-1. Bestelling apart factuur adres op kunnen geven			// 0%
-2. Bestelling apart bezorg adres op kunnen geven			// 0%
-3. Code Cleanup								// 0%
-4. Dropdown menu's							// 0%
-5. Verminderen, verhogen & Verwijderen van items in winkelwagen via productdetail // 0%
+1. Code Cleanup								// 0%
+2. Dropdown menu's							// 10%
+3. Verminderen, verhogen & Verwijderen van items in winkelwagen via productdetail // 0%
+4. Bestelling proces moet ook de aanbieding Id meegeven			// 70%
 
 Bram
 1. Producten zien op voorpagina 					//Alleen nog afbeeldingen op de front end
@@ -30,16 +29,9 @@ Bram
 11. Omzet van de winkel zien van afgelopen 6 maanden (Manager)	//0%
 12. Winst van de afgelopen 6 maanden (Manager)			//0%
 
-Jeroen
-<<<<<<< HEAD
-1. Use Case
-2. Use Case Diagram
-3. Sitemap
-4. Viewbag Messages
-=======
+
 1. Use Cases								// 100% Af
 2. Use Case Diagram							// 100% Af
 3. Use Case Beschrijving						// 10% To-Do
 4. Sitemap
-5. Viewbag Messages
->>>>>>> b255f816e9ff605732567fde81ab1526677c49d4
+

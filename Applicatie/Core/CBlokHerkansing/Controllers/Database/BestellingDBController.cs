@@ -171,7 +171,7 @@ namespace CBlokHerkansing.Controllers.Database
             return bestellingen;
         }
 
-        public bool InsertBestelling(WinkelwagenItem item, string datum, int gebruikerId, int adresId, int aanbiedingId)
+        public bool InsertBestelling(WinkelwagenItem item, string datum, int gebruikerId, int adresId, string bestelKeuze, int aanbiedingId)
         {
             MySqlTransaction trans = null;
             try
@@ -181,7 +181,7 @@ namespace CBlokHerkansing.Controllers.Database
                 trans = conn.BeginTransaction();
 
                 // Insert BestelBase & Retrieve last inserted Id
-                int bestellingId = InsertBestelBase(datum, gebruikerId, adresId);
+                int bestellingId = InsertBestelBase(datum, bestelKeuze, gebruikerId, adresId);
                 
                 // Doorloop alle winkelwagen items
                 for (int i = 0; i < item.product.Count; i++)
@@ -200,32 +200,34 @@ namespace CBlokHerkansing.Controllers.Database
             return true;
         }
         
-        public int InsertBestelBase(string datum, int gebruikerId, int adresId)
+        public int InsertBestelBase(string datum, string bestelKeuze, int gebruikerId, int adresId)
         {
             int id = 0;
             MySqlCommand cmd = null;
             try
             {
-                // TODO: Haal alleen data binnen dat relevant is, niet alles.
-                string insertQuery = @"insert into bestelling (bezorgStatus,  bezorgTijd, bestelDatum, adresId, gebruikerId) 
-                                                        values (@bezorgStatus,@bezorgTijd, @bestelDatum, @adresId, @gebruikerId)";
+                string insertQuery = @"insert into bestelling (bezorgStatus,  bezorgTijd, bestelDatum, verzendKeuze, adresId, gebruikerId) 
+                                                        values (@bezorgStatus,@bezorgTijd, @bestelDatum, @verzendKeuze, @adresId, @gebruikerId)";
 
                 cmd = new MySqlCommand(insertQuery, conn);
                 MySqlParameter bezorgStatusParam = new MySqlParameter("@bezorgStatus", MySqlDbType.VarChar);
                 MySqlParameter bezorgTijdParam = new MySqlParameter("@bezorgTijd", MySqlDbType.VarChar);
                 MySqlParameter bestelDatumParam = new MySqlParameter("@bestelDatum", MySqlDbType.VarChar);
+                MySqlParameter verzendKeuzeParam = new MySqlParameter("@verzendKeuze", MySqlDbType.VarChar);
                 MySqlParameter adresIdParam = new MySqlParameter("@adresId", MySqlDbType.Int32);
                 MySqlParameter gebruikerIdParam = new MySqlParameter("@gebruikerId", MySqlDbType.Int32);
 
-                bezorgStatusParam.Value = BestelStatus.PENDING; // TODO: Enum
+                bezorgStatusParam.Value = BestelStatus.PENDING;
                 bezorgTijdParam.Value = BestelEnum.GetDescription(BestelTijd.DEFAULT);
                 bestelDatumParam.Value = datum;
+                verzendKeuzeParam.Value = bestelKeuze;
                 adresIdParam.Value = adresId;
                 gebruikerIdParam.Value = gebruikerId;
 
                 cmd.Parameters.Add(bezorgStatusParam);
                 cmd.Parameters.Add(bezorgTijdParam);
                 cmd.Parameters.Add(bestelDatumParam);
+                cmd.Parameters.Add(verzendKeuzeParam);
                 cmd.Parameters.Add(adresIdParam);
                 cmd.Parameters.Add(gebruikerIdParam);
                 cmd.Prepare();

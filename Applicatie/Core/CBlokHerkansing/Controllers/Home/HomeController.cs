@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using CBlokHerkansing.Controllers.Database;
 using CBlokHerkansing.Models.Product;
+using CBlokHerkansing.ViewModels.Product;
 
 namespace CBlokHerkansing.Controllers
 {

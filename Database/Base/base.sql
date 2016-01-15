@@ -115,6 +115,7 @@ CREATE TABLE `bestelling` (
   `bezorgStatus` varchar(45) DEFAULT NULL,
   `bezorgTijd` varchar(45) DEFAULT NULL,
   `bestelDatum` varchar(45) DEFAULT NULL,
+  `verzendKeuze` varchar(45) DEFAULT NULL,
   `adresId` int(11) NOT NULL,
   `gebruikerId` int(11) NOT NULL,
   PRIMARY KEY (`bestellingId`),
