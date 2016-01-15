@@ -24,13 +24,11 @@ Bram
 5. Categorie�n zoeken 							//Alleen nog testen en front end afvangen
 6. Product zoeken op naam 						//Alleen nog testen en front end afvangen
 7. Klant Adres CRUD 							// Alleen bij klant geimplementeerd
-8. Redirect direct na inloggen naar beheer pagina(Beheer)	//0%
-9 Status bestelling aanpassen						//0%
-10. Categorie CRUD 							//Bijna uitgewerkt voornamelijk alleen nog testen
-11. 10 best lopende producten kunnen zien (Manager)		//0%
-12. 10 slechtst lopende producten kunnen zien (Manager)	//0%
-13. Omzet van de winkel zien van afgelopen 6 maanden (Manager)	//0%
-14. Winst van de afgelopen 6 maanden (Manager)			//0%
+8. Categorie CRUD 							//Bijna uitgewerkt voornamelijk alleen nog testen
+9. 10 best lopende producten kunnen zien (Manager)		//0%
+10. 10 slechtst lopende producten kunnen zien (Manager)	//0%
+11. Omzet van de winkel zien van afgelopen 6 maanden (Manager)	//0%
+12. Winst van de afgelopen 6 maanden (Manager)			//0%
 
 Jeroen
 <<<<<<< HEAD
