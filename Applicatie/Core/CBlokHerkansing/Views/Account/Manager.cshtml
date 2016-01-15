@@ -3,6 +3,27 @@
     ViewBag.Title = "Manager";
 }
 
-<h2 class="text-center login-title">Manager</h2>
+<div class="centered-pills">
+    <h2>Manager</h2>
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#home">Statistiek 1 Gegevens</a></li>
+        <li><a data-toggle="tab" href="#menu1">Statistiek 2 Gegevens</a></li>
+        <li><a data-toggle="tab" href="#menu2">Statistiek 3 Gegevens</a></li>
+        <li><a data-toggle="tab" href="#menu2">Statistiek 4 Gegevens</a></li>
+    </ul>
 
-<b>PLS STATISTIEKEN, MOOI GRAAFJES. PLS</b>
+    <div class="tab-content" style="max-width: 75%; margin: 0 auto;">
+        <div id="home" class="tab-pane fade in active">
+            <h3>Statistiek 1</h3>
+        </div>
+        <div id="menu1" class="tab-pane fade">
+            <h3>Statistiek 2</h3>
+        </div>
+        <div id="menu2" class="tab-pane fade">
+            <h3>Statistiek 3</h3>
+        </div>
+        <div id="menu3" class="tab-pane fade">
+            <h3>Statistiek 4</h3>
+        </div>
+    </div>
+</div>
