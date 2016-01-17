@@ -17,6 +17,6 @@ namespace CBlokHerkansing.ViewModels.Product
         public SelectList listStatus { get; set; }
 
         [Required(ErrorMessage = "U moet een bestel status selecteren")]
-        public string SelectedStatus { get; set; }
+        public int SelectedStatus { get; set; }
     }
 }
