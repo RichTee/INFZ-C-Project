@@ -169,6 +169,7 @@
     <Compile Include="Controllers\Database\DatabaseController.cs" />
     <Compile Include="Controllers\Database\KlantDBController.cs" />
     <Compile Include="Controllers\Database\ProductDBController.cs" />
+    <Compile Include="Controllers\Error\ErrorController.cs" />
     <Compile Include="Controllers\Home\HomeController.cs" />
     <Compile Include="Controllers\Product\ProductController.cs" />
     <Compile Include="Controllers\Klant\KlantController.cs" />
@@ -198,6 +199,7 @@
     <Compile Include="ViewModels\Klant\KlantBaseEnAdresViewModel.cs" />
     <Compile Include="ViewModels\Product\ProductItemViewModel.cs" />
     <Compile Include="ViewModels\Product\ProductViewModel.cs" />
+    <Compile Include="ViewModels\Product\ToevoegenProductDetailViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -227,6 +229,9 @@
     <Content Include="Views\Bestelling\Bestellen.cshtml" />
     <Content Include="Views\Klant\ToevoegenAdres.cshtml" />
     <Content Include="Views\Klant\WijzigAdres.cshtml" />
+    <Content Include="Views\Error\Error.cshtml" />
+    <Content Include="Views\Error\ERROR_404.cshtml" />
+    <Content Include="Views\Error\ERROR_500.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
