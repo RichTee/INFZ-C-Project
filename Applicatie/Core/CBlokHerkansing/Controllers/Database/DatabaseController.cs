@@ -64,6 +64,21 @@ namespace CBlokHerkansing.Controllers.Database
             return klant;
         }
 
+        // Haal adres van klanten binnen
+        protected Adres getFullAdresFromDataReader(MySqlDataReader datareader)
+        {
+            Adres adres = new Adres
+            {
+                Id = datareader.GetInt32("adresId"),
+                Straat = datareader.GetString("straat"),
+                Postcode = datareader.GetString("postcode"),
+                Huisnummer = datareader.GetInt32("huisnummer"),
+                HuisnummerToevoegsel = String.IsNullOrEmpty(datareader["huisnummertoevoeging"].ToString()) ? "Geen" : datareader.GetString("huisnummertoevoeging"),
+                Stad = datareader.GetString("stad"),
+            };
+            return adres;
+        }
+
         /*
          * 
          * Product
@@ -113,7 +128,7 @@ namespace CBlokHerkansing.Controllers.Database
                 detailId = datareader.GetInt32("detailID"),
                 verkoopprijs = datareader.GetDouble("verkoopprijs"),
                 inkoopprijs = datareader.GetDouble("inkoopprijs"),
-                maat = datareader.GetInt32("maat"),
+                maatId = datareader.GetInt32("maatId"),
                 voorraad = datareader.GetInt32("voorraad"),
                 product = GetProductFromDataReader(datareader)
             };
@@ -128,7 +143,7 @@ namespace CBlokHerkansing.Controllers.Database
                 detailId = datareader.GetInt32("detailID"),
                 verkoopprijs = datareader.GetDouble("verkoopprijs"),
                 inkoopprijs = datareader.GetDouble("inkoopprijs"),
-                maat = datareader.GetInt32("maat"),
+                maatId = datareader.GetInt32("maatId"),
                 voorraad = datareader.GetInt32("voorraad"),
             };
             return productDetail;
@@ -144,18 +159,15 @@ namespace CBlokHerkansing.Controllers.Database
             };
             return categorie;
         }
-        protected Adres getFullAdresFromDataReader(MySqlDataReader datareader)
+
+        protected ProductMaat getFullMaatFromDataReader(MySqlDataReader dataReader)
         {
-            Adres adres = new Adres
+            ProductMaat maat = new ProductMaat
             {
-                Id = datareader.GetInt32("adresId"),
-                Straat = datareader.GetString("straat"),
-                Postcode = datareader.GetString("postcode"),
-                Huisnummer = datareader.GetInt32("huisnummer"),
-                HuisnummerToevoegsel = String.IsNullOrEmpty(datareader["huisnummertoevoeging"].ToString()) ? "Geen" : datareader.GetString("huisnummertoevoeging"),
-                Stad = datareader.GetString("stad"),
+                MaatId = dataReader.GetInt32("maatId"),
+                Maat = dataReader.GetString("maat"),
             };
-            return adres;
+            return maat;
         }
 
         /*

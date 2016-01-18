@@ -231,6 +231,30 @@ INSERT INTO `gebruiker` VALUES (1,'bram','test','test','bram@test.nl','test','te
 UNLOCK TABLES;
 
 --
+-- Table structure for table `maat`
+--
+
+DROP TABLE IF EXISTS `maat`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `maat` (
+  `maatId` int(11) NOT NULL,
+  `maat` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`maatId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `maat`
+--
+
+LOCK TABLES `maat` WRITE;
+/*!40000 ALTER TABLE `maat` DISABLE KEYS */;
+INSERT INTO `maat` VALUES (1,'small'),(2,'medium'),(3,'large');
+/*!40000 ALTER TABLE `maat` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `product`
 --
 
@@ -268,12 +292,14 @@ CREATE TABLE `productdetail` (
   `detailId` int(11) NOT NULL AUTO_INCREMENT,
   `verkoopprijs` double DEFAULT NULL,
   `inkoopprijs` double DEFAULT NULL,
-  `maat` int(11) DEFAULT NULL,
+  `maatId` int(11) NOT NULL,
   `voorraad` int(11) DEFAULT NULL,
   `productId` int(11) NOT NULL,
   PRIMARY KEY (`detailId`),
   KEY `FK_DetailProduct_idx` (`productId`),
-  CONSTRAINT `FK_DetailProduct` FOREIGN KEY (`productId`) REFERENCES `product` (`productId`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `FK_Maat_idx` (`maatId`),
+  CONSTRAINT `FK_DetailProduct` FOREIGN KEY (`productId`) REFERENCES `product` (`productId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_Maat` FOREIGN KEY (`maatId`) REFERENCES `maat` (`maatId`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
