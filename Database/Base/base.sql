@@ -132,7 +132,7 @@ CREATE TABLE `bestelling` (
 
 LOCK TABLES `bestelling` WRITE;
 /*!40000 ALTER TABLE `bestelling` DISABLE KEYS */;
-INSERT INTO `bestelling` VALUES (1,'pending','3 dagen','iets',1,1),(2,'pending','3 dagen','iets',1,1);
+INSERT INTO `bestelling` VALUES (1,'pending','3 dagen','iets', 'Factuur',1,1);
 /*!40000 ALTER TABLE `bestelling` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -166,7 +166,7 @@ CREATE TABLE `bestelregel` (
 
 LOCK TABLES `bestelregel` WRITE;
 /*!40000 ALTER TABLE `bestelregel` DISABLE KEYS */;
-INSERT INTO `bestelregel` VALUES (1,20,'2016-12-13',NULL,1,NULL);
+INSERT INTO `bestelregel` VALUES (1,20,'2016-12-13',1,1,NULL);
 /*!40000 ALTER TABLE `bestelregel` ENABLE KEYS */;
 UNLOCK TABLES;
 
