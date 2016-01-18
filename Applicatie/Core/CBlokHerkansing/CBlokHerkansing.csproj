@@ -232,13 +232,10 @@
     <Content Include="Views\Bestelling\Bestellen.cshtml" />
     <Content Include="Views\Klant\ToevoegenAdres.cshtml" />
     <Content Include="Views\Klant\WijzigAdres.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\Product\ToevoegenProduct.cshtml" />
-=======
     <Content Include="Views\Error\Error.cshtml" />
     <Content Include="Views\Error\ERROR_404.cshtml" />
     <Content Include="Views\Error\ERROR_500.cshtml" />
->>>>>>> dcd9f4769f799541ba8a1447e7b412683d254733
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

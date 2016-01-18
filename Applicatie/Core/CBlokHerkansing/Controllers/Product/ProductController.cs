@@ -213,24 +213,19 @@ namespace CBlokHerkansing.Controllers.Product
         [HttpGet]
         public ActionResult ToevoegenProductDetail(int id)
         {
-<<<<<<< HEAD
             return View(id);
-=======
+
             ToevoegenProductDetailViewModel viewModel = new ToevoegenProductDetailViewModel();
             viewModel.listProduct = selectListProductBase();
             viewModel.listMaat = selectListProductMaat();
 
             return View(viewModel);
->>>>>>> dcd9f4769f799541ba8a1447e7b412683d254733
         }
 
         [HttpPost]
-        [CustomUnauthorized(Roles = "ADMIN")]
-<<<<<<< HEAD
+        [CustomUnauthorized(Roles = "ADMIN")]/*
         public ActionResult ToevoegenProductDetail(ProductDetail productDetail, int anotherOne)
-=======
         public ActionResult ToevoegenProductDetail(ToevoegenProductDetailViewModel viewModel)
->>>>>>> dcd9f4769f799541ba8a1447e7b412683d254733
         {
             if (ModelState.IsValid)
             {
@@ -245,7 +240,6 @@ namespace CBlokHerkansing.Controllers.Product
                     productDetail.voorraad = viewModel.productDetail.voorraad;
 
                     productDBController.InsertProductDetail(productDetail);
-<<<<<<< HEAD
                     TempData[Enum.ViewMessage.TOEVOEGING.ToString()] = "Detail Id: " + productDetail.detailId + ", Voorraad: " + productDetail.voorraad + ", Maat: " + productDetail.maat + ", Verkoopprijs: " + productDetail.verkoopprijs + ", Inkoopprijs: " + productDetail.inkoopprijs;
                     if (anotherOne == 1)
                     {
@@ -256,11 +250,9 @@ namespace CBlokHerkansing.Controllers.Product
                         return RedirectToAction("Beheer", "Account");
                     }
                     
-=======
                     TempData[Enum.ViewMessage.TOEVOEGING.ToString()] = "Detail Id: " + viewModel.productDetail.detailId + ", Voorraad: " + viewModel.productDetail.voorraad + ", Maat: " + viewModel.productDetail.maatId + ", Verkoopprijs: " + viewModel.productDetail.verkoopprijs + ", Inkoopprijs: " + viewModel.productDetail.inkoopprijs;
                     
                     return RedirectToAction("Beheer", "Account");
->>>>>>> dcd9f4769f799541ba8a1447e7b412683d254733
                 }
                 catch (Exception e)
                 {
@@ -276,7 +268,7 @@ namespace CBlokHerkansing.Controllers.Product
                 return View(viewModel);
             }
         }
-
+        */
         [CustomUnauthorized(Roles = "ADMIN")]
         public ActionResult WijzigProductDetail(int id)
         {

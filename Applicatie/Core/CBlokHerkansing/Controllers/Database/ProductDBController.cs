@@ -225,7 +225,6 @@ namespace CBlokHerkansing.Controllers.Database
 
             return productDetail;
         }
-<<<<<<< HEAD
         public int insertProductAndAfbeeldingForToeveogenProductDetail(ProductBase product)
         {
             InsertProduct(product);
@@ -233,7 +232,6 @@ namespace CBlokHerkansing.Controllers.Database
             InsertAfbeelding(product.ProductId, product.AfbeeldingPath);
             return product.ProductId;
         }
-=======
 
         // Get alle maten
         public List<ProductMaat> GetMaten()
@@ -270,7 +268,6 @@ namespace CBlokHerkansing.Controllers.Database
             return maten;
         }
 
->>>>>>> dcd9f4769f799541ba8a1447e7b412683d254733
         // Insert Product
         public void InsertProduct(ProductBase product)
         {
