@@ -32,11 +32,13 @@ namespace CBlokHerkansing.Controllers
             return RedirectToAction("Login", "Account"); // Ternary Operator when already logged in to redirect to somewhere else.
         }
 
-        // TODO: Resolve having to click login twice to logout, redirect properly when user is logged in.
         public ActionResult Login()
         {
-            FormsAuthentication.SignOut();
-            Session.Abandon();
+            if(User.Identity.IsAuthenticated)
+            {
+                FormsAuthentication.SignOut();
+                Session.Abandon();
+            }
 
             return View();
         }
@@ -82,8 +84,11 @@ namespace CBlokHerkansing.Controllers
         // Is this needed if we let Login handle both?
         public ActionResult Logout()
         {
-            FormsAuthentication.SignOut();
-            Session.Abandon();
+            if(User.Identity.IsAuthenticated)
+            {
+                FormsAuthentication.SignOut();
+                Session.Abandon();
+            }
             
             //TODO: Make a small page that notifies the user being logged out or make a small notification on the index page.
             return RedirectToAction("Index", "Home");
@@ -91,8 +96,12 @@ namespace CBlokHerkansing.Controllers
 
         public ActionResult Register()
         {
-            FormsAuthentication.SignOut();
-            Session.Abandon();
+            if(User.Identity.IsAuthenticated)
+            {
+                FormsAuthentication.SignOut();
+                Session.Abandon();
+            }
+
             return View();
         }
 

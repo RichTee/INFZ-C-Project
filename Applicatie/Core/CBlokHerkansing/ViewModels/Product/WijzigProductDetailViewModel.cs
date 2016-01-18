@@ -8,22 +8,11 @@ using System.Web.Mvc;
 
 namespace CBlokHerkansing.ViewModels.Product
 {
-    public class ToevoegenProductDetailViewModel
+    public class WijzigProductDetailViewModel
     {
         public List<ProductBase> productBaseList { get; set; }
 
         public ProductDetail productDetail { get; set; }
-
-        /*
-         * 
-         * Product
-         * 
-         */
-        public SelectList listProduct { get; set; }
-
-        [Required(ErrorMessage = "U moet een product selecteren")]
-        public int SelectedProduct { get; set; }
-
 
         /*
          * 

@@ -12,7 +12,6 @@ Undef
 Hans
 1. ProductDetail in winkelwagen, niet productBase				 // 0%
 2. Bestelling proces moet ook de aanbieding Id meegeven				// 70%
-3. Goldstatus klant								// 0%
 
 Bram
 1. Producten zien op voorpagina 					//Alleen nog afbeeldingen op de front end

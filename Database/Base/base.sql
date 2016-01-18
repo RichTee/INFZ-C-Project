@@ -132,7 +132,7 @@ CREATE TABLE `bestelling` (
 
 LOCK TABLES `bestelling` WRITE;
 /*!40000 ALTER TABLE `bestelling` DISABLE KEYS */;
-INSERT INTO `bestelling` VALUES (1,'pending','3 dagen','iets',1,1),(2,'pending','3 dagen','iets',1,1);
+INSERT INTO `bestelling` VALUES (1,'pending','3 dagen','iets', 'Factuur',1,1);
 /*!40000 ALTER TABLE `bestelling` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -166,7 +166,7 @@ CREATE TABLE `bestelregel` (
 
 LOCK TABLES `bestelregel` WRITE;
 /*!40000 ALTER TABLE `bestelregel` DISABLE KEYS */;
-INSERT INTO `bestelregel` VALUES (1,20,'2016-12-13',NULL,1,NULL);
+INSERT INTO `bestelregel` VALUES (1,20,'2016-12-13',1,1,NULL);
 /*!40000 ALTER TABLE `bestelregel` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -212,7 +212,7 @@ CREATE TABLE `gebruiker` (
   `wachtwoord` varchar(45) NOT NULL,
   `email` varchar(45) DEFAULT NULL,
   `telefoonnummer` varchar(45) DEFAULT NULL,
-  `goldStatus` varchar(45) DEFAULT NULL,
+  `goldStatus` varchar(45) DEFAULT 'Geen',
   `rolId` int(11) DEFAULT '2',
   PRIMARY KEY (`gebruikerId`),
   KEY `FK_GebruikerRol_idx` (`rolId`),
@@ -226,8 +226,32 @@ CREATE TABLE `gebruiker` (
 
 LOCK TABLES `gebruiker` WRITE;
 /*!40000 ALTER TABLE `gebruiker` DISABLE KEYS */;
-INSERT INTO `gebruiker` VALUES (1,'bram','test','test','bram@test.nl','test','test',1),(2,'manager','manager','test','manager@test.nl','test','test',3),(3,'klant','klant','test','klant@test.nl','test','test',2);
+INSERT INTO `gebruiker` VALUES (1,'bram','test','test','bram@test.nl','test','Nee',1),(2,'manager','manager','test','manager@test.nl','test','Nee',3),(3,'klant','klant','test','klant@test.nl','test','Nee',2);
 /*!40000 ALTER TABLE `gebruiker` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `maat`
+--
+
+DROP TABLE IF EXISTS `maat`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `maat` (
+  `maatId` int(11) NOT NULL,
+  `maat` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`maatId`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `maat`
+--
+
+LOCK TABLES `maat` WRITE;
+/*!40000 ALTER TABLE `maat` DISABLE KEYS */;
+INSERT INTO `maat` VALUES (1,'small'),(2,'medium'),(3,'large');
+/*!40000 ALTER TABLE `maat` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -268,13 +292,14 @@ CREATE TABLE `productdetail` (
   `detailId` int(11) NOT NULL AUTO_INCREMENT,
   `verkoopprijs` double DEFAULT NULL,
   `inkoopprijs` double DEFAULT NULL,
-  `maat` int(11) DEFAULT NULL,
-  `kleur` varchar(45) DEFAULT NULL,
+  `maatId` int(11) NOT NULL,
   `voorraad` int(11) DEFAULT NULL,
   `productId` int(11) NOT NULL,
   PRIMARY KEY (`detailId`),
   KEY `FK_DetailProduct_idx` (`productId`),
-  CONSTRAINT `FK_DetailProduct` FOREIGN KEY (`productId`) REFERENCES `product` (`productId`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `FK_Maat_idx` (`maatId`),
+  CONSTRAINT `FK_DetailProduct` FOREIGN KEY (`productId`) REFERENCES `product` (`productId`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `FK_Maat` FOREIGN KEY (`maatId`) REFERENCES `maat` (`maatId`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -284,7 +309,7 @@ CREATE TABLE `productdetail` (
 
 LOCK TABLES `productdetail` WRITE;
 /*!40000 ALTER TABLE `productdetail` DISABLE KEYS */;
-INSERT INTO `productdetail` VALUES (1,20,10,2,'rood',20,1);
+INSERT INTO `productdetail` VALUES (1,20,10,2,20,1);
 /*!40000 ALTER TABLE `productdetail` ENABLE KEYS */;
 UNLOCK TABLES;
 

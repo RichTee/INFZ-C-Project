@@ -190,6 +190,7 @@
     <Compile Include="Models\Product\ProductAfbeelding.cs" />
     <Compile Include="Models\Product\ProductBase.cs" />
     <Compile Include="Models\Product\ProductDetail.cs" />
+    <Compile Include="Models\Product\ProductMaat.cs" />
     <Compile Include="Models\Winkelwagen\WinkelwagenItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\Klant\Adres.cs" />
@@ -200,6 +201,7 @@
     <Compile Include="ViewModels\Product\ProductItemViewModel.cs" />
     <Compile Include="ViewModels\Product\ProductViewModel.cs" />
     <Compile Include="ViewModels\Product\ToevoegenProductDetailViewModel.cs" />
+    <Compile Include="ViewModels\Product\WijzigProductDetailViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />

@@ -47,6 +47,47 @@ namespace CBlokHerkansing.Controllers.Database
             return klanten;
         }
 
+        // check if gebruiker is eligible for gold member
+        public bool CheckGebruikerGoldMember(int id)
+        {
+            try
+            {
+                conn.Open();
+
+                String insertString = @"SELECT 
+                                        SUM(pd.verkoopprijs * br.hoeveelheid) as MemberCheck 
+                                        FROM bestelling be 
+                                        JOIN bestelRegel br on br.bestelId = be.bestellingId
+                                        JOIN productDetail pd on pd.detailId = br.detailId
+                                        JOIN gebruiker gb on gb.gebruikerId = be.gebruikerId
+                                        WHERE be.gebruikerId = @gebruikerId AND gb.goldStatus IS NULL
+                                        HAVING MemberCheck >= 400;";
+
+                MySqlCommand cmd = new MySqlCommand(insertString, conn);
+                MySqlParameter gebruikerIdParam = new MySqlParameter("@gebruikerId", MySqlDbType.Int32);
+
+                gebruikerIdParam.Value = id;
+
+                cmd.Parameters.Add(gebruikerIdParam);
+                cmd.Prepare();
+
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                if (dataReader.Read())
+                    return true;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return false;
+        }
+
         public bool CheckKlantMaxAdres(int id)
         {
             try
@@ -587,6 +628,44 @@ namespace CBlokHerkansing.Controllers.Database
             catch (Exception e)
             {
                 Console.Write("Klant adres niet verwijderd: " + e);
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        /*
+         * 
+         * Membership
+         * 
+         */
+        public void UpdateGoldMember(int user)
+        {
+            try
+            {
+                conn.Open();
+
+                string insertString = @"UPDATE gebruiker SET goldStatus = @goldStatus WHERE gebruikerId=@gebruikerId";
+
+                MySqlCommand cmd = new MySqlCommand(insertString, conn);
+                MySqlParameter goldStatusParam = new MySqlParameter("@goldStatus", MySqlDbType.VarChar);
+                MySqlParameter gebruikerIdParam = new MySqlParameter("@gebruikerId", MySqlDbType.Int32);
+
+                goldStatusParam.Value = "Ja";
+                gebruikerIdParam.Value = user;
+
+                cmd.Parameters.Add(goldStatusParam);
+                cmd.Parameters.Add(gebruikerIdParam);
+
+                cmd.Prepare();
+                cmd.ExecuteNonQuery();
+
+            }
+            catch (Exception e)
+            {
+                Console.Write("Updaten membership niet gelukt: " + e);
                 throw e;
             }
             finally
