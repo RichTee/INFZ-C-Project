@@ -226,7 +226,7 @@ CREATE TABLE `gebruiker` (
 
 LOCK TABLES `gebruiker` WRITE;
 /*!40000 ALTER TABLE `gebruiker` DISABLE KEYS */;
-INSERT INTO `gebruiker` VALUES (1,'bram','test','test','bram@test.nl','test','test',1),(2,'manager','manager','test','manager@test.nl','test','test',3),(3,'klant','klant','test','klant@test.nl','test','test',2);
+INSERT INTO `gebruiker` VALUES (1,'bram','test','test','bram@test.nl','test','Nee',1),(2,'manager','manager','test','manager@test.nl','test','Nee',3),(3,'klant','klant','test','klant@test.nl','test','Nee',2);
 /*!40000 ALTER TABLE `gebruiker` ENABLE KEYS */;
 UNLOCK TABLES;
 
