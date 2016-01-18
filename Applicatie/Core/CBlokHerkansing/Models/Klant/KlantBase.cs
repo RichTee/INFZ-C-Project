@@ -10,8 +10,7 @@ namespace CBlokHerkansing.Models.Klant
     {
         public int Id { get; set; }
 
-        [Required(ErrorMessage = "Een email is verplicht")]
-        //[RegularExpression(reg ,ErrorMessage = "Dit is geen geldig email adres.")]
+        [CustomEmailValidator] // Is al required
         [StringLength(25, ErrorMessage = "Een Email mag maximaal 25 karakters hebben")]
         public string Email { get; set; }
 
