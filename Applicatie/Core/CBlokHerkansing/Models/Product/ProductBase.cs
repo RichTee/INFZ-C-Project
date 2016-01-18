@@ -11,5 +11,6 @@ namespace CBlokHerkansing.Models.Product
         public string Naam { get; set; }
         public string Omschrijving { get; set; }
         public int CategorieId { get; set; }
+        public string AfbeeldingPath { get; set; }
     }
 }

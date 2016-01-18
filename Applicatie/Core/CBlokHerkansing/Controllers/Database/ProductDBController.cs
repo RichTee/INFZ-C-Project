@@ -225,6 +225,13 @@ namespace CBlokHerkansing.Controllers.Database
 
             return productDetail;
         }
+        public int insertProductAndAfbeeldingForToeveogenProductDetail(ProductBase product)
+        {
+            InsertProduct(product);
+            product.ProductId = getProductId(product);
+            InsertAfbeelding(product.ProductId, product.AfbeeldingPath);
+            return product.ProductId;
+        }
 
         // Get alle maten
         public List<ProductMaat> GetMaten()
@@ -357,7 +364,45 @@ namespace CBlokHerkansing.Controllers.Database
                 conn.Close();
             }
         }
+        public int getProductId(ProductBase product)
+        {
+            int id= 0;
+            try
+            {
+                conn.Open();
 
+                string selectQuery = "SELECT productId from product where omschrijving = @omschrijving and naam  = @naam";
+                MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
+                MySqlParameter naamParam = new MySqlParameter("@naam", MySqlDbType.Int32);
+                MySqlParameter omschrijvingParam = new MySqlParameter("@omschrijving", MySqlDbType.Int32);
+                naamParam.Value = product.Naam;
+                omschrijvingParam.Value = product.Omschrijving;
+
+                cmd.Parameters.Add(naamParam);
+                cmd.Parameters.Add(omschrijvingParam);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                if (dataReader != null)
+                {
+                    while (dataReader.Read())
+                    {
+
+                        id = dataReader.GetInt32("productId");
+                    }
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.Write("Ophalen van producten mislukt " + e);
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return id;
+        }
         // Insert 1 productDetail
         public void InsertProductDetail(ProductDetail productDetail)
         {
@@ -378,7 +423,7 @@ namespace CBlokHerkansing.Controllers.Database
                 inkoopprijsParam.Value = productDetail.inkoopprijs;
                 maatParam.Value = productDetail.maatId;
                 voorraadParam.Value = productDetail.voorraad;
-                productIdParam.Value = productDetail.product.ProductId;
+                productIdParam.Value = productDetail.productid;
 
                 cmd.Parameters.Add(verkoopprijsParam);
                 cmd.Parameters.Add(inkoopprijsParam);
@@ -399,7 +444,37 @@ namespace CBlokHerkansing.Controllers.Database
                 conn.Close();
             }
         }
+        public void InsertAfbeelding(int productId, string locatie)
+        {
+            try
+            {
+                conn.Open();
+                string insertString = @"insert into afbeelding (locatie, productid) " +
+                                        "values (@locatie, @productid)";
 
+                MySqlCommand cmd = new MySqlCommand(insertString, conn);
+                MySqlParameter locatieParam = new MySqlParameter("@locatie", MySqlDbType.VarChar);
+                MySqlParameter productIdParam = new MySqlParameter("@productid", MySqlDbType.Int32);
+
+                locatieParam.Value = locatie;
+                productIdParam.Value = productId;
+
+                cmd.Parameters.Add(locatieParam);
+                cmd.Parameters.Add(productIdParam);
+
+                cmd.Prepare();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                Console.Write("ProductDetail niet toegevoegd: " + e);
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
         // Update 1 productdetail
         public void UpdateProductDetail(ProductDetail productDetail)
         {
