@@ -1,0 +1,21 @@
+﻿@model CBlokHerkansing.Models.Product.ProductBase
+@{
+    ViewBag.Title = "ToevoegenProduct";
+}
+
+<h2>ToevoegenProduct</h2>
+@using (Html.BeginForm("ToevoegenProduct", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <!--Naam van een product-->
+    <div>
+    @Html.TextBoxFor(model => model.Naam, new {placeholder = "Naam van het product"}))
+    </div>
+    @Html.ValidationMessageFor(model => model.Naam)
+    <!--Omschrijving van het product-->
+    @Html.TextAreaFor(model => model.Omschrijving, new {placeholder = "omschrijving van het product"})
+    @Html.ValidationMessageFor(model => model.Omschrijving)
+    <!--Afbeeldingen toevoegen-->
+    <input type="file" name="Files" id="Files" style="width: 100%" />
+    <input type="submit" value="Voeg Product Toe" />
+}
+

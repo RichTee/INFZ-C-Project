@@ -185,6 +185,7 @@
     <Compile Include="Models\Klant\KlantBase.cs" />
     <Compile Include="Models\Account\LoginModel.cs" />
     <Compile Include="Models\Account\RegistrationModel.cs" />
+    <Compile Include="Models\Product\Picture.cs" />
     <Compile Include="Models\Product\ProductAanbieding.cs" />
     <Compile Include="Models\Product\ProductAfbeelding.cs" />
     <Compile Include="Models\Product\ProductBase.cs" />
@@ -227,6 +228,7 @@
     <Content Include="Views\Bestelling\Bestellen.cshtml" />
     <Content Include="Views\Klant\ToevoegenAdres.cshtml" />
     <Content Include="Views\Klant\WijzigAdres.cshtml" />
+    <Content Include="Views\Product\ToevoegenProduct.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

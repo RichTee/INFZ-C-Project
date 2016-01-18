@@ -4,6 +4,7 @@ using CBlokHerkansing.Models.Product;
 using CBlokHerkansing.ViewModels.Product;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -109,15 +110,32 @@ namespace CBlokHerkansing.Controllers.Product
 
         [HttpPost]
         [CustomUnauthorized(Roles = "ADMIN")]
-        public ActionResult ToevoegenProduct(ProductBase product)
+        public ActionResult ToevoegenProduct(ProductBase product, Picture picture)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid )
             {
+                List<string> extensie = new List<string>(){
+                ".jpg",
+                ".JPG",
+                ".png",
+                ".PNG",
+                ".jpeg",
+                ".JPEG"
+            };
                 try
                 {
-                    productDBController.InsertProduct(product);
+                    if (picture.File.ContentLength > 0 && extensie.Contains(Path.GetExtension(picture.File.FileName)))
+                        {
+
+                            var fileName = Path.GetFileName(picture.File.FileName);
+                            var path = Path.Combine(Server.MapPath("~/Content/ProductImages"), fileName);
+                            picture.File.SaveAs(path);
+                            product.AfbeeldingPath = "../../Content/ProductImages/" + fileName;
+                        }
+                   int id = productDBController.insertProductAndAfbeeldingForToeveogenProductDetail(product);
+
                     TempData[Enum.ViewMessage.TOEVOEGING.ToString()] = "Product Id: " + product.ProductId + ", Naam: " + product.Naam;
-                    return RedirectToAction("Beheer", "Account");
+                    return RedirectToAction("ToevoegenProductDetail", "Product", new { productId = id });
                 }
                 catch (Exception e)
                 {
@@ -190,15 +208,17 @@ namespace CBlokHerkansing.Controllers.Product
          * ProductDetail
          * 
          */
+        
         [CustomUnauthorized(Roles = "ADMIN")]
-        public ActionResult ToevoegenProductDetail()
+        [HttpGet]
+        public ActionResult ToevoegenProductDetail(int id)
         {
-            return View();
+            return View(id);
         }
 
         [HttpPost]
         [CustomUnauthorized(Roles = "ADMIN")]
-        public ActionResult ToevoegenProductDetail(ProductDetail productDetail)
+        public ActionResult ToevoegenProductDetail(ProductDetail productDetail, int anotherOne)
         {
             if (ModelState.IsValid)
             {
@@ -206,7 +226,15 @@ namespace CBlokHerkansing.Controllers.Product
                 {
                     productDBController.InsertProductDetail(productDetail);
                     TempData[Enum.ViewMessage.TOEVOEGING.ToString()] = "Detail Id: " + productDetail.detailId + ", Voorraad: " + productDetail.voorraad + ", Maat: " + productDetail.maat + ", Verkoopprijs: " + productDetail.verkoopprijs + ", Inkoopprijs: " + productDetail.inkoopprijs;
-                    return RedirectToAction("Beheer", "Account");
+                    if (anotherOne == 1)
+                    {
+                        return RedirectToAction("ToevoegenProductDetail", "Product", new { productId = productDetail.productid });
+                    }
+                    else
+                    {
+                        return RedirectToAction("Beheer", "Account");
+                    }
+                    
                 }
                 catch (Exception e)
                 {
