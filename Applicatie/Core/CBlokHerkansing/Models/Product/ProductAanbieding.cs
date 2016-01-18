@@ -17,6 +17,8 @@ namespace CBlokHerkansing.Models.Product
         public string EindDatum { get; set; }
 
         [Required(ErrorMessage = "Kortingspercentage is een verplicht veld")]
+        [DataAnnotationsExtensions.Integer(ErrorMessage = "Mogen alleen nummers zijn! Voorbeeld: 91")]
+        [Range(1, 100, ErrorMessage = "Vul een valide nummer tussen de 0 en 100 in ")]
         public int KortingsPercentage { get; set; }
     }
 }
