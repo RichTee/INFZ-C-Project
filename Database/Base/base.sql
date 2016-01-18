@@ -212,7 +212,7 @@ CREATE TABLE `gebruiker` (
   `wachtwoord` varchar(45) NOT NULL,
   `email` varchar(45) DEFAULT NULL,
   `telefoonnummer` varchar(45) DEFAULT NULL,
-  `goldStatus` varchar(45) DEFAULT NULL,
+  `goldStatus` varchar(45) DEFAULT 'Geen',
   `rolId` int(11) DEFAULT '2',
   PRIMARY KEY (`gebruikerId`),
   KEY `FK_GebruikerRol_idx` (`rolId`),
