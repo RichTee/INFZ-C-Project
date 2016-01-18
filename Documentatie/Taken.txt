@@ -10,10 +10,8 @@ Undef
 
 
 Hans
-1. Code Cleanup								// 0%
-2. Dropdown menu's							// 10%
-3. Verminderen, verhogen & Verwijderen van items in winkelwagen via productdetail // 0%
-4. Bestelling proces moet ook de aanbieding Id meegeven			// 70%
+1. ProductDetail in winkelwagen, niet productBase				 // 0%
+2. Bestelling proces moet ook de aanbieding Id meegeven				// 70%
 
 Bram
 1. Producten zien op voorpagina 					//Alleen nog afbeeldingen op de front end

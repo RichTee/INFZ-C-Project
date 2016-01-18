@@ -71,6 +71,11 @@ namespace CBlokHerkansing.Controllers.Bestelling
                     }
 
                     bestellingAfronden(item, bestelKeuze, adresKeuze);
+                    int klantId = klantDBController.GetKlantId(User.Identity.Name);
+                    if (klantDBController.CheckGebruikerGoldMember(klantId))
+                    {
+                        klantDBController.UpdateGoldMember(klantId);
+                    }
                     TempData[Enum.ViewMessage.TOEVOEGING.ToString()] = "uw bestelling naar ons verzonden. Deze is in ons process";
 
                     return RedirectToAction("Profiel", "Account");
@@ -144,6 +149,16 @@ namespace CBlokHerkansing.Controllers.Bestelling
                 RedirectToAction("Winkelwagen", "Winkelwagen"); // Temp Data over Adres niet ingevult
 
             int aanbiedingId = 0; // TODO: Get aanbieding
+
+            // Gold member = 10% korting
+            if (klantDBController.CheckGebruikerGoldMember(klant.Id))
+            {
+                for(int i = 0; i < winkelwagenItemModel.product.Count; i++)
+                {
+                    // 10% korting
+                    winkelwagenItemModel.product[i].verkoopprijs = winkelwagenItemModel.product[i].verkoopprijs * 0.9;
+                }
+            }
 
             // Insert Bestelling
             if(bestellingDBController.InsertBestelling(winkelwagenItemModel, DateTime.Today.ToString("yyyy/M/%d"), klant.Id, adres, bestelKeuze, aanbiedingId))

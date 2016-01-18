@@ -1,4 +1,4 @@
-﻿@model CBlokHerkansing.Models.Product.ProductDetail
+﻿@model CBlokHerkansing.ViewModels.Product.WijzigProductDetailViewModel
 
 @{
     ViewBag.Title = "WijzigProductDetail";
@@ -15,51 +15,48 @@
                 {
                     @Html.ValidationSummary(true)
                     <form class="form-horizontal">
-                        <input type="hidden" value="@Model.detailId" name="DetailId" />
-                        <input type="hidden" value="@Model.product.ProductId" name="ProductId" />
-                        <h1 class="text-center login-title">Vul gegevens in om een product detail toe te voegen.</h1>
+                        @Html.HiddenFor(model => model.productDetail.detailId)
+                        @Html.HiddenFor(model => model.productDetail.product.ProductId)
+                        <h1 class="text-center login-title">Vul gegevens in om een product detail te wijzigen.</h1>
+                        <div class="form-group">
+                            <label for="inputPassword3" class="col-sm-4 control-label">Product Naam</label>
+                            <div class="col-sm-6">
+                                @Html.TextBoxFor(model => model.productDetail.product.Naam, new { placeholder = "Verkoopprijs", @class = "form-control", @readonly = "readonly" })
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label for="inputPassword3" class="col-sm-4 control-label">Verkoopprijs</label>
                             <div class="col-sm-6">
-                                @Html.TextBoxFor(model => model.verkoopprijs, new { placeholder = "Verkoopprijs", @class = "form-control" })
+                                @Html.TextBoxFor(model => model.productDetail.verkoopprijs, new { placeholder = "Verkoopprijs", @class = "form-control" })
                                 <div style="color: red">
-                                    @Html.ValidationMessageFor(model => model.verkoopprijs)
+                                    @Html.ValidationMessageFor(model => model.productDetail.verkoopprijs)
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputPassword3" class="col-sm-4 control-label">Inkoopprijs</label>
                             <div class="col-sm-6">
-                                @Html.TextBoxFor(model => model.inkoopprijs, new { placeholder = "Inkoopprijs", @class = "form-control" })
+                                @Html.TextBoxFor(model => model.productDetail.inkoopprijs, new { placeholder = "Inkoopprijs", @class = "form-control" })
                                 <div style="color: red">
-                                    @Html.ValidationMessageFor(model => model.inkoopprijs)
+                                    @Html.ValidationMessageFor(model => model.productDetail.inkoopprijs)
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-4 control-label">Maat</label>
                             <div class="col-sm-6">
-                                @Html.TextBoxFor(model => model.maat, new { placeholder = "Maat", @class = "form-control" })
+                                @Html.DropDownListFor(m => m.SelectedMaat, Model.listMaat, new { @class = "form-control" })
                                 <div style="color: red">
-                                    @Html.ValidationMessageFor(model => model.maat)
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="inputEmail3" class="col-sm-4 control-label">Kleur</label>
-                            <div class="col-sm-6">
-                                @Html.TextBoxFor(model => model.kleur, new { placeholder = "Kleur", @class = "form-control" })
-                                <div style="color: red">
-                                    @Html.ValidationMessageFor(model => model.kleur)
+                                    @Html.ValidationMessageFor(model => model.SelectedMaat)
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="inputEmail3" class="col-sm-4 control-label">Voorraad</label>
                             <div class="col-sm-6">
-                                @Html.TextBoxFor(model => model.voorraad, new { placeholder = "Voorraad", @class = "form-control" })
+                                @Html.TextBoxFor(model => model.productDetail.voorraad, new { placeholder = "Voorraad", @class = "form-control" })
                                 <div style="color: red">
-                                    @Html.ValidationMessageFor(model => model.voorraad)
+                                    @Html.ValidationMessageFor(model => model.productDetail.voorraad)
                                 </div>
                             </div>
                         </div>

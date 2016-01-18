@@ -213,18 +213,39 @@ namespace CBlokHerkansing.Controllers.Product
         [HttpGet]
         public ActionResult ToevoegenProductDetail(int id)
         {
+<<<<<<< HEAD
             return View(id);
+=======
+            ToevoegenProductDetailViewModel viewModel = new ToevoegenProductDetailViewModel();
+            viewModel.listProduct = selectListProductBase();
+            viewModel.listMaat = selectListProductMaat();
+
+            return View(viewModel);
+>>>>>>> dcd9f4769f799541ba8a1447e7b412683d254733
         }
 
         [HttpPost]
         [CustomUnauthorized(Roles = "ADMIN")]
+<<<<<<< HEAD
         public ActionResult ToevoegenProductDetail(ProductDetail productDetail, int anotherOne)
+=======
+        public ActionResult ToevoegenProductDetail(ToevoegenProductDetailViewModel viewModel)
+>>>>>>> dcd9f4769f799541ba8a1447e7b412683d254733
         {
             if (ModelState.IsValid)
             {
                 try
                 {
+                    ProductDetail productDetail = new ProductDetail();
+                    productDetail.product = new ProductBase();
+                    productDetail.product.ProductId = viewModel.SelectedProduct;
+                    productDetail.inkoopprijs = viewModel.productDetail.inkoopprijs;
+                    productDetail.verkoopprijs = viewModel.productDetail.inkoopprijs;
+                    productDetail.maatId = viewModel.SelectedMaat;
+                    productDetail.voorraad = viewModel.productDetail.voorraad;
+
                     productDBController.InsertProductDetail(productDetail);
+<<<<<<< HEAD
                     TempData[Enum.ViewMessage.TOEVOEGING.ToString()] = "Detail Id: " + productDetail.detailId + ", Voorraad: " + productDetail.voorraad + ", Maat: " + productDetail.maat + ", Verkoopprijs: " + productDetail.verkoopprijs + ", Inkoopprijs: " + productDetail.inkoopprijs;
                     if (anotherOne == 1)
                     {
@@ -235,6 +256,11 @@ namespace CBlokHerkansing.Controllers.Product
                         return RedirectToAction("Beheer", "Account");
                     }
                     
+=======
+                    TempData[Enum.ViewMessage.TOEVOEGING.ToString()] = "Detail Id: " + viewModel.productDetail.detailId + ", Voorraad: " + viewModel.productDetail.voorraad + ", Maat: " + viewModel.productDetail.maatId + ", Verkoopprijs: " + viewModel.productDetail.verkoopprijs + ", Inkoopprijs: " + viewModel.productDetail.inkoopprijs;
+                    
+                    return RedirectToAction("Beheer", "Account");
+>>>>>>> dcd9f4769f799541ba8a1447e7b412683d254733
                 }
                 catch (Exception e)
                 {
@@ -244,7 +270,10 @@ namespace CBlokHerkansing.Controllers.Product
             }
             else
             {
-                return View(productDetail);
+                viewModel.listProduct = selectListProductBase();
+                viewModel.listMaat = selectListProductMaat();
+
+                return View(viewModel);
             }
         }
 
@@ -253,8 +282,11 @@ namespace CBlokHerkansing.Controllers.Product
         {
             try
             {
-                ProductDetail product = productDBController.GetProductDetail(id);
-                return View(product);
+                WijzigProductDetailViewModel viewModel = new WijzigProductDetailViewModel();
+                viewModel.productDetail = productDBController.GetProductDetail(id);
+                viewModel.listMaat = selectListProductMaat();
+
+                return View(viewModel);
             }
             catch (Exception e)
             {
@@ -265,14 +297,22 @@ namespace CBlokHerkansing.Controllers.Product
 
         [HttpPost]
         [CustomUnauthorized(Roles = "ADMIN")]
-        public ActionResult WijzigProductDetail(ProductDetail productDetailModel)
+        public ActionResult WijzigProductDetail(WijzigProductDetailViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    productDBController.UpdateProductDetail(productDetailModel);
-                    TempData[Enum.ViewMessage.WIJZIGING.ToString()] = "Detail: " + productDBController.GetProductByDetail(productDetailModel.detailId).Naam;
+                    ProductDetail productDetail = new ProductDetail();
+                    productDetail.product = new ProductBase();
+                    productDetail.detailId = viewModel.productDetail.detailId;
+                    productDetail.inkoopprijs = viewModel.productDetail.inkoopprijs;
+                    productDetail.verkoopprijs = viewModel.productDetail.inkoopprijs;
+                    productDetail.maatId = viewModel.SelectedMaat;
+                    productDetail.voorraad = viewModel.productDetail.voorraad;
+
+                    productDBController.UpdateProductDetail(productDetail);
+                    TempData[Enum.ViewMessage.WIJZIGING.ToString()] = "Detail: " + productDBController.GetProductByDetail(productDetail.detailId).Naam;
 
                     return RedirectToAction("Beheer", "Account");
                 }
@@ -284,7 +324,9 @@ namespace CBlokHerkansing.Controllers.Product
             }
             else
             {
-                return View(productDetailModel);
+                viewModel.listMaat = selectListProductMaat();
+
+                return View(viewModel);
             }
         }
 
@@ -303,6 +345,22 @@ namespace CBlokHerkansing.Controllers.Product
             }
 
             return RedirectToAction("Beheer", "Account");
+        }
+
+        private SelectList selectListProductBase()
+        {
+            List<String> list = new List<String>();
+            List<ProductBase> producten = productDBController.GetProducten();
+
+            return new SelectList(producten, "ProductId", "Naam");
+        }
+
+        private SelectList selectListProductMaat()
+        {
+            List<String> list = new List<String>();
+            List<ProductMaat> maten = productDBController.GetMaten();
+
+            return new SelectList(maten, "MaatId", "Maat");
         }
     }
 }

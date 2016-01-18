@@ -129,7 +129,6 @@
                             <th>Datum</th>
                             <th>Product Naam</th>
                             <th>Product Verkoopprijs</th>
-                            <th>Product Kleur</th>
                             <th>Product Maat</th>
                             <th>Adres</th>
                         </tr>
@@ -144,8 +143,7 @@
                                 <td>@Model.bestellingOverzicht[i].Bestelling.BestelDatum</td>
                                 <td>Product Naam</td>
                                 <td>@Model.bestellingOverzicht[i].ProductDetail.verkoopprijs</td>
-                                <td>@Model.bestellingOverzicht[i].ProductDetail.kleur</td>
-                                <td>@Model.bestellingOverzicht[i].ProductDetail.maat</td>
+                                <td>@Model.bestellingOverzicht[i].ProductDetail.maatId</td>
                                 <td>@Model.bestellingOverzicht[i].Bestelling.Adres.Straat</td> <!-- TODO: Volledig adres-->
                             </tr>
                         }

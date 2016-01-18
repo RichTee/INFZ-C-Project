@@ -90,6 +90,17 @@
                                     </div>
                                 </td>
                             </tr>
+                            @if (Model.klantAdressen.Count == 0)
+                            {
+                                <tr>
+                                    <td>
+                                        <div style="color: red">
+                                            <p>U heeft geen adres opgegeven, dit kunt u doen door een adres toe te voegen op uw profiel.</p>
+                                            @Html.ActionLink("Profiel", "Profiel", "Account")
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                     <div class="form-group">
