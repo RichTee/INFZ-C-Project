@@ -269,7 +269,6 @@ CREATE TABLE `productdetail` (
   `verkoopprijs` double DEFAULT NULL,
   `inkoopprijs` double DEFAULT NULL,
   `maat` int(11) DEFAULT NULL,
-  `kleur` varchar(45) DEFAULT NULL,
   `voorraad` int(11) DEFAULT NULL,
   `productId` int(11) NOT NULL,
   PRIMARY KEY (`detailId`),
@@ -284,7 +283,7 @@ CREATE TABLE `productdetail` (
 
 LOCK TABLES `productdetail` WRITE;
 /*!40000 ALTER TABLE `productdetail` DISABLE KEYS */;
-INSERT INTO `productdetail` VALUES (1,20,10,2,'rood',20,1);
+INSERT INTO `productdetail` VALUES (1,20,10,2,20,1);
 /*!40000 ALTER TABLE `productdetail` ENABLE KEYS */;
 UNLOCK TABLES;
 

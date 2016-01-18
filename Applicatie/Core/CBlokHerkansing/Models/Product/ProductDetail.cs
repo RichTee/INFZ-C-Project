@@ -21,9 +21,6 @@ namespace CBlokHerkansing.Models.Product
         [Required(ErrorMessage = "maat is vereist")]
         public int maat { get; set; } // FK?
 
-        [Required(ErrorMessage = "kleur is vereist")]
-        public string kleur { get; set; } // FK?
-
         [Required(ErrorMessage = "voorraad is vereist")]
         [Range(0, Int32.MaxValue, ErrorMessage = "Vul een geldige waarde in")]
         public int voorraad { get; set; }

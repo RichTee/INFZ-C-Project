@@ -57,7 +57,7 @@ namespace CBlokHerkansing.Controllers.Database
             {
                 conn.Open();
 
-                string selectQuery = "SELECT detailId, verkoopprijs, inkoopprijs, maat, kleur, voorraad, naam, omschrijving, categorieId, pd.productId FROM productdetail pd LEFT JOIN product p on pd.productId = p.productId;";
+                string selectQuery = "SELECT detailId, verkoopprijs, inkoopprijs, maat, voorraad, naam, omschrijving, categorieId, pd.productId FROM productdetail pd LEFT JOIN product p on pd.productId = p.productId;";
                 MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
                 MySqlDataReader dataReader = cmd.ExecuteReader();
 
@@ -164,7 +164,7 @@ namespace CBlokHerkansing.Controllers.Database
             try{                
             conn.Open();
 
-            string selectQuery = "SELECT detailId, verkoopprijs, inkoopprijs, maat, kleur, voorraad, naam, omschrijving, categorieId, pd.productId FROM productdetail pd LEFT JOIN product on pd.productId = @productId;";
+            string selectQuery = "SELECT detailId, verkoopprijs, inkoopprijs, maat, voorraad, naam, omschrijving, categorieId, pd.productId FROM productdetail pd LEFT JOIN product on pd.productId = @productId;";
                 MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
                 MySqlParameter productIdParam = new MySqlParameter("@productId", MySqlDbType.Int32);
 
@@ -199,7 +199,7 @@ namespace CBlokHerkansing.Controllers.Database
             {
                 conn.Open();
 
-                string selectQuery = "SELECT detailId, verkoopprijs, inkoopprijs, maat, kleur, voorraad, naam, omschrijving, categorieId, pd.productId FROM productdetail pd LEFT JOIN product p on pd.productId = p.productId where pd.detailId = @detailId;";
+                string selectQuery = "SELECT detailId, verkoopprijs, inkoopprijs, maat, voorraad, naam, omschrijving, categorieId, pd.productId FROM productdetail pd LEFT JOIN product p on pd.productId = p.productId where pd.detailId = @detailId;";
                 MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
                 MySqlParameter detailIdParam = new MySqlParameter("@detailId", MySqlDbType.Int32);
 
@@ -269,7 +269,7 @@ namespace CBlokHerkansing.Controllers.Database
             {
                 conn.Open();
 
-                string selectQuery = @"Update verkoopprijs, inkoopprijs, maat, kleur, voorraad, naam, omschrijving, FROM productdetail LEFT JOIN product on productdetail.productId = product.productId;";
+                string selectQuery = @"Update verkoopprijs, inkoopprijs, maat, voorraad, naam, omschrijving, FROM productdetail LEFT JOIN product on productdetail.productId = product.productId;";
                 MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
                 MySqlDataReader dataReader = cmd.ExecuteReader();
 
@@ -329,28 +329,25 @@ namespace CBlokHerkansing.Controllers.Database
             try
             {
                 conn.Open();
-                string insertString = @"insert into productdetail (verkoopprijs, inkoopprijs, maat, kleur, voorraad, productId) " +
-                                        "values (@verkoopprijs, @inkoopprijs, @maat, @kleur, @voorraad, @productId)";
+                string insertString = @"insert into productdetail (verkoopprijs, inkoopprijs, maat, voorraad, productId) " +
+                                        "values (@verkoopprijs, @inkoopprijs, @maat, @voorraad, @productId)";
 
                 MySqlCommand cmd = new MySqlCommand(insertString, conn);
                 MySqlParameter verkoopprijsParam = new MySqlParameter("@verkoopprijs", MySqlDbType.Double);
                 MySqlParameter inkoopprijsParam = new MySqlParameter("@inkoopprijs", MySqlDbType.Double);
                 MySqlParameter maatParam = new MySqlParameter("@maat", MySqlDbType.Int32);
-                MySqlParameter kleurParam = new MySqlParameter("@kleur", MySqlDbType.VarChar);
                 MySqlParameter voorraadParam = new MySqlParameter("@voorraad", MySqlDbType.Int32);
                 MySqlParameter productIdParam = new MySqlParameter("@productId", MySqlDbType.Int32);
 
                 verkoopprijsParam.Value = productDetail.verkoopprijs;
                 inkoopprijsParam.Value = productDetail.inkoopprijs;
                 maatParam.Value = productDetail.maat;
-                kleurParam.Value = productDetail.kleur;
                 voorraadParam.Value = productDetail.voorraad;
                 productIdParam.Value = productDetail.product.ProductId;
 
                 cmd.Parameters.Add(verkoopprijsParam);
                 cmd.Parameters.Add(inkoopprijsParam);
                 cmd.Parameters.Add(maatParam);
-                cmd.Parameters.Add(kleurParam);
                 cmd.Parameters.Add(voorraadParam);
                 cmd.Parameters.Add(productIdParam);
 
@@ -376,26 +373,23 @@ namespace CBlokHerkansing.Controllers.Database
                 conn.Open();
 
                 string updateQuery = @"UPDATE productdetail SET verkoopprijs = @verkoopprijs, inkoopprijs = @inkoopprijs, maat = @maat, 
-                                        kleur = @kleur, voorraad = @voorraad WHERE detailId = @detailId;";
+                                        voorraad = @voorraad WHERE detailId = @detailId;";
                 MySqlCommand cmd = new MySqlCommand(updateQuery, conn);
                 MySqlParameter verkoopprijsParam = new MySqlParameter("@verkoopprijs", MySqlDbType.Double);
                 MySqlParameter inkoopprijsParam = new MySqlParameter("@inkoopprijs", MySqlDbType.Double);
                 MySqlParameter maatParam = new MySqlParameter("@maat", MySqlDbType.Int32);
-                MySqlParameter kleurParam = new MySqlParameter("@kleur", MySqlDbType.VarChar);
                 MySqlParameter voorraadParam = new MySqlParameter("@voorraad", MySqlDbType.Int32);
                 MySqlParameter detailIdParam = new MySqlParameter("@detailId", MySqlDbType.Int32);
 
                 verkoopprijsParam.Value = productDetail.verkoopprijs;
                 inkoopprijsParam.Value = productDetail.inkoopprijs;
                 maatParam.Value = productDetail.maat;
-                kleurParam.Value = productDetail.kleur;
                 voorraadParam.Value = productDetail.voorraad;
                 detailIdParam.Value = productDetail.detailId;
 
                 cmd.Parameters.Add(verkoopprijsParam);
                 cmd.Parameters.Add(inkoopprijsParam);
                 cmd.Parameters.Add(maatParam);
-                cmd.Parameters.Add(kleurParam);
                 cmd.Parameters.Add(voorraadParam);
                 cmd.Parameters.Add(detailIdParam);
 

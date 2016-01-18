@@ -213,7 +213,6 @@ namespace CBlokHerkansing.Controllers.Product
                     productDetail.inkoopprijs = viewModel.productDetail.inkoopprijs;
                     productDetail.verkoopprijs = viewModel.productDetail.inkoopprijs;
                     productDetail.maat = viewModel.productDetail.maat;
-                    productDetail.kleur = viewModel.productDetail.kleur;
                     productDetail.voorraad = viewModel.productDetail.voorraad;
 
                     productDBController.InsertProductDetail(productDetail);

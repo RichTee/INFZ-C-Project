@@ -114,7 +114,6 @@ namespace CBlokHerkansing.Controllers.Database
                 verkoopprijs = datareader.GetDouble("verkoopprijs"),
                 inkoopprijs = datareader.GetDouble("inkoopprijs"),
                 maat = datareader.GetInt32("maat"),
-                kleur = datareader.GetString("kleur"),
                 voorraad = datareader.GetInt32("voorraad"),
                 product = GetProductFromDataReader(datareader)
             };
@@ -130,7 +129,6 @@ namespace CBlokHerkansing.Controllers.Database
                 verkoopprijs = datareader.GetDouble("verkoopprijs"),
                 inkoopprijs = datareader.GetDouble("inkoopprijs"),
                 maat = datareader.GetInt32("maat"),
-                kleur = datareader.GetString("kleur"),
                 voorraad = datareader.GetInt32("voorraad"),
             };
             return productDetail;
