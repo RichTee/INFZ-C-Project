@@ -20,20 +20,41 @@
 <div class="col-md-4">
     @using (Html.BeginForm("ToevoegenProduct", "Product", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-control" }))
     {
-
-            <!--Naam van een product-->
-        @Html.TextBoxFor(model => model.Naam, new { placeholder = "Naam van het product", @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.Naam)
-            <!--Omschrijving van het product-->
-        @Html.TextAreaFor(model => model.Omschrijving, new { placeholder = "omschrijving van het product", @class = "form-control" })
-        @Html.ValidationMessageFor(model => model.Omschrijving)
-        @Html.DropDownListFor(model => model.CategorieId, new SelectList(
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-4 control-label">Naam</label>
+            <div class="col-sm-6">
+                @Html.TextBoxFor(model => model.Naam, new { placeholder = "Naam van het product", @class = "form-control" })
+                <div style="color: red">
+                    @Html.ValidationMessageFor(model => model.Naam)
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-4 control-label">Omschrijving</label>
+            <div class="col-sm-6">
+                @Html.TextAreaFor(model => model.Omschrijving, new { placeholder = "omschrijving van het product", @class = "form-control" })
+                <div style="color: red">
+                    @Html.ValidationMessageFor(model => model.Omschrijving)
+                </div>
+            </div>
+        </div>
+    <div class="form-group">
+        <label for="inputPassword3" class="col-sm-4 control-label">Categorie</label>
+        <div class="col-sm-6">
+            @Html.DropDownListFor(model => model.CategorieId, new SelectList(
                   list,
                   "value",
                   "text",
                    2))
-            <!--Afbeeldingen toevoegen-->
-        <input type="file" name="File" id="File" style="width: 100%" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputPassword3" class="col-sm-4 control-label">Afbeelding</label>
+        <div class="col-sm-6">
+            <input type="file" name="File" id="File" style="width: 100%" />
+
+        </div>
+    </div>
         <button class="btn btn-lg btn-primary btn-block" type="submit">
             Voeg product toe
         </button>
