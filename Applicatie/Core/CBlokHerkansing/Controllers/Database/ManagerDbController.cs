@@ -71,5 +71,40 @@ namespace CBlokHerkansing.Controllers.Manager
             }
             return list;
         }
+
+        // Get Omzet
+        public double getOmzet()
+        {           
+            try
+            {
+                conn.Open();
+
+                string selectQuery = @"SELECT 
+                                        SUM(DISTINCT pd.verkoopprijs * br.hoeveelheid) AS Amount 
+                                        FROM productdetail pd 
+                                        JOIN bestelRegel br on pd.detailId = br.detailId
+                                        JOIN bestelling be on be.bestellingId = br.bestelId
+                                        WHERE be.bestelDatum >= DATE_SUB(NOW(), INTERVAL 6 MONTH);";
+                MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                if (dataReader != null)
+                {
+                    while (dataReader.Read())
+                        return dataReader.GetDouble("Amount");        
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.Write("Ophalen van omzet mislukt " + e);
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return 0;
+        }
     }
 }

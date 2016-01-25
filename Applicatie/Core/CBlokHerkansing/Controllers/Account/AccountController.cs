@@ -245,19 +245,24 @@ namespace CBlokHerkansing.Controllers
         [CustomUnauthorized(Roles = "MANAGER")]
         public ActionResult Manager()
         {
-            ManagerDbController controller = new ManagerDbController();
+            ManagerDbController managerDBController = new ManagerDbController();
             
             ManagerViewModel model = new ManagerViewModel();
+
             List<ProductBase> bestSellerView = new List<ProductBase>();
-            foreach(int id in controller.getBestSellers()){
+            foreach(int id in managerDBController.getBestSellers()){
                 bestSellerView.Add(productDBController.GetProductByDetail(id));
             }
             List<ProductBase> worstSellerView = new List<ProductBase>();
-            foreach (int id in controller.getWorsttSellers())
+            foreach (int id in managerDBController.getWorsttSellers())
             {
                 worstSellerView.Add(productDBController.GetProductByDetail(id));
             }
+
             model.bestSeller = bestSellerView;
+            model.worstSeller = worstSellerView;
+            model.omzet = managerDBController.getOmzet();
+
             return View(model);
         }
     }

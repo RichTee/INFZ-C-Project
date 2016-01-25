@@ -10,7 +10,7 @@ namespace CBlokHerkansing.ViewModels.Account
     {
         public List<ProductBase> bestSeller { get; set; }
         public List<ProductBase> worstSeller { get; set; }
-        public int omzet { get; set; }
-        public int winsit { get; set; }
+        public double omzet { get; set; }
+        public double winst { get; set; }
     }
 }
