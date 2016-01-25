@@ -16,6 +16,5 @@ namespace CBlokHerkansing.Models
         [MaxLength(100, ErrorMessage="Een omschrijving mag maximaal 100 tekens bevatten")]
         public string Omschrijving { get; set; }
         public int HoofdcategorieId { get; set; }
-        public List<Categorie> subCategorieën { get; set; }
     }
 }

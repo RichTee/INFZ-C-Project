@@ -23,6 +23,7 @@ namespace CBlokHerkansing.Controllers
             return View();
         }
 
+        [HttpGet]
         public ActionResult Search(string search, int type)
         {
             //product search from product name

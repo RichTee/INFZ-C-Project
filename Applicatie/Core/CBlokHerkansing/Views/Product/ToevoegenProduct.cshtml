@@ -2,20 +2,43 @@
 @{
     ViewBag.Title = "ToevoegenProduct";
 }
-
-<h2>ToevoegenProduct</h2>
-@using (Html.BeginForm("ToevoegenProduct", "Product", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@{
+    List<Object> list = new List<Object>();
+    foreach (CBlokHerkansing.Models.Categorie item in ViewBag.Categorieen)
 {
-    <!--Naam van een product-->
-    <div>
-    @Html.TextBoxFor(model => model.Naam, new {placeholder = "Naam van het product"}))
-    </div>
-    @Html.ValidationMessageFor(model => model.Naam)
-    <!--Omschrijving van het product-->
-    @Html.TextAreaFor(model => model.Omschrijving, new {placeholder = "omschrijving van het product"})
-    @Html.ValidationMessageFor(model => model.Omschrijving)
-    <!--Afbeeldingen toevoegen-->
-    <input type="file" name="Files" id="Files" style="width: 100%" />
-    <input type="submit" value="Voeg Product Toe" />
+    list.Add(new { value = item.Id, text = item.Naam });
 }
+}
+<div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4"><h2>ToevoegenProduct</h2></div>
+    <div class="col-md-4"></div>
 
+</div>
+<div class="row">
+    <div class="col-md-4"></div>
+<div class="col-md-4">
+    @using (Html.BeginForm("ToevoegenProduct", "Product", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-control" }))
+    {
+
+            <!--Naam van een product-->
+        @Html.TextBoxFor(model => model.Naam, new { placeholder = "Naam van het product", @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Naam)
+            <!--Omschrijving van het product-->
+        @Html.TextAreaFor(model => model.Omschrijving, new { placeholder = "omschrijving van het product", @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Omschrijving)
+        @Html.DropDownListFor(model => model.CategorieId, new SelectList(
+                  list,
+                  "value",
+                  "text",
+                   2))
+            <!--Afbeeldingen toevoegen-->
+        <input type="file" name="File" id="File" style="width: 100%" />
+        <button class="btn btn-lg btn-primary btn-block" type="submit">
+            Voeg product toe
+        </button>
+    
+    }
+    </div>
+    <div class="col-md-4"></div>
+</div>

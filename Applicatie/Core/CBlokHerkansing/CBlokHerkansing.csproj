@@ -171,6 +171,7 @@
     <Compile Include="Controllers\Database\ProductDBController.cs" />
     <Compile Include="Controllers\Error\ErrorController.cs" />
     <Compile Include="Controllers\Home\HomeController.cs" />
+    <Compile Include="Controllers\Database\ManagerDbController.cs" />
     <Compile Include="Controllers\Product\ProductController.cs" />
     <Compile Include="Controllers\Klant\KlantController.cs" />
     <Compile Include="Controllers\Winkelwagen\WinkelwagenController.cs" />
@@ -197,6 +198,7 @@
     <Compile Include="Models\Klant\Adres.cs" />
     <Compile Include="ViewModels\Account\BeheerderViewModel.cs" />
     <Compile Include="ViewModels\Account\KlantViewModel.cs" />
+    <Compile Include="ViewModels\Account\ManagerViewModel.cs" />
     <Compile Include="ViewModels\Bestelling\BestelBaseViewModel.cs" />
     <Compile Include="ViewModels\Klant\KlantBaseEnAdresViewModel.cs" />
     <Compile Include="ViewModels\Product\ProductItemViewModel.cs" />
@@ -225,7 +227,7 @@
     <Content Include="Views\Klant\ToevoegenKlant.cshtml" />
     <Content Include="Views\Categorie\AlleCategorieen.cshtml" />
     <Content Include="Views\Categorie\VoegCategorieToe.cshtml" />
-    <Content Include="Views\Categorie\UpdateProduct.cshtml" />
+    <Content Include="Views\Categorie\UpdateCategorie.cshtml" />
     <Content Include="Views\Product\ToevoegenProductDetail.cshtml" />
     <Content Include="Views\Product\WijzigProductDetail.cshtml" />
     <Content Include="Views\Bestelling\WijzigBestelling.cshtml" />
@@ -236,6 +238,7 @@
     <Content Include="Views\Error\Error.cshtml" />
     <Content Include="Views\Error\ERROR_404.cshtml" />
     <Content Include="Views\Error\ERROR_500.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

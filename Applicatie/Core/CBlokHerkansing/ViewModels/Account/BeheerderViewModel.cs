@@ -1,4 +1,5 @@
-﻿using CBlokHerkansing.Models.Bestelling;
+﻿using CBlokHerkansing.Models;
+using CBlokHerkansing.Models.Bestelling;
 using CBlokHerkansing.Models.Klant;
 using CBlokHerkansing.Models.Product;
 using System;
@@ -15,5 +16,6 @@ namespace CBlokHerkansing.ViewModels.Account
         public List<ProductDetail> productDetailOverzicht { get; set; }
         public List<ProductAanbieding> productAanbiedingOverzicht { get; set; }
         public List<BestelRegel> bestellingDetailOverzicht { get; set; }
+        public List<Categorie> categorieenOverzicht { get; set; }
     }
 }

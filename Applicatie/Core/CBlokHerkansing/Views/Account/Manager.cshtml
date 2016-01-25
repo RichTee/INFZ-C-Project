@@ -1,4 +1,4 @@
-﻿
+﻿@model CBlokHerkansing.ViewModels.Account.ManagerViewModel
 @{
     ViewBag.Title = "Manager";
 }
@@ -14,10 +14,78 @@
 
     <div class="tab-content" style="max-width: 75%; margin: 0 auto;">
         <div id="home" class="tab-pane fade in active">
-            <h3>Statistiek 1</h3>
+            <h3>Best lopende producten</h3>
+            @if (Model.bestSeller != null)
+            {
+                <table class="table table-striped table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Id</th> <!-- TODO: Belangrijk voor beheerder? -->
+                            <th>Naam</th>
+                            <th>Omschrijving</th>
+                            <th>Categorie</th> <!-- TODO: Categorie NAAM niet ID-->
+                            <th>Functies</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.bestSeller.Count; i++)
+                        {
+                            <tr>
+                                <td>@Model.bestSeller[i].ProductId</td>
+                                <td>@Model.bestSeller[i].Naam</td>
+                                <td>@Model.bestSeller[i].Omschrijving</td>
+                                <td>@Model.bestSeller[i].CategorieId</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-danger">Action</button>
+                                        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
         </div>
         <div id="menu1" class="tab-pane fade">
-            <h3>Statistiek 2</h3>
+            <h3>Slechts lopende producten</h3>
+            @if (Model.worstSeller != null)
+            {
+                <table class="table table-striped table-condensed">
+                    <thead>
+                        <tr>
+                            <th>Id</th> <!-- TODO: Belangrijk voor beheerder? -->
+                            <th>Naam</th>
+                            <th>Omschrijving</th>
+                            <th>Categorie</th> <!-- TODO: Categorie NAAM niet ID-->
+                            <th>Functies</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.bestSeller.Count; i++)
+                        {
+                            <tr>
+                                <td>@Model.worstSeller[i].ProductId</td>
+                                <td>@Model.worstSeller[i].Naam</td>
+                                <td>@Model.worstSeller[i].Omschrijving</td>
+                                <td>@Model.worstSeller[i].CategorieId</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-danger">Action</button>
+                                        <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
         </div>
         <div id="menu2" class="tab-pane fade">
             <h3>Statistiek 3</h3>

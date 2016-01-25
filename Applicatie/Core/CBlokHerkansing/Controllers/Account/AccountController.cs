@@ -12,6 +12,8 @@ using CBlokHerkansing.Models.Product;
 using CBlokHerkansing.ViewModels.Product;
 using CBlokHerkansing.Models.Klant;
 using CBlokHerkansing.Models.Bestelling;
+using CBlokHerkansing.Controllers.Manager;
+using CBlokHerkansing.Models;
 
 namespace CBlokHerkansing.Controllers
 {
@@ -25,6 +27,7 @@ namespace CBlokHerkansing.Controllers
         private ProductDBController productDBController = new ProductDBController();
         private AanbiedingDBController aanbiedingDBController = new AanbiedingDBController();
         private BestellingDBController bestellingDBController = new BestellingDBController();
+        private CategorieDbController categorie = new CategorieDbController();
 
         // GET: Account
         public ActionResult Index()
@@ -199,13 +202,14 @@ namespace CBlokHerkansing.Controllers
             List<ProductDetail> productenDetail = productDBController.getProductenDetail();
             List<ProductAanbieding> aanbiedingen = aanbiedingDBController.GetAanbiedingen();
             List<BestelRegel> bestellingRegel = bestellingDBController.GetBestellingen();
-
+            List<Categorie> categorieen = categorie.getListWithAllCategorieen();
             BeheerderViewModel viewModel = new BeheerderViewModel();
             viewModel.klantOverzicht = klanten;
             viewModel.productBaseOverzicht = producten;
             viewModel.productDetailOverzicht = productenDetail;
             viewModel.productAanbiedingOverzicht = aanbiedingen;
             viewModel.bestellingDetailOverzicht = bestellingRegel;
+            viewModel.categorieenOverzicht = categorieen;
 
             // TempData Foutmelding
             if (TempData[Enum.ViewMessage.FOUTMELDING.ToString()] != null)
@@ -241,7 +245,20 @@ namespace CBlokHerkansing.Controllers
         [CustomUnauthorized(Roles = "MANAGER")]
         public ActionResult Manager()
         {
-            return View();
+            ManagerDbController controller = new ManagerDbController();
+            
+            ManagerViewModel model = new ManagerViewModel();
+            List<ProductBase> bestSellerView = new List<ProductBase>();
+            foreach(int id in controller.getBestSellers()){
+                bestSellerView.Add(productDBController.GetProductByDetail(id));
+            }
+            List<ProductBase> worstSellerView = new List<ProductBase>();
+            foreach (int id in controller.getWorsttSellers())
+            {
+                worstSellerView.Add(productDBController.GetProductByDetail(id));
+            }
+            model.bestSeller = bestSellerView;
+            return View(model);
         }
     }
 }

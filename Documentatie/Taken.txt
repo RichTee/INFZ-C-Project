@@ -15,20 +15,9 @@ Hans
 3. Aanbieding, begin datum mag net later dan eind datum zijn			// 0%
 
 Bram
-1. Producten zien op voorpagina 					//Alleen nog afbeeldingen op de front end
-2. Producten wijzigen(beheer)						//0%
-3. Producten toevoegen(beheer)					//0%
-4. Aanbiedingen op de homepagina kunnen zien 			//Alleen nog afbeeldingen in kunnen laden
-5. Categorie�n zoeken 							//Alleen nog testen en front end afvangen
-6. Product zoeken op naam 						//Alleen nog testen en front end afvangen
-7. Klant Adres CRUD 							// Alleen bij klant geimplementeerd
-8. Categorie CRUD 							//Bijna uitgewerkt voornamelijk alleen nog testen
-9. 10 best lopende producten kunnen zien (Manager)		//0%
-10. 10 slechtst lopende producten kunnen zien (Manager)	//0%
-11. Omzet van de winkel zien van afgelopen 6 maanden (Manager)	//0%
-12. Winst van de afgelopen 6 maanden (Manager)			//0%
+1. Producten zien op voorpagina 					//Kan de afbeelding niet vinden
 
-
+Jeroen
 1. Use Cases								// 100% Af
 2. Use Case Diagram							// 100% Af
 3. Use Case Beschrijving						// 10% To-Do

@@ -183,8 +183,8 @@ CREATE TABLE `categorie` (
   `omschrijving` varchar(100) DEFAULT NULL,
   `hoofdId` int(11) DEFAULT NULL,
   PRIMARY KEY (`categorieId`),
-  KEY `SubID` (`hoofdId`),
-  CONSTRAINT `FK_SubCatergorie` FOREIGN KEY (`hoofdId`) REFERENCES `categorie` (`categorieId`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `FK_SubCatergorie` (`hoofdId`),
+  CONSTRAINT `FK_SubCatergorie` FOREIGN KEY (`hoofdId`) REFERENCES `categorie` (`categorieId`) ON DELETE NO Action ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -267,7 +267,7 @@ CREATE TABLE `product` (
   `omschrijving` varchar(100) DEFAULT NULL,
   `categorieId` int(11) NOT NULL,
   PRIMARY KEY (`productId`),
-  CONSTRAINT `FK_ProductCategorie` FOREIGN KEY (`productId`) REFERENCES `categorie` (`categorieId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `FK_ProductCategorie` FOREIGN KEY (`categorieId`) REFERENCES `categorie` (`categorieId`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

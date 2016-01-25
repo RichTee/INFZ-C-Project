@@ -45,7 +45,10 @@ namespace CBlokHerkansing.Controllers.Database
             {
                 conn.Close();
             }
-
+            foreach (ProductBase product in producten)
+            {
+                product.AfbeeldingPath = getAfbeelding(product.ProductId);
+            }
             return producten;
         }
 
@@ -82,6 +85,40 @@ namespace CBlokHerkansing.Controllers.Database
             }
 
             return producten;
+        }
+        private string getAfbeelding(int productId)
+        {
+            string path = null;
+            try
+            {
+                conn.Open();
+
+                string selectQuery = "SELECT locatie FROM afbeelding where productId = @productId;";
+                MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
+                MySqlParameter idParam = new MySqlParameter("@productId", MySqlDbType.Int32);
+                idParam.Value = productId;
+                cmd.Parameters.Add(idParam);
+                cmd.Prepare();
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                if (dataReader != null)
+                {
+                    while (dataReader.Read())
+                    {
+                        path = dataReader.GetString("locatie");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                Console.Write("Ophalen van producten mislukt " + e);
+                throw e;
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return path;
         }
 
         // Get 1 product zonder details
@@ -373,13 +410,14 @@ namespace CBlokHerkansing.Controllers.Database
 
                 string selectQuery = "SELECT productId from product where omschrijving = @omschrijving and naam  = @naam";
                 MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
-                MySqlParameter naamParam = new MySqlParameter("@naam", MySqlDbType.Int32);
-                MySqlParameter omschrijvingParam = new MySqlParameter("@omschrijving", MySqlDbType.Int32);
+                MySqlParameter naamParam = new MySqlParameter("@naam", MySqlDbType.VarChar);
+                MySqlParameter omschrijvingParam = new MySqlParameter("@omschrijving", MySqlDbType.VarChar);
                 naamParam.Value = product.Naam;
                 omschrijvingParam.Value = product.Omschrijving;
 
                 cmd.Parameters.Add(naamParam);
                 cmd.Parameters.Add(omschrijvingParam);
+                cmd.Prepare();
                 MySqlDataReader dataReader = cmd.ExecuteReader();
 
                 if (dataReader != null)
@@ -423,7 +461,7 @@ namespace CBlokHerkansing.Controllers.Database
                 inkoopprijsParam.Value = productDetail.inkoopprijs;
                 maatParam.Value = productDetail.maatId;
                 voorraadParam.Value = productDetail.voorraad;
-                productIdParam.Value = productDetail.productid;
+                productIdParam.Value = productDetail.productId;
 
                 cmd.Parameters.Add(verkoopprijsParam);
                 cmd.Parameters.Add(inkoopprijsParam);
@@ -555,7 +593,7 @@ namespace CBlokHerkansing.Controllers.Database
             {
                 conn.Open();
 
-                string selectQuery = "SELECT productId, naam, omschrijving from product where categorieId = @categorieId";
+                string selectQuery = "SELECT productId, naam, omschrijving, categorieId from product where categorieId = @categorieId";
                 MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
                 MySqlParameter categorieIdParam = new MySqlParameter("@categorieId", MySqlDbType.Int32);
                 categorieIdParam.Value = categorieId;
@@ -592,11 +630,12 @@ namespace CBlokHerkansing.Controllers.Database
             {
                 conn.Open();
 
-                string selectQuery = "SELECT productId, naam, omschrijving from product where naam like %@search%";
+                string selectQuery = "SELECT productId, naam, omschrijving, categorieId from product where naam like @search";
                 MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
                 MySqlParameter naamParam = new MySqlParameter("@search", MySqlDbType.VarChar);
                 naamParam.Value = search;
                 cmd.Parameters.Add(naamParam);
+                cmd.Prepare();
                 MySqlDataReader dataReader = cmd.ExecuteReader();
 
                 if (dataReader != null)

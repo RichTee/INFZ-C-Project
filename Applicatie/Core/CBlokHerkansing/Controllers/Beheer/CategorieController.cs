@@ -18,6 +18,8 @@ namespace CBlokHerkansing.Controllers.Beheer
 
         public ActionResult VoegCategorieToe()
         {
+            CategorieDbController controller = new CategorieDbController();
+            ViewBag.categorieList = controller.getListWithAllCategorieen();
             return View();
         }
 
@@ -29,14 +31,15 @@ namespace CBlokHerkansing.Controllers.Beheer
             controller.insertCategorie(categorie);
             ViewBag.succes = "Het toevoegen van het product is gelukt";
             }
-            
-            return View();
+
+            return RedirectToAction("Beheer", "Account");
         }
         [HttpGet]
-        public ActionResult UpdateCategorie(int categorieId)
+        public ActionResult UpdateCategorie(int id)
         {
             CategorieDbController controller = new CategorieDbController();
-            return View(controller.getCategorieFromId(categorieId));
+            ViewBag.categorieList = controller.getListWithAllCategorieen();
+            return View(controller.getCategorieFromId(id));
         }
         [HttpPost]
         public ActionResult UpdateCategorie(Categorie categorie)
@@ -44,14 +47,14 @@ namespace CBlokHerkansing.Controllers.Beheer
             CategorieDbController controller = new CategorieDbController();
             controller.UpdateCategorie(categorie);
             ViewBag.Succes = "Het updaten van deze categorie is gelukt";
-            return View(categorie);
+            return RedirectToAction("Beheer", "Account");
         }
         [HttpGet]
-        public ActionResult DeleteCategorie(int categorieId)
+        public ActionResult DeleteCategorie(int id)
         {
             CategorieDbController controller = new CategorieDbController();
-            controller.DeleteCategorie(categorieId);
-            return RedirectToAction("AlleCategorieen", "Categorie");
+            controller.DeleteCategorie(id);
+            return RedirectToAction("Beheer", "Account");
         }
     }
 }

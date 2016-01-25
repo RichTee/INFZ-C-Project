@@ -1,23 +1,36 @@
 ﻿@model CBlokHerkansing.Models.Categorie
 @{
+   
     ViewBag.Title = "VoegCategorieToe";
+    List<Object> list = new List<Object>();
+    list.Add(new { value = 0, text = "" });
+    if (ViewBag.categorieList != null) { 
+    foreach (CBlokHerkansing.Models.Categorie item in ViewBag.categorieList)
+    {
+        list.Add(new { value = item.Id, text = item.Naam });
+    }
+    }
 }
-
 <h2 class="text-center login-title">Voeg Categorie Toe</h2>
 <h4 style="color:green">@ViewBag.succes</h4>
 <div class="row">
     <div class="col-md-4"></div>
     <div class="col-md-4">
-        @using (Html.BeginForm("ProductToevoegen", "Portal", FormMethod.Post))
+        @using (Html.BeginForm("VoegCategorieToe", "Categorie", FormMethod.Post))
         {
+            @Html.LabelFor(model => model.Naam)
         @Html.TextBoxFor(model => model.Naam, new { text = "Naam", @class = "form-control" })
         <div style="color: red">
             @Html.ValidationMessageFor(Model => Model.Naam)
         </div>
+            @Html.LabelFor(model => model.Omschrijving)
         @Html.TextAreaFor(model => model.Omschrijving, new { text = "Omschrijving", @class = "form-control" })
         <div style="color: red">
             @Html.ValidationMessageFor(Model => Model.Omschrijving)
         </div>
+            @Html.LabelFor(model => model.HoofdcategorieId)
+            <br/>
+            @Html.ListBoxFor(model => model.HoofdcategorieId, new SelectList(list,"Value", "Text"))
         <button class="btn btn-lg btn-primary btn-block" type="submit">
         Voeg product toe
         </button>

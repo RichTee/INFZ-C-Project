@@ -24,10 +24,17 @@ namespace CBlokHerkansing.Controllers.Database
 
                 naamParam.Value = categorie.Naam;
                 omschrijvingParam.Value = categorie.Omschrijving;
-                hoofdIdParam.Value = categorie.HoofdcategorieId;
-
+                if (categorie.HoofdcategorieId != 0)
+                {
+                    hoofdIdParam.Value = categorie.HoofdcategorieId;
+                }
+                else
+                {
+                    hoofdIdParam.Value = null;
+                }
                 cmd.Parameters.Add(naamParam);
                 cmd.Parameters.Add(omschrijvingParam);
+                
                 cmd.Parameters.Add(hoofdIdParam);
 
                 cmd.Prepare();
@@ -85,7 +92,7 @@ namespace CBlokHerkansing.Controllers.Database
             {
                 conn.Open();
 
-                string insertString = "DELETE FROM categorie WHERE Id = @id";
+                string insertString = "DELETE FROM categorie WHERE categorieId = @id";
 
                 MySqlCommand cmd = new MySqlCommand(insertString, conn);
                 MySqlParameter idParam = new MySqlParameter("@id", MySqlDbType.Int32);
@@ -147,7 +154,7 @@ namespace CBlokHerkansing.Controllers.Database
             {
                 conn.Open();
 
-                string selectQuery = "SELECT categorieId, naam, omschrijving FROM categorie;";
+                string selectQuery = "SELECT categorieId, naam, omschrijving, hoofdId FROM categorie;";
                 MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
                 MySqlDataReader dataReader = cmd.ExecuteReader();
 
@@ -180,11 +187,12 @@ namespace CBlokHerkansing.Controllers.Database
             {
                 conn.Open();
 
-                string selectQuery = "SELECT naam, omschrijving, hoofdId FROM categorie where categorieId = @categorieId;";
+                string selectQuery = "SELECT categorieId, naam, omschrijving, hoofdId FROM categorie where categorieId = @categorieId;";
                 MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
                 MySqlParameter categorieIdParam = new MySqlParameter("@categorieId", MySqlDbType.Int32);
                 categorieIdParam.Value = categorieId;
                 cmd.Parameters.Add(categorieIdParam);
+                cmd.Prepare();
                 MySqlDataReader dataReader = cmd.ExecuteReader();
 
                 if (dataReader != null)
@@ -216,11 +224,12 @@ namespace CBlokHerkansing.Controllers.Database
             {
                 conn.Open();
 
-                string selectQuery = "SELECT categorieId FROM categorie where naam like %@search%;";
+                string selectQuery = "SELECT categorieId FROM categorie where naam like @search;";
                 MySqlCommand cmd = new MySqlCommand(selectQuery, conn);
                 MySqlParameter searchParam = new MySqlParameter("@search", MySqlDbType.VarChar);
                 searchParam.Value = search;
                 cmd.Parameters.Add(searchParam);
+                cmd.Prepare();
                 MySqlDataReader dataReader = cmd.ExecuteReader();
 
                 if (dataReader != null)

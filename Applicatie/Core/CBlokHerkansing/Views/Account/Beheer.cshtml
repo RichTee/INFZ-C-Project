@@ -40,6 +40,7 @@ else if (ViewBag.Verwijdering != null)
         <li><a data-toggle="tab" href="#menu2">Aanbiedingen</a></li>
         <li><a data-toggle="tab" href="#menu3">Gebruikers</a></li>
         <li><a data-toggle="tab" href="#menu4">Bestellingen</a></li>
+        <li><a data-toggle="tab" href="#menu5">Categorieen</a></li>
     </ul>
 
         <div class="tab-content" style="max-width: 75%; margin: 0 auto;">
@@ -128,11 +129,20 @@ else if (ViewBag.Verwijdering != null)
                                     </td>
                                 </tr>
                             }
-                            <tr>
-                                <td>@Html.ActionLink("Toevoegen", "ToevoegenProductDetail", "Product")</td>
-                            </tr>
+
                         </tbody>
                     </table>
+                                                    <div class="btn-group">
+                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Toevoegen Product Detail <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+@for (int i = 0; i < Model.productBaseOverzicht.Count; i++)
+{
+    <li>@Html.ActionLink(Model.productBaseOverzicht[i].Naam, "ToevoegenProductDetail", "Product", new { id = @Model.productBaseOverzicht[i].ProductId },null)</li>
+}
+                                    </ul>
+                                </div>
                 }
             </div>
             <div id="menu2" class="tab-pane fade">
@@ -269,6 +279,49 @@ else if (ViewBag.Verwijdering != null)
                                     </td>
                                 </tr>
                             }
+                        </tbody>
+                    </table>
+                }
+            </div>
+            <div id="menu5" class="tab-pane fade">
+                <h3>Aanbiedingen</h3>
+                @if (Model.categorieenOverzicht != null)
+                {
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Id</th> <!-- TODO: Belangrijk voor beheerder? -->
+                                <th>Naam</th>
+                                <th>Omschrijving</th>
+                                <th>HoofId</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (int i = 0; i < Model.categorieenOverzicht.Count; i++)
+                            {
+                                <tr>
+                                    <td>@Model.categorieenOverzicht[i].Id</td>
+                                    <td>@Model.categorieenOverzicht[i].Naam</td>
+                                    <td>@Model.categorieenOverzicht[i].Omschrijving</td>
+                                    <td>@Model.categorieenOverzicht[i].HoofdcategorieId</td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-danger">Action</button>
+                                            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown">
+                                                <span class="caret"></span>
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li><a href="#">@Html.ActionLink("Wijzigen", "UpdateCategorie", "Categorie", new { id = @Model.categorieenOverzicht[i].Id }, new { onclick = "return confirm('Weet u zeker dat u dit wilt wijzigen?')" })</a></li>
+                                                <li><a href="#">@Html.ActionLink("Verwijderen", "DeleteCategorie", "Categorie", new { id = @Model.categorieenOverzicht[i].Id }, new { onclick = "return confirm('Weet u zeker dat u dit wilt verwijderen?')" })</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                            <tr>
+                                <td>@Html.ActionLink("Toevoegen", "VoegCategorieToe", "Categorie")</td>
+                            </tr>
                         </tbody>
                     </table>
                 }

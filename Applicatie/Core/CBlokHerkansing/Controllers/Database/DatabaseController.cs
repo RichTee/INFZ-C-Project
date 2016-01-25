@@ -156,7 +156,12 @@ namespace CBlokHerkansing.Controllers.Database
                 Id = datareader.GetInt32("categorieId"),
                 Naam = datareader.GetString("naam"),
                 Omschrijving = datareader.GetString("omschrijving")
+                
             };
+            try { categorie.HoofdcategorieId = datareader.GetInt32("hoofdId"); }
+            catch { }
+
+                
             return categorie;
         }
 

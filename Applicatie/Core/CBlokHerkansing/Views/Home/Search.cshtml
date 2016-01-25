@@ -2,13 +2,13 @@
 @model List<ProductBase>
 
 @{
-    ViewBag.Title = "Home";
+    ViewBag.Title = "Search";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container">
-     @foreach (ProductBase product in @Model)
-     {
+    @foreach (ProductBase product in @Model)
+    {
         <div class="col-sm-4">
             <div class="panel panel-success">
                 <div class="panel-heading">@product.Naam</div>
@@ -20,8 +20,7 @@
                 </div>
             </div>
         </div>
-     }
-</div>     
+    }
+</div>
 }
-    
-    
+

@@ -24,7 +24,7 @@ namespace CBlokHerkansing.Models.Product
         [Required(ErrorMessage = "voorraad is vereist")]
         [Range(0, Int32.MaxValue, ErrorMessage = "Vul een geldige waarde in")]
         public int voorraad { get; set; }
-        public int productid { get; set; }
+        public int productId { get; set; }
         public ProductBase product { get; set; }
     }
 }
