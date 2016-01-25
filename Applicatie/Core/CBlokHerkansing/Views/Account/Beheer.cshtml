@@ -75,7 +75,7 @@ else if (ViewBag.Verwijdering != null)
                                             </button>
                                             <ul class="dropdown-menu" role="menu">
                                                 <li><a href="#">@Html.ActionLink("Wijzigen", "WijzigProduct", "Product", new { id = @Model.productBaseOverzicht[i].ProductId }, new { onclick = "return confirm('Weet u zeker dat u dit wilt wijzigen?')" })</a></li>
-                                                <li><a href="#">@Html.ActionLink("Verwijderen", "VerwijderProduct", "Product", new { id = @Model.productBaseOverzicht[i].ProductId }, new { onclick = "return confirm('Weet u zeker dat u dit wilt verwijderen?')" })</a></li>
+                                                <li><a href="#">@Html.ActionLink("Verwijderen", "VerwijderProductEnDetail", "Product", new { id = @Model.productBaseOverzicht[i].ProductId }, new { onclick = "return confirm('Weet u zeker dat u dit wilt verwijderen?')" })</a></li>
                                             </ul>
                                         </div>
                                     </td>

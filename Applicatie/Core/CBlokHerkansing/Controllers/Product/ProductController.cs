@@ -196,7 +196,9 @@ namespace CBlokHerkansing.Controllers.Product
         {
             try
             {
+                productDBController.VerwijderProduct(id);
                 TempData[Enum.ViewMessage.VERWIJDERING.ToString()] = "het";
+
             }
             catch (Exception e)
             {

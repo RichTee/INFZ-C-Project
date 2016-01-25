@@ -15,7 +15,6 @@ Hans
 3. Aanbieding, begin datum mag net later dan eind datum zijn			// 0%
 
 Bram
-1. Producten zien op voorpagina 					//Kan de afbeelding niet vinden
 
 Jeroen
 1. Use Cases								// 100% Af
