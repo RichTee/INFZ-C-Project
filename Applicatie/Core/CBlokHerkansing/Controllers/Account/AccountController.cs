@@ -262,7 +262,7 @@ namespace CBlokHerkansing.Controllers
             model.bestSeller = bestSellerView;
             model.worstSeller = worstSellerView;
             model.omzet = managerDBController.getOmzet();
-
+            model.winst = managerDBController.getWinst();
             return View(model);
         }
     }
